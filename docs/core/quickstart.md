@@ -8,7 +8,7 @@
 
 Micronaut CLI 是创建 Micronaut 应用程序的可选但方便的方法。在 Unix 系统上安装 Micronaut CLI 的最佳方法是使用 [SDKMAN](http://sdkman.io/)，它大大简化了多个 Micronaut 版本的安装和管理。
 
-要查看所有可用的安装方法，请查看 [Micronaut Starter](/starter/installation.html) 文档。
+要查看所有可用的安装方法，请查看 [Micronaut Starter](/launch/installation.html) 文档。
 
 ## 2.2 创建服务器应用程序
 
@@ -223,7 +223,7 @@ Micronaut 需要 Eclipse IDE 4.9 或更高版本
 
 可以通过以下两种方式之一在 Visual Studio Code 中设置 Micronaut。
 
-- **选项1） GraalVM Extension Pack for Java**
+**选项1） GraalVM Extension Pack for Java**
 
 首选的方法是使用随 [Apache NetBeans](https://netbeans.apache.org/) 语言服务器提供的 [GraalVM Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=oracle-labs-graalvm.graalvm-pack)。
 
@@ -238,7 +238,7 @@ GraalVM 扩展包还包括 [GraalVM Tools for Micronaut](https://marketplace.vis
 - YAML 配置的代码完成
 - 用于构建、部署和创建本地映像集的托盘命令
 
-- **选项2）Red Hat/Microsoft Java Extension Pack**
+**选项2）Red Hat/Microsoft Java Extension Pack**
 
 首先安装 [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)。
 
@@ -373,7 +373,7 @@ class HelloControllerSpec {
 
 除了低级客户端之外，Micronaut 还具有一个[声明性的编译时 HTTP 客户端](/core/httpclient.html#73-带有-client-的声明性-http-客户端)，由[客户端](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html)注解提供支持。
 
-要创建客户端，请创建一个用 `@client` 注释的接口，例如：
+要创建客户端，请创建一个用 `@Client` 注释的接口，例如：
 
 *src/main/java/hello/world/HelloClient.java*
 
