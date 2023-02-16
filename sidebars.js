@@ -15,16 +15,27 @@
 const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
+    "intro",
+    {
+      type: 'category',
+      label: 'Micronaut Launch',
+      items: [
+        'launch/introduction',
+        'launch/installation',
+        'launch/commands',
+        'launch/starterImpls'
+      ],
+    },
     {
       type: 'category',
       label: 'Micronaut Core',
       items: [
-        "core/introduction"
+        "core/introduction",
+        "core/quickstart"
       ]
     }
   ],
   actionSidebar: [
-    "intro",
     "action/guide"
   ]
 

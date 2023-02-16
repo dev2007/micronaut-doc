@@ -21,7 +21,7 @@ const config = {
   organizationName: 'dev2007', // Usually your GitHub org/user name.
   projectName: 'micronaut-doc', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -53,6 +53,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
+      docs:{
+        sidebar: {
+          hideable: true,
+        },
+      },
       metadata: [{ name: 'keywords', content: 'mysql,sql,innodb,mysql中文,mysql文档' }],
       navbar: {
         title: 'Micronaut 实战及文档',
@@ -63,15 +68,15 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: '实战',
-          },
-          {
-            type: 'doc',
             docId: 'core/introduction',
             position: 'left',
             label: '文档',
+          },
+          {
+            type: 'doc',
+            docId: 'intro',
+            position: 'left',
+            label: '实战',
           },
           {
             href: 'https://www.bookhub.tech',
@@ -143,7 +148,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['bash', 'java', 'yaml', `json`]
+        additionalLanguages: ['bash', 'java', 'yaml', 'json', 'groovy', 'kotlin']
       },
     }),
 };
