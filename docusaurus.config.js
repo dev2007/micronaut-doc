@@ -68,13 +68,13 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'core/introduction',
+            docId: 'intro',
             position: 'left',
             label: '文档',
           },
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'action/guide',
             position: 'left',
             label: '实战',
           },

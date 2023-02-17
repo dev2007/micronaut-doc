@@ -9,9 +9,9 @@ slug: /
 
 ## 感谢与支持
 
-![license](https://img.shields.io/badge/license-CC--BY--NC) ![translate](https://img.shields.io/badge/Translate-MySQL-%23396D94)
+![license](https://img.shields.io/badge/License-CC--BY--NC-black) ![translate](https://img.shields.io/badge/Translate-Micronaut-black) ![stars](https://img.shields.io/github/stars/dev2007/micronaut-doc?label=Stars&logo=github&color=black) ![forks](https://img.shields.io/github/forks/dev2007/micronaut-doc?label=Forks&logo=github&color=black)
 
-如果对你有帮助，欢迎到 GitHub 给我一颗星星 [Star](https://github.com/dev2007/mysql8-manual)。
+如果对你有帮助，欢迎到 GitHub 给我一颗星星 [Star](https://github.com/dev2007/micronaut-doc)。
 
 但你的赞赏比感谢更有力！
 
