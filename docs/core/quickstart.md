@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # 2. 快速开始
 
 以下部分将引导您快速入门，了解如何使用 Micronaut 设置基本的“Hello World”应用程序。

@@ -49,6 +49,13 @@ const config = {
     ],
   ],
 
+  scripts: [
+    {
+      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8380975615223941',
+      crossorigin: 'anonymous'
+    }
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -58,7 +65,7 @@ const config = {
           hideable: true,
         },
       },
-      metadata: [{ name: 'keywords', content: 'mysql,sql,innodb,mysql中文,mysql文档' }],
+      metadata: [{ name: 'keywords', content: 'micronaut,micronaut doc,micronaut 文档' }],
       navbar: {
         title: 'Micronaut 实战及文档',
         logo: {

@@ -31,7 +31,8 @@ const sidebars = {
       label: 'Micronaut Core',
       items: [
         "core/introduction",
-        "core/quickstart"
+        "core/quickstart",
+        "core/ioc"
       ]
     }
   ],
