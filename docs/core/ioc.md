@@ -217,7 +217,7 @@ Micronaut 自动发现 classpath 上的依赖注入元数据，并根据你定�
 
 Micronaut 支持以下类型的依赖注入：
 
-- 构造函数注入（必须是一个公共构造函数或带有 `@Inject` 注释的单个构造函数）
+- 构造函数注入（必须是一个公共构造函数或带有 `@Inject` 注解的单个构造函数）
 - 字段注入
 - JavaBean 属性注入
 - 方法参数注入
@@ -376,7 +376,7 @@ class RateLimitsFactory {
   </TabItem>
 </Tabs>
 
-当从上下文请求 `RateLimit` bean 集合时，将根据注释中的值以升序返回它们。
+当从上下文请求 `RateLimit` bean 集合时，将根据注解中的值以升序返回它们。
 
 **按顺序注入 Bean**
 
@@ -595,7 +595,7 @@ annotation class V8
   </TabItem>
 </Tabs>
 
-上面的注解本身使用 `@Qualifier` 进行注解，以将其指定为限定符。然后可以在代码中的任何注入点使用注释。例如：
+上面的注解本身使用 `@Qualifier` 进行注解，以将其指定为限定符。然后可以在代码中的任何注入点使用注解。例如：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -646,10 +646,10 @@ annotation class Cylinders(
   </TabItem>
 </Tabs>
 
-1. `@Cylinders` 注解使用 `@Qualifier` 进行元注释
+1. `@Cylinders` 注解使用 `@Qualifier` 进行元注解
 2. 注解有两个成员。[@NonBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/NonBinding.html) 注解用于在依赖项解析期间排除描述成员。
 
-然后，您可以在任何 bean 上使用 `@Cylinders` 注解，并且在依赖关系解析期间会考虑未使用 [@NonBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/NonBinding.html) 注解的成员：
+然后，你可以在任何 bean 上使用 `@Cylinders` 注解，并且在依赖关系解析期间会考虑未使用 [@NonBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/NonBinding.html) 注解的成员：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1340,7 +1340,7 @@ fun startAll() {
 
 ## 3.6 限制可注入类型
 
-默认情况下，当你使用作用域（如 `@Singleton`）注释 bean 时，bean 类及其实现的所有接口和扩展的超级类都可以通过 `@Inject` 注入。
+默认情况下，当你使用作用域（如 `@Singleton`）注解 bean 时，bean 类及其实现的所有接口和扩展的超级类都可以通过 `@Inject` 注入。
 
 考虑上一节中关于定义 bean 的以下示例：
 
@@ -1552,7 +1552,7 @@ Micronaut 具有基于 JSR-330 的可扩展 bean 范围机制。支持以下默�
 
 注意，在启动 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 时，默认情况下，`@Singleton` 作用域 bean 是按需创建的。这是为了优化启动时间而设计的。
 
-如果这给您的用例带来了问题，你可以选择使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 注解，该注解将对象的生命周期绑定到 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 的生命周期。换句话说，当 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 启动时，将创建 bean。
+如果这给你的用例带来了问题，你可以选择使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 注解，该注解将对象的生命周期绑定到 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 的生命周期。换句话说，当 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 启动时，将创建 bean。
 
 或者，用 [@Parallel](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Parallel.html) 注解任何 `@Singleton` 作用域的 bean，它允许并行初始化 bean 而不影响整个启动时间。
 
@@ -1688,7 +1688,7 @@ open class WeatherService {
   </TabItem>
 </Tabs>
 
-1. `WeatherService` 使用 `@Refreshable` 范围进行注释，它存储实例，直到触发刷新事件
+1. `WeatherService` 使用 `@Refreshable` 范围进行注解，它存储实例，直到触发刷新事件
 2. 在创建 bean 时，`forecast` 属性的值设置为固定值，在刷新 bean 之前不会更改
 
 如果你两次调用 `latestForecast()`，你将看到相同的响应，如 `"Scattered Clouds 01/Feb/18 10:29.199"`。
@@ -1721,7 +1721,7 @@ applicationContext.publishEvent(RefreshEvent())
 
 ### 3.7.3 元注解范围
 
-可以在元注解上定义作用域，然后可以将其应用于类。考虑以下元注释示例：
+可以在元注解上定义作用域，然后可以将其应用于类。考虑以下元注解示例：
 
 *Driver java 注解*
 
@@ -1844,12 +1844,12 @@ annotation class Driver
 
 ## 3.8 Bean 工厂
 
-在许多情况下，您可能希望将不属于代码库的类（如第三方库提供的类）作为bean提供。在这种情况下，不能对编译的类进行注释。相反，实现一个 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)。
+在许多情况下，你可能希望将不属于代码库的类（如第三方库提供的类）作为bean提供。在这种情况下，不能对编译的类进行注解。相反，实现一个 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)。
 
-工厂是一个用 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 范围注解）。您使用的注解取决于您希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-范围)一节。
+工厂是一个用 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 范围注解）。你使用的注解取决于你希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-范围)一节。
 
 :::tip 注意
-工厂具有默认作用域 singleton ，并将随上下文一起销毁。如果您想在工厂生成 bean 后处理它，请使用 `@Prototype` 范围。
+工厂具有默认作用域 singleton ，并将随上下文一起销毁。如果你想在工厂生成 bean 后处理它，请使用 `@Prototype` 范围。
 :::
 
 用 bean 范围注解来注解的方法的返回类型是 bean 类型。这最好用一个例子来说明：
@@ -1946,7 +1946,7 @@ internal class EngineFactory {
   </TabItem>
 </Tabs>
 
-在本例中，`V8Engine` 由 `EngineFactory` 类的 `V8Engine` 方法创建。注意，您可以将参数注入到方法中，它们将被解析为 bean。生成的 `V8Engine` bean 将是一个单例。
+在本例中，`V8Engine` 由 `EngineFactory` 类的 `V8Engine` 方法创建。注意，你可以将参数注入到方法中，它们将被解析为 bean。生成的 `V8Engine` bean 将是一个单例。
 
 一个工厂可以有多个用 bean 范围注解的方法，每个方法都返回一个不同的 bean 类型。
 
@@ -1962,7 +1962,7 @@ internal class EngineFactory {
 
 使用 Micronaut 3.0 或更高版本，也可以通过在字段上声明 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解来从字段生成 Bean。
 
-虽然一般情况下，这种方法应该不鼓励使用工厂方法，因为工厂方法提供了更多的灵活性，但它确实简化了测试代码。例如，使用 bean 字段，您可以在测试代码中轻松生成模拟：
+虽然一般情况下，这种方法应该不鼓励使用工厂方法，因为工厂方法提供了更多的灵活性，但它确实简化了测试代码。例如，使用 bean 字段，你可以在测试代码中轻松生成模拟：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -2511,6 +2511,190 @@ internal class EngineFactory {
 需要注意的是，工厂声明为 [@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 作用域，因此每个注入点都会调用该方法。如果 `V8Engine` 和 `V6Engine` 类型需要是单体的，工厂应该使用 Map 来确保对象只构造一次
 :::
 
+## 3.9 条件 Bean
 
+有时，你可能希望基于各种潜在因素，包括类路径、配置、其他bean的存在等，有条件地加载bean。
+
+[Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 注解提供了在 bean 上定义一个或多个条件的能力。
+
+考虑以下示例：
+
+*使用 @Requires*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+@Requires(beans = DataSource.class)
+@Requires(property = "datasource.url")
+public class JdbcBookService implements BookService {
+
+    DataSource dataSource;
+
+    public JdbcBookService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+@Requires(beans = DataSource)
+@Requires(property = "datasource.url")
+class JdbcBookService implements BookService {
+
+    DataSource dataSource
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+@Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
+class JdbcBookService(internal var dataSource: DataSource) : BookService {
+```
+
+  </TabItem>
+</Tabs>
+
+上面的 bean 定义了两个需求。第一个指示必须存在 `DataSource` bean 才能加载该 bean。第二个要求确保在加载 `JdbcBookService` bean 之前设置 `datasource.url` 属性。
+
+:::tip 注意
+Kotlin 目前不支持可重复注解。当需要多个需求时，使用 `@Requirements` 注解。例如，`@Requirements(Requires(…​), Requires(…​))`。参阅 [https://youtrack.jetbrains.com/issue/KT-12794](https://youtrack.jetbrains.com/issue/KT-12794) 以跟踪此功能。
+:::
+
+如果多个 bean 需要相同的需求组合，则可以使用要求定义元注解：
+
+*使用 @Requires 元注解*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Requires(beans = DataSource.class)
+@Requires(property = "datasource.url")
+public @interface RequiresJdbc {
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target([ElementType.PACKAGE, ElementType.TYPE])
+@Requires(beans = DataSource)
+@Requires(property = "datasource.url")
+@interface RequiresJdbc {
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Documented
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
+annotation class RequiresJdbc
+```
+
+  </TabItem>
+</Tabs>
+
+在上面的示例中，`RequiresJdbc` 注解可以在 `JdbcBookService` 上使用：
+
+*使用元注解*
+
+```java
+@RequiresJdbc
+public class JdbcBookService implements BookService {
+    ...
+}
+```
+
+如果你有多个 bean 需要在加载之前满足给定的需求，那么你可能需要考虑一个 bean 配置组，如下一节所述。
+
+### 配置要求
+
+[@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 注解非常灵活，可以用于各种用例。下表总结了一些可能性：
+
+|要求|示例|
+|--|--|
+|要求存在一个或多个类|`@Requires(classes=javax.servlet.Servlet)`|
+|要求缺少一个或多个类|`@Requires(missing=javax.servlet.Servlet)`|
+|要求存在一个或多个 bean|`@Requires(beans=javax.sql.DataSource)`|
+|要求缺少一个或多个 bean|`@Requires(missingBeans=javax.sql.DataSource)`|
+|要求应用环境变量|`@Requires(env="test")`|
+|要求不应用环境变量|`@Requires(notEnv="test")`|
+|要求另一个配置包|`@Requires(configuration="foo.bar")`|
+|要求缺少另一个配置包|`@Requires(missingConfigurations="foo.bar")`|
+|要求特定 SDK 版本|`@Requires(sdk=Sdk.JAVA, value="1.8")`|
+|要求通过包扫描向应用程序提供带有给定注解的类|`@Requires(entities=javax.persistence.Entity)`|
+|要求具有可选值的属性|`@Requires(property="data-source.url")`|
+|要求属性不是配置的一部分|`@Requires(missingProperty="data-source.url")`|
+|要求文件系统中存在一个或多个文件|`@Requires(resources="file:/path/to/file")`|
+|要求存在一个或多个类路径资源|`@Requires(resources="classpath:myFile.properties")`|
+|要求当前操作系统在列表中|`@Requires(os={Requires.Family.WINDOWS})`|
+|要求当前操作系统**不**在列表中|`@Requires(notOs={Requires.Family.WINDOWS})`|
+|如果未指定 beanProperty，则要求 bean|`@Requires(bean=Config.class)`|
+|要求存在 bean 的指定属性|`@Requires(bean=Config.class, beanProperty="enabled")`|
+
+**属性要求附加说明。**
+
+在属性上添加需求具有一些附加功能。你可以要求属性为特定值，而不是特定值，如果未设置，则在这些检查中使用默认值。
+
+```java
+@Requires(property="foo") (1)
+@Requires(property="foo", value="John") (2)
+@Requires(property="foo", value="John", defaultValue="John") (3)
+@Requires(property="foo", notEquals="Sally") (4)
+```
+
+1. 需要设置属性
+2. 要求属性为 "John"
+3. 要求属性为 "John" 或未设置
+4. 要求属性不为 "Sally" 或未设置
+
+**在 @Requires 中引用 bean 属性**
+
+你还可以在 `@Requires` 中引用其他 bean 属性，以有条件地加载 bean。与 `property` 要求类似，你可以指定所需的 `value` 或设置值 bean 属性不应等于使用 `notEquals` 注解成员。对于要检查的 bean 属性，bean 注解成员中指定的 bean 类型应该存在于上下文中，否则将不会加载条件 bean。
+
+```java
+@Requires(bean=Config.class, beanProperty="foo") (1)
+@Requires(bean=Config.class, beanProperty="foo", value="John") (2)
+@Requires(bean=Config.class, beanProperty="foo", notEquals="Sally") (3)
+```
+
+1. 要求 `Config` bean 上的 "foo" 属性
+2. 要求 `Config` bean 上的 "foo" 属性为 "John"
+3. 要求 `Config` bean 上的 "foo" 属性不为 "Sally" 或不设置
+
+指定的 bean 属性通过相应的 getter 方法访问，其存在性和可用性将在编译时检查。
+
+注意，如果 bean 属性的值不为 null，则认为它存在。请记住，基本属性是用默认值初始化的，例如布尔值为 false，int 值为 0，因此即使没有为它们显式指定值，也会将它们视为已设置。
+
+### 调试条件 Bean
+
+如果你有多个条件和复杂的需求，那么可能很难理解为什么没有加载特定的 bean。
+
+为了帮助解决条件 bean 的问题，你可以为 `io.micronaut.context.condition` 包启用调试日志记录，该包将记录未加载 bean 的原因。
+
+*logback.xml*
+
+```xml
+<logger name="io.micronaut.context.condition" level="DEBUG"/>
+```
+
+有关[如何设置日志](/core/logging.html)的详细信息，参阅日志一章。
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
