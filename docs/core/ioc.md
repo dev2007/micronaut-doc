@@ -1842,4 +1842,675 @@ annotation class Driver
 
 1. [DefaultScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultScope.html) 声明了未指定时要使用的作用域
 
+## 3.8 Bean 工厂
+
+在许多情况下，您可能希望将不属于代码库的类（如第三方库提供的类）作为bean提供。在这种情况下，不能对编译的类进行注释。相反，实现一个 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)。
+
+工厂是一个用 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 范围注解）。您使用的注解取决于您希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-范围)一节。
+
+:::tip 注意
+工厂具有默认作用域 singleton ，并将随上下文一起销毁。如果您想在工厂生成 bean 后处理它，请使用 `@Prototype` 范围。
+:::
+
+用 bean 范围注解来注解的方法的返回类型是 bean 类型。这最好用一个例子来说明：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+class CrankShaft {
+}
+
+class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private final CrankShaft crankShaft;
+
+    public V8Engine(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    @Override
+    public String start() {
+        return "Starting V8";
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    @Singleton
+    Engine v8Engine(CrankShaft crankShaft) {
+        return new V8Engine(crankShaft);
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+class CrankShaft {
+}
+
+class V8Engine implements Engine {
+    final int cylinders = 8
+    final CrankShaft crankShaft
+
+    V8Engine(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft
+    }
+
+    @Override
+    String start() {
+        "Starting V8"
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    @Singleton
+    Engine v8Engine(CrankShaft crankShaft) {
+        new V8Engine(crankShaft)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+internal class CrankShaft
+
+internal class V8Engine(private val crankShaft: CrankShaft) : Engine {
+    private val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V8"
+    }
+}
+
+@Factory
+internal class EngineFactory {
+
+    @Singleton
+    fun v8Engine(crankShaft: CrankShaft): Engine {
+        return V8Engine(crankShaft)
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+在本例中，`V8Engine` 由 `EngineFactory` 类的 `V8Engine` 方法创建。注意，您可以将参数注入到方法中，它们将被解析为 bean。生成的 `V8Engine` bean 将是一个单例。
+
+一个工厂可以有多个用 bean 范围注解的方法，每个方法都返回一个不同的 bean 类型。
+
+:::tip 注意
+如果采用这种方法，则不应在类内部调用其他 bean 方法。相反，通过参数注入类型。
+:::
+
+:::note 提示
+要允许生成的 bean 参与应用程序上下文关闭过程，请使用 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解该方法，并将 `preDestroy` 参数设置为要调用以关闭 bean 的方法的名称。
+:::
+
+**来自字段的 Bean**
+
+使用 Micronaut 3.0 或更高版本，也可以通过在字段上声明 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解来从字段生成 Bean。
+
+虽然一般情况下，这种方法应该不鼓励使用工厂方法，因为工厂方法提供了更多的灵活性，但它确实简化了测试代码。例如，使用 bean 字段，您可以在测试代码中轻松生成模拟：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.*;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+import jakarta.inject.Inject;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@MicronautTest
+public class VehicleMockSpec {
+    @Requires(beans = VehicleMockSpec.class)
+    @Bean @Replaces(Engine.class)
+    Engine mockEngine = () -> "Mock Started"; // (1)
+
+    @Inject Vehicle vehicle; // (2)
+
+    @Test
+    void testStartEngine() {
+        final String result = vehicle.start();
+        assertEquals("Mock Started", result); // (3)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.*
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Specification
+import jakarta.inject.Inject
+
+@MicronautTest
+class VehicleMockSpec extends Specification {
+    @Requires(beans=VehicleMockSpec.class)
+    @Bean @Replaces(Engine.class)
+    Engine mockEngine = {-> "Mock Started" } as Engine  // (1)
+
+    @Inject Vehicle vehicle // (2)
+
+    void "test start engine"() {
+        given:
+        final String result = vehicle.start()
+
+        expect:
+        result == "Mock Started" // (3)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Replaces
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import jakarta.inject.Inject
+
+@MicronautTest
+class VehicleMockSpec {
+    @get:Bean
+    @get:Replaces(Engine::class)
+    val mockEngine: Engine = object : Engine { // (1)
+        override fun start(): String {
+            return "Mock Started"
+        }
+    }
+
+    @Inject
+    lateinit var vehicle : Vehicle // (2)
+
+    @Test
+    fun testStartEngine() {
+        val result = vehicle.start()
+        Assertions.assertEquals("Mock Started", result) // (3)
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. bean 是从替换现有 `Engine` 的字段中定义的。
+2. `Vehicle` 被注入。
+3. 代码断言调用了模拟实现。
+
+请注意，非基元类型仅支持公共或包保护字段。如果字段是 `static`、`private` 或 `protected` 的，则会发生编译错误。
+
+:::tip 注意
+如果bean方法/字段包含作用域或限定符，则将省略该类型中的任何作用域或限制符。
+:::
+
+:::tip 注意
+工厂实例的限定符不会继承到bean
+:::
+
+**基本 bean 和数组**
+
+从 Micronaut 3.1 开始，可以从工厂定义和注入基本类型和数组类型。
+
+例如：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Factory;
+import jakarta.inject.Named;
+
+@Factory
+class CylinderFactory {
+    @Bean
+    @Named("V8") // (1)
+    final int v8 = 8;
+
+    @Bean
+    @Named("V6") // (1)
+    final int v6 = 6;
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+import jakarta.inject.Named
+
+@Factory
+class CylinderFactory {
+    @Bean
+    @Named("V8") // (1)
+    final int v8 = 8
+
+    @Bean
+    @Named("V6") // (1)
+    final int v6 = 6
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+import jakarta.inject.Named
+
+@Factory
+class CylinderFactory {
+    @get:Bean
+    @get:Named("V8") // (1)
+    val v8 = 8
+
+    @get:Bean
+    @get:Named("V6") // (1)
+    val v6 = 6
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 使用不同的名称定义了两个基本整数 bean
+
+基本 bean 可以像任何其他 bean 一样被注入：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
+
+@Singleton
+public class V8Engine {
+    private final int cylinders;
+
+    public V8Engine(@Named("V8") int cylinders) { // (1)
+        this.cylinders = cylinders;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import jakarta.inject.Named
+import jakarta.inject.Singleton
+
+@Singleton
+class V8Engine {
+    private final int cylinders
+
+    V8Engine(@Named("V8") int cylinders) { // (1)
+        this.cylinders = cylinders
+    }
+
+    int getCylinders() {
+        return cylinders
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import jakarta.inject.Named
+import jakarta.inject.Singleton
+
+@Singleton
+class V8Engine(
+    @param:Named("V8") val cylinders: Int // (1)
+)
+```
+
+  </TabItem>
+</Tabs>
+
+请注意，基元 bean 和基本数组 bean 具有以下限制：
+
+- [AOP advice](/core/aop.html) 不能应用于原语或包装器类型
+- 由于上述自定义作用域，不支持代理
+- 不支持 `@Bean(preDestroy=..)` 成员
+
+**编程禁用 Bean**
+
+工厂方法可以抛出 [DisabledBeanException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/DisabledBeanException.html) 以有条件地禁用 bean。使用 [@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 应该始终是有条件地创建 bean 的首选方法；只有在无法使用 [@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 时，才能在工厂方法中引发异常。
+
+例如：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+public interface Engine {
+    Integer getCylinders();
+}
+
+@EachProperty("engines")
+public class EngineConfiguration implements Toggleable {
+
+    private boolean enabled = true;
+    private Integer cylinders;
+
+    @NotNull
+    public Integer getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(Integer cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+}
+
+@Factory
+public class EngineFactory {
+
+    @EachBean(EngineConfiguration.class)
+    public Engine buildEngine(EngineConfiguration engineConfiguration) {
+        if (engineConfiguration.isEnabled()) {
+            return engineConfiguration::getCylinders;
+        } else {
+            throw new DisabledBeanException("Engine configuration disabled");
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+interface Engine {
+    Integer getCylinders()
+}
+
+@EachProperty("engines")
+class EngineConfiguration implements Toggleable {
+    boolean enabled = true
+    @NotNull
+    Integer cylinders
+}
+
+@Factory
+class EngineFactory {
+
+    @EachBean(EngineConfiguration)
+    Engine buildEngine(EngineConfiguration engineConfiguration) {
+        if (engineConfiguration.enabled) {
+            (Engine){ -> engineConfiguration.cylinders }
+        } else {
+            throw new DisabledBeanException("Engine configuration disabled")
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+interface Engine {
+    fun getCylinders(): Int
+}
+
+@EachProperty("engines")
+class EngineConfiguration : Toggleable {
+
+    var enabled = true
+
+    @NotNull
+    val cylinders: Int? = null
+
+    override fun isEnabled(): Boolean {
+        return enabled
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    @EachBean(EngineConfiguration::class)
+    fun buildEngine(engineConfiguration: EngineConfiguration): Engine? {
+        return if (engineConfiguration.isEnabled) {
+            object : Engine {
+                override fun getCylinders(): Int {
+                    return engineConfiguration.cylinders!!
+                }
+            }
+        } else {
+            throw DisabledBeanException("Engine configuration disabled")
+        }
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+**注入点**
+
+工厂的一个常见用例是从注入对象的点利用注解元数据，从而可以基于所述元数据修改行为。
+
+考虑以下注解：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Documented
+@Retention(RUNTIME)
+@Target(ElementType.PARAMETER)
+public @interface Cylinders {
+    int value() default 8;
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Documented
+@Retention(RUNTIME)
+@Target(ElementType.PARAMETER)
+@interface Cylinders {
+    int value() default 8
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.VALUE_PARAMETER)
+annotation class Cylinders(val value: Int = 8)
+```
+
+  </TabItem>
+</Tabs>
+
+上述注解可用于自定义我们希望在定义的注入点处注入到车辆中的发动机类型：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+class Vehicle {
+
+    private final Engine engine;
+
+    Vehicle(@Cylinders(6) Engine engine) {
+        this.engine = engine;
+    }
+
+    String start() {
+        return engine.start();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+class Vehicle {
+
+    private final Engine engine
+
+    Vehicle(@Cylinders(6) Engine engine) {
+        this.engine = engine
+    }
+
+    String start() {
+        return engine.start()
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+internal class Vehicle(@param:Cylinders(6) private val engine: Engine) {
+    fun start(): String {
+        return engine.start()
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+上述 `Vehicle` 类指定了 `@Cylinders(6)` 的注解值，表示需要六个气缸的 `Engine`。
+
+要实现此用例，请定义一个接受 [InjectionPoint](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/InjectionPoint.html) 实例的工厂，以分析定义的注解值：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Factory
+class EngineFactory {
+
+    @Prototype
+    Engine v8Engine(InjectionPoint<?> injectionPoint, CrankShaft crankShaft) { // (1)
+        final int cylinders = injectionPoint
+                .getAnnotationMetadata()
+                .intValue(Cylinders.class).orElse(8); // (2)
+        switch (cylinders) { // (3)
+            case 6:
+                return new V6Engine(crankShaft);
+            case 8:
+                return new V8Engine(crankShaft);
+            default:
+                throw new IllegalArgumentException("Unsupported number of cylinders specified: " + cylinders);
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Factory
+class EngineFactory {
+
+    @Prototype
+    Engine v8Engine(InjectionPoint<?> injectionPoint, CrankShaft crankShaft) { // (1)
+        final int cylinders = injectionPoint
+                .getAnnotationMetadata()
+                .intValue(Cylinders.class).orElse(8) // (2)
+        switch (cylinders) { // (3)
+            case 6:
+                return new V6Engine(crankShaft)
+            case 8:
+                return new V8Engine(crankShaft)
+            default:
+                throw new IllegalArgumentException("Unsupported number of cylinders specified: $cylinders")
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Factory
+internal class EngineFactory {
+
+    @Prototype
+    fun v8Engine(injectionPoint: InjectionPoint<*>, crankShaft: CrankShaft): Engine { // (1)
+        val cylinders = injectionPoint
+                .annotationMetadata
+                .intValue(Cylinders::class.java).orElse(8) // (2)
+        return when (cylinders) { // (3)
+            6 -> V6Engine(crankShaft)
+            8 -> V8Engine(crankShaft)
+            else -> throw IllegalArgumentException("Unsupported number of cylinders specified: $cylinders")
+        }
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 工厂方法定义了 [InjectionPoint](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/InjectionPoint.html) 类型的参数。
+2. 注解元数据用于获取 `@Cylinder` 注解的值
+3. 该值用于构造引擎，如果无法构造引擎，则引发异常。
+
+:::tip 注意
+需要注意的是，工厂声明为 [@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 作用域，因此每个注入点都会调用该方法。如果 `V8Engine` 和 `V6Engine` 类型需要是单体的，工厂应该使用 Map 来确保对象只构造一次
+:::
+
+
+
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
