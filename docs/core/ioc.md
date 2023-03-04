@@ -2697,4 +2697,429 @@ public class JdbcBookService implements BookService {
 
 有关[如何设置日志](/core/logging.html)的详细信息，参阅日志一章。
 
+## 3.10 Bean 替换
+
+Micronaut 的依赖注入系统和 Spring 的一个显著区别是 bean 的替换方式。
+
+在 Spring 应用程序中，bean 具有名称，并通过创建具有相同名称的 bean 来覆盖，而不考虑 bean 的类型。Spring 还具有 bean 注册顺序的概念，因此在 Spring Boot 中有 `@AutoConfigureBefore` 和 `@AutoConfigureAfter `注解，它们控制 bean 如何相互覆盖。
+
+此策略会导致难以调试的问题，例如：
+
+- Bean 加载顺序更改，导致意外结果
+- 具有相同名称的bean覆盖具有不同类型的另一个bean
+
+为了避免这些问题，Micronaut 的 DI 没有 bean 名称或加载顺序的概念。bean 有一种类型和 [Qualifier](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/Qualifier.html)。不能用另一个完全不同类型的 bean 重写。
+
+Spring 方法的一个有用的好处是它允许重写现有 bean 来定制行为。为了支持相同的功能，Micronaut 的 DI 提供了一个显式的 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 注解，它与对[条件 Bean](#39-条件-bean)的支持很好地集成在一起，并清晰地记录和表达了开发人员的意图。
+
+任何现有的 bean 都可以被声明 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 的另一个 bean 替换。例如，考虑以下类：
+
+*JdbcBookService*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+@Requires(beans = DataSource.class)
+@Requires(property = "datasource.url")
+public class JdbcBookService implements BookService {
+
+    DataSource dataSource;
+
+    public JdbcBookService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+@Requires(beans = DataSource)
+@Requires(property = "datasource.url")
+class JdbcBookService implements BookService {
+
+    DataSource dataSource
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+@Requirements(Requires(beans = [DataSource::class]), Requires(property = "datasource.url"))
+class JdbcBookService(internal var dataSource: DataSource) : BookService {
+```
+
+  </TabItem>
+</Tabs>
+
+你可以在 `src/test/java` 中定义一个类，该类仅用于测试：
+
+*使用 @Replaces*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Replaces(JdbcBookService.class) // (1)
+@Singleton
+public class MockBookService implements BookService {
+
+    Map<String, Book> bookMap = new LinkedHashMap<>();
+
+    @Override
+    public Book findBook(String title) {
+        return bookMap.get(title);
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Replaces(JdbcBookService.class) // (1)
+@Singleton
+class MockBookService implements BookService {
+
+    Map<String, Book> bookMap = [:]
+
+    @Override
+    Book findBook(String title) {
+        bookMap.get(title)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Replaces(JdbcBookService::class) // (1)
+@Singleton
+class MockBookService : BookService {
+
+    var bookMap: Map<String, Book> = LinkedHashMap()
+
+    override fun findBook(title: String): Book? {
+        return bookMap[title]
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `MockBookService` 声明它将替换 `JdbcBookService`
+
+**工厂替换**
+
+`@Replaces` 注解还支持 `factory` 参数。该参数允许替换整个工厂 bean 或工厂创建的特定类型。
+
+例如，可能需要替换所有或部分给定工厂类别：
+
+*BookFactory*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Factory
+public class BookFactory {
+
+    @Singleton
+    Book novel() {
+        return new Book("A Great Novel");
+    }
+
+    @Singleton
+    TextBook textBook() {
+        return new TextBook("Learning 101");
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Factory
+class BookFactory {
+
+    @Singleton
+    Book novel() {
+        new Book('A Great Novel')
+    }
+
+    @Singleton
+    TextBook textBook() {
+        new TextBook('Learning 101')
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Factory
+class BookFactory {
+
+    @Singleton
+    internal fun novel(): Book {
+        return Book("A Great Novel")
+    }
+
+    @Singleton
+    internal fun textBook(): TextBook {
+        return TextBook("Learning 101")
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+:::warning 警告
+要完全替换工厂，工厂方法必须与替换工厂中所有方法的返回类型匹配。
+:::
+
+在本例中，`BookFactory#textBook()` **未**被替换，因为该工厂没有返回 `TextBook` 的工厂方法。
+
+*CustomBookFactory*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Factory
+@Replaces(factory = BookFactory.class)
+public class CustomBookFactory {
+
+    @Singleton
+    Book otherNovel() {
+        return new Book("An OK Novel");
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Factory
+@Replaces(factory = BookFactory)
+class CustomBookFactory {
+
+    @Singleton
+    Book otherNovel() {
+        new Book('An OK Novel')
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Factory
+@Replaces(factory = BookFactory::class)
+class CustomBookFactory {
+
+    @Singleton
+    internal fun otherNovel(): Book {
+        return Book("An OK Novel")
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+要替换一个或多个工厂方法，但保留其余方法，请在方法上应用 `@Replaces` 注解，并表示要应用的工厂。
+
+*TextBookFactory*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Factory
+public class TextBookFactory {
+
+    @Singleton
+    @Replaces(value = TextBook.class, factory = BookFactory.class)
+    TextBook textBook() {
+        return new TextBook("Learning 305");
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Factory
+class TextBookFactory {
+
+    @Singleton
+    @Replaces(value = TextBook, factory = BookFactory)
+    TextBook textBook() {
+        new TextBook('Learning 305')
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Factory
+class TextBookFactory {
+
+    @Singleton
+    @Replaces(value = TextBook::class, factory = BookFactory::class)
+    internal fun textBook(): TextBook {
+        return TextBook("Learning 305")
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+`BookFactory#novel()` 方法不会被替换，因为 TextBook 类是在注解中定义的。
+
+**默认实现**
+
+在公开 API 时，最好不要将接口的默认实现公开为公共 API 的一部分。这样做会阻止用户替换实现，因为他们将无法引用类。解决方案是用 [DefaultImplementation](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解接口，以指示如果用户创建了 `@Replaces(YourInterface.class` 的bean，则要替换哪个实现。
+
+例如，考虑：
+
+public API 约定
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.DefaultImplementation;
+
+@DefaultImplementation(DefaultResponseStrategy.class)
+public interface ResponseStrategy {
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.DefaultImplementation
+
+@DefaultImplementation(DefaultResponseStrategy)
+interface ResponseStrategy {
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.DefaultImplementation
+
+@DefaultImplementation(DefaultResponseStrategy::class)
+interface ResponseStrategy
+```
+
+  </TabItem>
+</Tabs>
+
+默认实现
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import jakarta.inject.Singleton;
+
+@Singleton
+class DefaultResponseStrategy implements ResponseStrategy {
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import jakarta.inject.Singleton
+
+@Singleton
+class DefaultResponseStrategy implements ResponseStrategy {
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import jakarta.inject.Singleton
+
+@Singleton
+internal class DefaultResponseStrategy : ResponseStrategy
+```
+
+  </TabItem>
+</Tabs>
+
+自定义实现
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Replaces;
+import jakarta.inject.Singleton;
+
+@Singleton
+@Replaces(ResponseStrategy.class)
+public class CustomResponseStrategy implements ResponseStrategy {
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Replaces
+import jakarta.inject.Singleton
+
+@Singleton
+@Replaces(ResponseStrategy)
+class CustomResponseStrategy implements ResponseStrategy {
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Replaces
+import jakarta.inject.Singleton
+
+@Singleton
+@Replaces(ResponseStrategy::class)
+class CustomResponseStrategy : ResponseStrategy
+```
+
+  </TabItem>
+</Tabs>
+
+在上面的示例中，`CustomResponseStrategy` 替换了 `DefaultResponsePolicy`，因为 [DefaultImplementation](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解指向 `DefaultResponceStrategy`。
+
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)

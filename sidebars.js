@@ -37,7 +37,14 @@ const sidebars = {
     }
   ],
   actionSidebar: [
-    "action/guide"
+    "action/guide",
+    {
+      type: 'category',
+      label: '2. 第一个应用',
+      link: {type: 'doc',id: 'action/firstapp'},
+      items: [
+      ],
+    },
   ]
 
   // But you can create a sidebar manually
