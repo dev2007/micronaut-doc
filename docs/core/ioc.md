@@ -178,7 +178,7 @@ class Vehicle(private val engine: Engine) { // (3)
 </Tabs>
 
 1. 定义了通用 `Engine` 接口
-2. `V8Engine` 实现被定义并标记为 `Singleton` 范围
+2. `V8Engine` 实现被定义并标记为 `Singleton` 作用域
 3. 通过构造函数注入来注入 `Engine`
 
 要执行依赖注入，请使用 `run()` 方法运行 [BeanContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanContext.html)，并使用 `getBean(Class)` 查找 bean，如下例所示：
@@ -1526,26 +1526,26 @@ class EngineSpec {
 1. 尝试查找 `V8Engine` 引发 [NoSuchBeaException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/NoSuchBeanException.html)
 2. 查找 `Engine` 接口时成功
 
-## 3.7 范围
+## 3.7 作用域
 
-Micronaut 具有基于 JSR-330 的可扩展 bean 范围机制。支持以下默认范围：
+Micronaut 具有基于 JSR-330 的可扩展 bean 作用域机制。支持以下默认作用域：
 
-### 3.7.1 内置范围
+### 3.7.1 内置作用域
 
-*表1。Micronaut 内置范围*
+*表1。Micronaut 内置作用域*
 
 |类型|描述|
 |--|--|
-|[@Singleton](https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html)|Singleton 范围表示只存在bean的一个实例|
-|[@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html)|Context 范围表示 bean 将与 `ApplicationContext` 同时创建（急切初始化）|
-|[@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html)|Prototype 范围表示每次注入 bean 时都会创建一个新的 bean 实例|
-|[@Infrastructure](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Infrastructure.html)|Infrastructure 范围表示不能使用 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 重写或替换的 bean，因为它对系统的运行至关重要。|
-|[@ThreadLocal](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/ThreadLocal.html)|`@ThreadLocal` 范围是一个自定义作用域，通过 ThreadLocal 为每个线程关联一个 bean|
-|[@Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html)|`@Refreshable` 范围是一个自定义范围，允许通过 `/refresh` 端点刷新bean的状态。|
-|[@RequestScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/http/scope/RequestScope.html)|`@RequestScope` 范围是一个自定义作用域，它指示创建了 bean 的新实例并与每个 HTTP 请求相关联|
+|[@Singleton](https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html)|Singleton 作用域表示只存在bean的一个实例|
+|[@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html)|Context 作用域表示 bean 将与 `ApplicationContext` 同时创建（急切初始化）|
+|[@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html)|Prototype 作用域表示每次注入 bean 时都会创建一个新的 bean 实例|
+|[@Infrastructure](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Infrastructure.html)|Infrastructure 作用域表示不能使用 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 重写或替换的 bean，因为它对系统的运行至关重要。|
+|[@ThreadLocal](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/ThreadLocal.html)|`@ThreadLocal` 作用域是一个自定义作用域，通过 ThreadLocal 为每个线程关联一个 bean|
+|[@Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html)|`@Refreshable` 作用域是一个自定义作用域，允许通过 `/refresh` 端点刷新bean的状态。|
+|[@RequestScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/http/scope/RequestScope.html)|`@RequestScope` 作用域是一个自定义作用域，它指示创建了 bean 的新实例并与每个 HTTP 请求相关联|
 
 :::tip 注意
-[@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 注解是 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 的同义词，因为默认范围是 Prototype。
+[@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 注解是 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 的同义词，因为默认作用域是 Prototype。
 :::
 
 通过定义实现 [CustomScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/scope/CustomScope.html) 接口的`@Singleton` bean，可以添加其他作用域。
@@ -1564,7 +1564,7 @@ Micronaut 具有基于 JSR-330 的可扩展 bean 范围机制。支持以下默�
 
 在某些情况下，例如在 AWS Lambda 上，分配给 Lambda 构造的 CPU 资源多于执行的 CPU 资源，可能需要对 `@Singleton` bean 进行急切初始化。
 
-你可以使用 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口指定是否急切地初始化 `@Singleton` 范围的 bean：
+你可以使用 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口指定是否急切地初始化 `@Singleton` 作用域的 bean：
 
 *启用单例的急切初始化*
 
@@ -1600,7 +1600,7 @@ public class MyFunctionHandler extends MicronautRequestHandler<APIGatewayProxyRe
 }
 ```
 
-[@ConfigurationReader](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationReader.html) bean，如 [@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 或[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)是单例 bean。要急切地初始化配置，但保持其他 `@Singleton` 范围内的 bean 懒创建，请使用 `eagerInitConfiguration`：
+[@ConfigurationReader](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationReader.html) bean，如 [@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 或[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)是单例 bean。要急切地初始化配置，但保持其他 `@Singleton` 作用域内的 bean 懒创建，请使用 `eagerInitConfiguration`：
 
 *启用急切配置初始化*
 
@@ -1618,14 +1618,14 @@ public class Application {
 
 1. 将急切初始化设置为 `true` 将初始化所有配置读取器 bean
 
-### 3.7.2 Refreshable 范围
+### 3.7.2 Refreshable 作用域
 
-[Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 范围是一个自定义范围，允许通过以下方式刷新 bean 的状态：
+[Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 作用域是一个自定义作用域，允许通过以下方式刷新 bean 的状态：
 
 - `/refresh` 端点。
 - [RefreshEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html) 的发布。
 
-以下示例说明了 `@Refreshable` 范围的行为。
+以下示例说明了 `@Refreshable` 作用域的行为。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1688,7 +1688,7 @@ open class WeatherService {
   </TabItem>
 </Tabs>
 
-1. `WeatherService` 使用 `@Refreshable` 范围进行注解，它存储实例，直到触发刷新事件
+1. `WeatherService` 使用 `@Refreshable` 作用域进行注解，它存储实例，直到触发刷新事件
 2. 在创建 bean 时，`forecast` 属性的值设置为固定值，在刷新 bean 之前不会更改
 
 如果你两次调用 `latestForecast()`，你将看到相同的响应，如 `"Scattered Clouds 01/Feb/18 10:29.199"`。
@@ -1719,7 +1719,7 @@ applicationContext.publishEvent(RefreshEvent())
   </TabItem>
 </Tabs>
 
-### 3.7.3 元注解范围
+### 3.7.3 元注解作用域
 
 可以在元注解上定义作用域，然后可以将其应用于类。考虑以下元注解示例：
 
@@ -1783,14 +1783,14 @@ annotation class Driver
   </TabItem>
 </Tabs>
 
-1. 范围使用 [Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 声明 `Car` 类上的需求
+1. 作用域使用 [Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 声明 `Car` 类上的需求
 2. 注解声明为 `@Singleton`
 
 在上面的示例中，`@Singleton` 注解应用于 `@Driver` 注解，这会导致用 `@Driver` 进行注解的每个类都被视为单例。
 
-注意，在这种情况下，应用注解时不可能更改范围。例如，以下内容不会覆盖 `@Driver` 声明的范围，并且无效：
+注意，在这种情况下，应用注解时不可能更改作用域。例如，以下内容不会覆盖 `@Driver` 声明的作用域，并且无效：
 
-*声明另一个范围*
+*声明另一个作用域*
 
 ```java
 @Driver
@@ -1846,13 +1846,13 @@ annotation class Driver
 
 在许多情况下，你可能希望将不属于代码库的类（如第三方库提供的类）作为bean提供。在这种情况下，不能对编译的类进行注解。相反，实现一个 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)。
 
-工厂是一个用 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 范围注解）。你使用的注解取决于你希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-范围)一节。
+工厂是一个用 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 作用域注解）。你使用的注解取决于你希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-作用域)一节。
 
 :::tip 注意
-工厂具有默认作用域 singleton ，并将随上下文一起销毁。如果你想在工厂生成 bean 后处理它，请使用 `@Prototype` 范围。
+工厂具有默认作用域 singleton ，并将随上下文一起销毁。如果你想在工厂生成 bean 后处理它，请使用 `@Prototype` 作用域。
 :::
 
-用 bean 范围注解来注解的方法的返回类型是 bean 类型。这最好用一个例子来说明：
+用 bean 作用域注解来注解的方法的返回类型是 bean 类型。这最好用一个例子来说明：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1948,7 +1948,7 @@ internal class EngineFactory {
 
 在本例中，`V8Engine` 由 `EngineFactory` 类的 `V8Engine` 方法创建。注意，你可以将参数注入到方法中，它们将被解析为 bean。生成的 `V8Engine` bean 将是一个单例。
 
-一个工厂可以有多个用 bean 范围注解的方法，每个方法都返回一个不同的 bean 类型。
+一个工厂可以有多个用 bean 作用域注解的方法，每个方法都返回一个不同的 bean 类型。
 
 :::tip 注意
 如果采用这种方法，则不应在类内部调用其他 bean 方法。相反，通过参数注入类型。
@@ -3121,5 +3121,994 @@ class CustomResponseStrategy : ResponseStrategy
 </Tabs>
 
 在上面的示例中，`CustomResponseStrategy` 替换了 `DefaultResponsePolicy`，因为 [DefaultImplementation](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解指向 `DefaultResponceStrategy`。
+
+## 3.11 Bean 配置
+
+一个带 [@Configuration](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Configuration.html) 的 bean 是包中多个 bean 定义的分组。
+
+`@Configuration` 注解应用于包级别，并通知 Micronaut 与包一起定义的 bean 形成了一个逻辑分组。
+
+`@Configuration` 注解通常应用于 `package-info` 类。例如：
+
+*package-info.groovy*
+
+```groovy
+@Configuration
+package my.package
+
+import io.micronaut.context.annotation.Configuration
+```
+
+当 bean 配置通过 `@Requires` 注解设置为有条件时，这种分组变得有用。例如：
+
+*package-info.groovy*
+
+```groovy
+@Configuration
+@Requires(beans = javax.sql.DataSource)
+package my.package
+```
+
+在上面的示例中，只有当 `javax.sql.DataSource` bean 存在时，才会加载带注解包中的所有 bean 定义并使其可用。这允许你实现 bean 定义的条件自动配置。
+
+:::tip 注意
+Java 和 Kotlin 也通过 `package-info.java` 支持此功能。Kotlin 不支持 1.3 版的 `package-ininfo.kt`。
+:::
+
+## 3..12 生命周期方法
+
+
+### 当构建 Bean 时
+
+要在构建 bean 时调用方法，请使用 `jakarta.annotation.PostConstruct` 注解：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import jakarta.annotation.PostConstruct; // (1)
+import jakarta.inject.Singleton;
+
+@Singleton
+public class V8Engine implements Engine {
+
+    private int cylinders = 8;
+    private boolean initialized = false; // (2)
+
+    @Override
+    public String start() {
+        if (!initialized) {
+            throw new IllegalStateException("Engine not initialized!");
+        }
+
+        return "Starting V8";
+    }
+
+    @Override
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    @PostConstruct // (3)
+    public void initialize() {
+        initialized = true;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import jakarta.annotation.PostConstruct // (1)
+import jakarta.inject.Singleton
+
+@Singleton
+class V8Engine implements Engine {
+
+    int cylinders = 8
+    boolean initialized = false // (2)
+
+    @Override
+    String start() {
+        if (!initialized) {
+            throw new IllegalStateException("Engine not initialized!")
+        }
+
+        return "Starting V8"
+    }
+
+    @PostConstruct // (3)
+    void initialize() {
+        initialized = true
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import jakarta.annotation.PostConstruct
+import jakarta.inject.Singleton
+
+@Singleton
+class V8Engine : Engine {
+
+    override val cylinders = 8
+
+    var initialized = false
+        private set // (2)
+
+    override fun start(): String {
+        check(initialized) { "Engine not initialized!" }
+
+        return "Starting V8"
+    }
+
+    @PostConstruct // (3)
+    fun initialize() {
+        initialized = true
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `PostConstruct` 注解已导入
+2. 定义了需要初始化的字段
+3. 一个方法用 `@PostConstruct` 注解，一旦对象被构造并完全注入，就会被调用。
+
+要管理何时构建 bean，请参阅 [bean 作用域](##37-作用域)一节。
+
+### 当销毁 Bean 时
+
+要在销毁 bean 时调用方法，请使用 `jakarta.annotation.PreDestroy` 注解：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import jakarta.annotation.PreDestroy; // (1)
+import jakarta.inject.Singleton;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@Singleton
+public class PreDestroyBean implements AutoCloseable {
+
+    AtomicBoolean stopped = new AtomicBoolean(false);
+
+    @PreDestroy // (2)
+    @Override
+    public void close() throws Exception {
+        stopped.compareAndSet(false, true);
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import jakarta.annotation.PreDestroy // (1)
+import jakarta.inject.Singleton
+import java.util.concurrent.atomic.AtomicBoolean
+
+@Singleton
+class PreDestroyBean implements AutoCloseable {
+
+    AtomicBoolean stopped = new AtomicBoolean(false)
+
+    @PreDestroy // (2)
+    @Override
+    void close() throws Exception {
+        stopped.compareAndSet(false, true)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import jakarta.annotation.PreDestroy // (1)
+import jakarta.inject.Singleton
+import java.util.concurrent.atomic.AtomicBoolean
+
+@Singleton
+class PreDestroyBean : AutoCloseable {
+
+    internal var stopped = AtomicBoolean(false)
+
+    @PreDestroy // (2)
+    @Throws(Exception::class)
+    override fun close() {
+        stopped.compareAndSet(false, true)
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 导入 `PreDestroy` 注解
+2. 方法用 `@PreDestroy` 注解，并将在上下文关闭时调用。
+
+对于工厂 Bean，[Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解中的 `preDestroy` 值告诉 Micronaut 要调用哪个方法。
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Factory;
+
+import jakarta.inject.Singleton;
+
+@Factory
+public class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") // (1)
+    @Singleton
+    public Connection connection() {
+        return new Connection();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+
+import jakarta.inject.Singleton
+
+@Factory
+class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") // (1)
+    @Singleton
+    Connection connection() {
+        new Connection()
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
+
+import jakarta.inject.Singleton
+
+@Factory
+class ConnectionFactory {
+
+    @Bean(preDestroy = "stop") // (1)
+    @Singleton
+    fun connection(): Connection {
+        return Connection()
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class Connection {
+
+    AtomicBoolean stopped = new AtomicBoolean(false);
+
+    public void stop() { // (2)
+        stopped.compareAndSet(false, true);
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import java.util.concurrent.atomic.AtomicBoolean
+
+class Connection {
+
+    AtomicBoolean stopped = new AtomicBoolean(false)
+
+    void stop() { // (2)
+        stopped.compareAndSet(false, true)
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import java.util.concurrent.atomic.AtomicBoolean
+
+class Connection {
+
+    internal var stopped = AtomicBoolean(false)
+
+    fun stop() { // (2)
+        stopped.compareAndSet(false, true)
+    }
+
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `preDestroy` 值设置在注解上
+2. 注解值与方法名称匹配
+
+:::tip 注意
+简单地实现 `Closeable` 或 `AutoCloseable` 接口不足以使 bean 与上下文一起关闭。必须使用上述方法之一。
+:::
+
+### 依赖 Bean
+
+依赖 bean 是构建 bean 时使用的 bean。如果依赖 bean 的作用域为 `@Prototype` 或未知，它将与实例一起销毁。
+
+## 3.13 上下文事件
+
+Micronaut 通过上下文支持通用事件系统。[ApplicationEventPublisher](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 发布事件，[ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 用于侦听事件。事件系统不限于 Micronaut 发布并支持用户创建的自定义事件。
+
+**发布事件**
+
+[ApplicationEventPublisher](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 支持任何类型的事件，尽管 Micronaut 发布的所有事件都继承 ApplicationEvent。
+
+要发布事件，请使用依赖注入获取 [ApplicationEventPublisher](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) 的实例，其中泛型类型是事件的类型，并使用事件对象调用 `publishEvent` 方法。
+
+**发布事件**
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+public class SampleEvent {
+    private String message = "Something happened";
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+@Singleton
+public class SampleEventEmitterBean {
+
+    @Inject
+    ApplicationEventPublisher<SampleEvent> eventPublisher;
+
+    public void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent());
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+class SampleEvent {
+    String message = "Something happened"
+}
+
+import io.micronaut.context.event.ApplicationEventPublisher
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
+
+@Singleton
+class SampleEventEmitterBean {
+
+    @Inject
+    ApplicationEventPublisher<SampleEvent> eventPublisher
+
+    void publishSampleEvent() {
+        eventPublisher.publishEvent(new SampleEvent())
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+data class SampleEvent(val message: String = "Something happened")
+
+import io.micronaut.context.event.ApplicationEventPublisher
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
+
+@Singleton
+class SampleEventEmitterBean {
+
+    @Inject
+    internal var eventPublisher: ApplicationEventPublisher<SampleEvent>? = null
+
+    fun publishSampleEvent() {
+        eventPublisher!!.publishEvent(SampleEvent())
+    }
+
+}
+```
+
+  </TabItem>
+</Tabs>
+
+:::warning 警告
+默认情况下，发布事件是**同步**的！在执行所有侦听器之前，`publishEvent` 方法不会返回。如果时间密集，将此工作移到线程池。
+:::
+
+**监听事件**
+
+要侦听事件，请注册一个实现 [ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html) 的 bean，其中泛型类型是事件类型。
+
+*使用 ApplicationEventListener 侦听事件*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.docs.context.events.SampleEvent;
+import jakarta.inject.Singleton;
+
+@Singleton
+public class SampleEventListener implements ApplicationEventListener<SampleEvent> {
+    private int invocationCounter = 0;
+
+    @Override
+    public void onApplicationEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}
+
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.docs.context.events.SampleEventEmitterBean;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class SampleEventListenerSpec {
+
+    @Test
+    public void testEventListenerIsNotified() {
+        try (ApplicationContext context = ApplicationContext.run()) {
+            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+            SampleEventListener listener = context.getBean(SampleEventListener.class);
+            assertEquals(0, listener.getInvocationCounter());
+            emitter.publishSampleEvent();
+            assertEquals(1, listener.getInvocationCounter());
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.docs.context.events.SampleEvent
+import jakarta.inject.Singleton
+
+@Singleton
+class SampleEventListener implements ApplicationEventListener<SampleEvent> {
+    int invocationCounter = 0
+
+    @Override
+    void onApplicationEvent(SampleEvent event) {
+        invocationCounter++
+    }
+}
+
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        ApplicationContext context = ApplicationContext.run()
+        SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)
+        SampleEventListener listener = context.getBean(SampleEventListener)
+
+        expect:
+        listener.invocationCounter == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        listener.invocationCounter == 1
+
+        cleanup:
+        context.close()
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.docs.context.events.SampleEvent
+import jakarta.inject.Singleton
+
+@Singleton
+class SampleEventListener : ApplicationEventListener<SampleEvent> {
+    var invocationCounter = 0
+
+    override fun onApplicationEvent(event: SampleEvent) {
+        invocationCounter++
+    }
+}
+
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+    fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.shouldBe(0)
+        emitter.publishSampleEvent()
+        listener.invocationCounter.shouldBe(1)
+
+        context.close()
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+:::tip 注意
+可以重写 [supports](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html#supports-E-) 方法以进一步澄清要处理的事件。
+:::
+
+或者，如果你不希望实现接口或使用内置事件之一，如 [StartupEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/StartupEvent.html) 和 [ShutdownEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ShutdownEvent.html)，请使用 [@EventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解：
+
+*使用 `@EventListener` 监听事件*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.docs.context.events.SampleEvent;
+import io.micronaut.context.event.StartupEvent;
+import io.micronaut.context.event.ShutdownEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
+
+@Singleton
+public class SampleEventListener {
+    private int invocationCounter = 0;
+
+    @EventListener
+    public void onSampleEvent(SampleEvent event) {
+        invocationCounter++;
+    }
+
+    @EventListener
+    public void onStartupEvent(StartupEvent event) {
+        // startup logic here
+    }
+
+    @EventListener
+    public void onShutdownEvent(ShutdownEvent event) {
+        // shutdown logic here
+    }
+
+    public int getInvocationCounter() {
+        return invocationCounter;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.context.event.StartupEvent
+import io.micronaut.context.event.ShutdownEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class SampleEventListener {
+    int invocationCounter = 0
+
+    @EventListener
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter++
+    }
+
+    @EventListener
+    void onStartupEvent(StartupEvent event) {
+        // startup logic here
+    }
+
+    @EventListener
+    void onShutdownEvent(ShutdownEvent event) {
+        // shutdown logic here
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.context.event.StartupEvent
+import io.micronaut.context.event.ShutdownEvent
+import io.micronaut.runtime.event.annotation.EventListener
+
+@Singleton
+class SampleEventListener {
+    var invocationCounter = 0
+
+    @EventListener
+    internal fun onSampleEvent(event: SampleEvent) {
+        invocationCounter++
+    }
+
+    @EventListener
+    internal fun onStartupEvent(event: StartupEvent) {
+        // startup logic here
+    }
+
+    @EventListener
+    internal fun onShutdownEvent(event: ShutdownEvent) {
+        // shutdown logic here
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+如果侦听器执行的工作可能需要一段时间，请使用 [@Async](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/Async.html) 注解在单独的线程上运行该操作：
+
+*使用 @EventListener 异步监听事件*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+
+@Singleton
+class SampleEventListener {
+    AtomicInteger invocationCounter = new AtomicInteger(0)
+
+    @EventListener
+    @Async
+    void onSampleEvent(SampleEvent event) {
+        invocationCounter.getAndIncrement()
+    }
+}
+
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import spock.lang.Specification
+import spock.util.concurrent.PollingConditions
+
+class SampleEventListenerSpec extends Specification {
+
+    void "test event listener is notified"() {
+        given:
+        def context = ApplicationContext.run()
+        def emitter = context.getBean(SampleEventEmitterBean)
+        def listener = context.getBean(SampleEventListener)
+
+        expect:
+        listener.invocationCounter.get() == 0
+
+        when:
+        emitter.publishSampleEvent()
+
+        then:
+        new PollingConditions(timeout: 5).eventually {
+            listener.invocationCounter.get() == 1
+        }
+
+        cleanup:
+        context.close()
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.docs.context.events.SampleEvent
+import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.scheduling.annotation.Async
+import java.util.concurrent.atomic.AtomicInteger
+
+@Singleton
+open class SampleEventListener {
+
+    var invocationCounter = AtomicInteger(0)
+
+    @EventListener
+    @Async
+    open fun onSampleEvent(event: SampleEvent) {
+        println("Incrementing invocation counter...")
+        invocationCounter.getAndIncrement()
+    }
+}
+
+import io.kotest.assertions.timing.eventually
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.AnnotationSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.docs.context.events.SampleEventEmitterBean
+import org.opentest4j.AssertionFailedError
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.toDuration
+
+@ExperimentalTime
+class SampleEventListenerSpec : AnnotationSpec() {
+
+    @Test
+    suspend fun testEventListenerWasNotified() {
+        val context = ApplicationContext.run()
+        val emitter = context.getBean(SampleEventEmitterBean::class.java)
+        val listener = context.getBean(SampleEventListener::class.java)
+        listener.invocationCounter.get().shouldBe(0)
+        emitter.publishSampleEvent()
+
+        eventually(5.toDuration(DurationUnit.SECONDS), AssertionFailedError::class) {
+            println("Current value of counter: " + listener.invocationCounter.get())
+            listener.invocationCounter.get().shouldBe(1)
+        }
+
+        context.close()
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+默认情况下，事件侦听器在计划的执行器上运行。你可以在 `application.yml` 中根据需要配置此线程池：
+
+*配置计划任务线程池*
+
+```yaml
+micronaut:
+  executors:
+    scheduled:
+      type: scheduled
+      core-pool-size: 30
+```
+
+## 3.14 Bean 事件
+
+你可以使用以下接口之一钩住 bean 的创建：
+
+- [BeanInitializedEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/BeanInitializedEventListener.html) ——允许在设置属性之后、但在 `@PostConstruct` 事件钩子之前修改或替换 bean。
+- [BeanCreatedEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) ——允许在 bean 完全初始化并调用所有 `@PostConstruct` 钩子后修改或替换 bean。
+
+`BeanInitializedEventListener` 接口通常与 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) bean 结合使用。考虑以下示例：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+public class V8Engine implements Engine {
+    private final int cylinders = 8;
+    private double rodLength; // (1)
+
+    public V8Engine(double rodLength) {
+        this.rodLength = rodLength;
+    }
+
+    @Override
+    public String start() {
+        return "Starting V" + getCylinders() + " [rodLength=" + getRodLength() + ']';
+    }
+
+    @Override
+    public final int getCylinders() {
+        return cylinders;
+    }
+
+    public double getRodLength() {
+        return rodLength;
+    }
+
+    public void setRodLength(double rodLength) {
+        this.rodLength = rodLength;
+    }
+}
+
+@Factory
+public class EngineFactory {
+
+    private V8Engine engine;
+    private double rodLength = 5.7;
+
+    @PostConstruct
+    public void initialize() {
+        engine = new V8Engine(rodLength); // (2)
+    }
+
+    @Singleton
+    public Engine v8Engine() {
+        return engine;// (3)
+    }
+
+    public void setRodLength(double rodLength) {
+        this.rodLength = rodLength;
+    }
+}
+
+@Singleton
+public class EngineInitializer implements BeanInitializedEventListener<EngineFactory> { // (4)
+    @Override
+    public EngineFactory onInitialized(BeanInitializingEvent<EngineFactory> event) {
+        EngineFactory engineFactory = event.getBean();
+        engineFactory.setRodLength(6.6);// (5)
+        return engineFactory;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+class V8Engine implements Engine {
+    final int cylinders = 8
+    double rodLength // (1)
+
+    @Override
+    String start() {
+        return "Starting V$cylinders [rodLength=$rodLength]"
+    }
+}
+
+@Factory
+class EngineFactory {
+    private V8Engine engine
+    double rodLength = 5.7
+
+    @PostConstruct
+    void initialize() {
+        engine = new V8Engine(rodLength: rodLength) // (2)
+    }
+
+    @Singleton
+    Engine v8Engine() {
+        return engine // (3)
+    }
+}
+
+@Singleton
+class EngineInitializer implements BeanInitializedEventListener<EngineFactory> { // (4)
+    @Override
+    EngineFactory onInitialized(BeanInitializingEvent<EngineFactory> event) {
+        EngineFactory engineFactory = event.bean
+        engineFactory.rodLength = 6.6 // (5)
+        return engineFactory
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+class V8Engine(var rodLength: Double) : Engine {  // (1)
+
+    override val cylinders = 8
+
+    override fun start(): String {
+        return "Starting V$cylinders [rodLength=$rodLength]"
+    }
+}
+
+@Factory
+class EngineFactory {
+
+    private var engine: V8Engine? = null
+    private var rodLength = 5.7
+
+    @PostConstruct
+    fun initialize() {
+        engine = V8Engine(rodLength) // (2)
+    }
+
+    @Singleton
+    fun v8Engine(): Engine? {
+        return engine// (3)
+    }
+
+    fun setRodLength(rodLength: Double) {
+        this.rodLength = rodLength
+    }
+}
+
+@Singleton
+class EngineInitializer : BeanInitializedEventListener<EngineFactory> { // (4)
+    override fun onInitialized(event: BeanInitializingEvent<EngineFactory>): EngineFactory {
+        val engineFactory = event.bean
+        engineFactory.setRodLength(6.6) // (5)
+        return engineFactory
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `V8Engine` 类定义了 `rodLength` 属性
+2. `EngineFactory` 初始化 `rodLength` 的值并创建实例
+3. 创建的实例作为 [Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 返回
+4. 实现 `BeanInitializedEventListener` 接口以监听工厂的初始化
+5. 在 `onInitialized` 方法中，`rodLength` 在工厂 bean 创建引擎之前被重写。
+
+[BeanCreatedEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) 接口通常用于修饰或增强完全初始化的 bean，例如通过创建代理。
+
+:::danger 注意
+Bean 事件监听器在类型转换器**前**初始化。如果事件监听器通过依赖配置属性 bean 或任何其他机制依赖类型转换，则可能会看到与类型转换相关的错误。
+:::
+
+
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
