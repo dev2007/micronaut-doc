@@ -4109,6 +4109,610 @@ class EngineInitializer : BeanInitializedEventListener<EngineFactory> { // (4)
 Bean 事件监听器在类型转换器**前**初始化。如果事件监听器通过依赖配置属性 bean 或任何其他机制依赖类型转换，则可能会看到与类型转换相关的错误。
 :::
 
+## 3.15 Bean 自省
 
+从 Micronaut 1.1 开始，JDK 的 [Introspector](https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html) 类就包含了编译时替换。
+
+[BeanIntrospector](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospector.html) 和 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) 接口允许查找 bean 自省来实例化和读/写 bean 属性，而无需使用反射或缓存反射元数据，因为反射元数据会为大型 bean 消耗过多内存。
+
+**让 Bean 可供自省**
+
+与 JDK 的 [Introspector](https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html) 不同，不是每个类都可以自动进行内省。要使一个类可用于自省，你必须在构建中至少启用 Micronaut 的注解处理器（`micronaut-inject-java` 用于 Java 和 Kotlin，`micronaut-inject-groovy` 用于 Groovy），并确保有依赖 `micronaut-core` 的运行时。
+
+<Tabs>
+  <TabItem value="Gradle" label="Gradle">
+
+```groovy
+annotationProcessor("io.micronaut:micronaut-inject-java:3.8.4")
+```
+
+  </TabItem>
+  <TabItem value="Maven" label="Maven">
+
+```xml
+<annotationProcessorPaths>
+    <path>
+        <groupId>io.micronaut</groupId>
+        <artifactId>micronaut-inject-java</artifactId>
+        <version>3.8.4</version>
+    </path>
+</annotationProcessorPaths>
+```
+
+  </TabItem>
+</Tabs>
+
+:::tip 注意
+对于 Kotlin，在 `kapt` 范围中添加 `micronaut-inject-java` 依赖，对于 Groovy，在 `compileOnly` 范围中添加 `micronaut-inject-groovy`。
+:::
+
+<Tabs>
+  <TabItem value="Gradle" label="Gradle">
+
+```groovy
+runtimeOnly("io.micronaut:micronaut-core:3.8.4")
+```
+
+  </TabItem>
+  <TabItem value="Maven" label="Maven">
+
+```xml
+<dependency>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-core</artifactId>
+    <version>3.8.4</version>
+    <scope>runtime</scope>
+</dependency>
+```
+
+  </TabItem>
+</Tabs>
+
+**使用 `@Introspected` 注解**
+
+[@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解可用于任何类，以使其可用于自省。简单使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解类:
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
+public class Person {
+
+    private String name;
+    private int age = 18;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import groovy.transform.Canonical
+import io.micronaut.core.annotation.Introspected
+
+@Introspected
+@Canonical
+class Person {
+
+    String name
+    int age = 18
+
+    Person(String name) {
+        this.name = name
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.annotation.Introspected
+
+@Introspected
+data class Person(var name : String) {
+    var age : Int = 18
+}
+```
+
+  </TabItem>
+</Tabs>
+
+一旦在编译时生成了自省数据，就可以通过 [BeanTranspection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 检索它：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+final BeanIntrospection<Person> introspection = BeanIntrospection.getIntrospection(Person.class); // (1)
+Person person = introspection.instantiate("John"); // (2)
+System.out.println("Hello " + person.getName());
+
+final BeanProperty<Person, String> property = introspection.getRequiredProperty("name", String.class); // (3)
+property.set(person, "Fred"); // (4)
+String name = property.get(person); // (5)
+System.out.println("Hello " + person.getName());
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+def introspection = BeanIntrospection.getIntrospection(Person) // (1)
+Person person = introspection.instantiate("John") // (2)
+println("Hello $person.name")
+
+BeanProperty<Person, String> property = introspection.getRequiredProperty("name", String) // (3)
+property.set(person, "Fred") // (4)
+String name = property.get(person) // (5)
+println("Hello $person.name")
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val introspection = BeanIntrospection.getIntrospection(Person::class.java) // (1)
+val person : Person = introspection.instantiate("John") // (2)
+print("Hello ${person.name}")
+
+val property : BeanProperty<Person, String> = introspection.getRequiredProperty("name", String::class.java) // (3)
+property.set(person, "Fred") // (4)
+val name = property.get(person) // (5)
+print("Hello ${person.name}")
+```
+
+  </TabItem>
+</Tabs>
+
+1. 你可以使用静态 `getIntrospection` 方法检索 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html)
+2. 一旦有了 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html)，就可以使用 `instantiate` 方法实例化一个 bean。
+3. 可以从自省中检索 [BeanProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanProperty.html)
+4. 使用 `set` 方法设置属性值
+5. 使用 `get` 方法检索属性值
+
+**@Introspected 和 @AccessorsStyle 共同使用**
+
+可以将 [@AccessorsStyle](https://docs.micronaut.io/3.8.4/guide/index.html#configurationPropertiesAccessorsStyle) 注解与 @Introspected 一起使用：
+
+```java
+import io.micronaut.core.annotation.AccessorsStyle;
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
+@AccessorsStyle(readPrefixes = "", writePrefixes = "") (1)
+public class Person {
+
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String name() { (2)
+        return name;
+    }
+
+    public void name(String name) { (2)
+        this.name = name;
+    }
+
+    public int age() { (2)
+        return age;
+    }
+
+    public void age(int age) { (2)
+        this.age = age;
+    }
+}
+```
+
+1. 用 `@AccessorsStyle` 注解类，为 getter 和 setter 定义空的读写前缀。
+2. 定义不带前缀的 getter 和 setter。
+
+现在，可以使用 [BeanTurpection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 检索编译时生成的自省：
+
+```java
+BeanIntrospection<Person> introspection = BeanIntrospection.getIntrospection(Person.class);
+Person person = introspection.instantiate("John", 42);
+
+Assertions.assertEquals("John", person.name());
+Assertions.assertEquals(42, person.age());
+```
+
+**Bean 字段**
+
+默认情况下，Java 自省仅将 JavaBean getter/setter 或 Java 16 记录组件视为 bean 属性。但是，你可以使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解的 `accessKind` 成员在 Java 中定义带有公共或包保护字段的类：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected(accessKind = Introspected.AccessKind.FIELD)
+public class User {
+    public final String name; // (1)
+    public int age = 18; // (2)
+
+    public User(String name) {
+        this.name = name;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.annotation.Introspected
+
+@Introspected(accessKind = Introspected.AccessKind.FIELD)
+class User {
+    public final String name // (1)
+    public int age = 18 // (2)
+
+    User(String name) {
+        this.name = name
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. final 字段被视为只读属性
+2. 可变字段被视为读写属性
+
+:::tip 注意
+`accessKind` 接受一个数组，因此可以允许两种类型的访问器，但根据它们在注释中出现的顺序，更喜欢其中一种。列表中的第一个具有优先级。
+:::
+
+:::danger 严重
+在 Kotlin 中无法对字段进行自省，因为无法直接声明字段。
+:::
+
+**构造方法**
+
+对于具有多个构造函数的类，将 [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于要使用的构造函数。
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+
+import javax.annotation.concurrent.Immutable;
+
+@Introspected
+@Immutable
+public class Vehicle {
+
+    private final String make;
+    private final String model;
+    private final int axles;
+
+    public Vehicle(String make, String model) {
+        this(make, model, 2);
+    }
+
+    @Creator // (1)
+    public Vehicle(String make, String model, int axles) {
+        this.make = make;
+        this.model = model;
+        this.axles = axles;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getAxles() {
+        return axles;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Vehicle {
+
+    final String make
+    final String model
+    final int axles
+
+    Vehicle(String make, String model) {
+        this(make, model, 2)
+    }
+
+    @Creator // (1)
+    Vehicle(String make, String model, int axles) {
+        this.make = make
+        this.model = model
+        this.axles = axles
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Vehicle @Creator constructor(val make: String, val model: String, val axles: Int) { // (1)
+
+    constructor(make: String, model: String) : this(make, model, 2) {}
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解表示要使用的构造函数
+
+:::tip 注意
+该类没有默认构造函数，因此在没有参数的情况下调用实例化会引发 [InstantiationException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/reflect/exception/InstantiationException.html)。
+:::
+
+**静态 Creator 方法**
+
+[@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解可以应用于创建类实例的静态方法。
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+
+import javax.annotation.concurrent.Immutable;
+
+@Introspected
+@Immutable
+public class Business {
+
+    private final String name;
+
+    private Business(String name) {
+        this.name = name;
+    }
+
+    @Creator // (1)
+    public static Business forName(String name) {
+        return new Business(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Business {
+
+    final String name
+
+    private Business(String name) {
+        this.name = name
+    }
+
+    @Creator // (1)
+    static Business forName(String name) {
+        new Business(name)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.annotation.Creator
+import io.micronaut.core.annotation.Introspected
+
+import javax.annotation.concurrent.Immutable
+
+@Introspected
+@Immutable
+class Business private constructor(val name: String) {
+    companion object {
+
+        @Creator // (1)
+        fun forName(name: String): Business {
+            return Business(name)
+        }
+    }
+
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于实例化类的静态方法
+
+:::notice 提示
+可以注释多个“creator”方法。如果有一个没有参数，它将是默认的构造方法。第一个带参数的方法将用作主要构造方法。
+:::
+
+**枚举**
+
+也可以对枚举进行内省。将注解添加到枚举中，它可以通过标准 `valueOf` 方法构造。
+
+**在配置类中使用 `@Introspected`**
+
+如果要自省的类已经编译并且不在你的控制之下，另一种选择是使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解集的 `classes` 成员定义一个配置类。
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected(classes = Person.class)
+public class PersonConfiguration {
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.annotation.Introspected
+
+@Introspected(classes = Person)
+class PersonConfiguration {
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.annotation.Introspected
+
+@Introspected(classes = [Person::class])
+class PersonConfiguration
+```
+
+  </TabItem>
+</Tabs>
+
+在上面的示例中，`PersonConfiguration` 类为 `Person` 类生成自省。
+
+:::tip 注意
+你还可以使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 的 `packages` 成员，该包在编译时扫描并为包中的所有类生成自省。注意，此功能目前被视为实验性。
+:::
+
+**编写 AnnotationMapper 以自省现有注解**
+
+如果默认情况下你希望自省现有注解，则可以编写 [AnnotationMap](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。
+
+这方面的一个例子是 [EntityIntrospectedAnnotationMap](https://github.com/micronaut-projects/micronaut-core/blob/master/inject/src/main/java/io/micronaut/inject/beans/visitor/EntityIntrospectedAnnotationMapper.java)，它确保所有用 `javax.persistence.Entity` 注解的 bean 在默认情况下都是可自省的。
+
+:::tip 注意
+`AnnotationMap` 必须位于注解处理器 classpath 上。
+:::
+
+**BeanWrapper API**
+
+[BeanProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanProperty.html) 提供了读取和写入给定类的属性值的原始访问，不提供任何自动类型转换。
+
+传递给 `set` 和 `get` 方法的值应与基础属性类型匹配，否则将发生异常。
+
+为了提供额外的类型转换智能，[BeanWrapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanWrapper.html) 接口允许包装现有 bean 实例，设置并获取 bean 的属性，并根据需要执行类型转换。
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+final BeanWrapper<Person> wrapper = BeanWrapper.getWrapper(new Person("Fred")); // (1)
+
+wrapper.setProperty("age", "20"); // (2)
+int newAge = wrapper.getRequiredProperty("age", int.class); // (3)
+
+System.out.println("Person's age now " + newAge);
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+final BeanWrapper<Person> wrapper = BeanWrapper.getWrapper(new Person("Fred")) // (1)
+
+wrapper.setProperty("age", "20") // (2)
+int newAge = wrapper.getRequiredProperty("age", Integer) // (3)
+
+println("Person's age now $newAge")
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val wrapper = BeanWrapper.getWrapper(Person("Fred")) // (1)
+
+wrapper.setProperty("age", "20") // (2)
+val newAge = wrapper.getRequiredProperty("age", Int::class.java) // (3)
+
+println("Person's age now $newAge")
+```
+
+  </TabItem>
+</Tabs>
+
+1. 使用静态 `getWrapper` 方法获取 bean 实例的 [BeanWrapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanWrapper.html)。
+2. 你可以设置财产，[BeanWrapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanWrapper.html) 将执行类型转换，如果转换不可能，则抛出 [ConversionErrorException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)。
+3. 你可以使用 `getRequiredProperty` 检索属性并请求适当的类型。如果属性不存在，则引发 [IntrospectionException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/exceptions/IntrospectionException.html)，如果无法转换，则引发  [ConversionErrorException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)。
+
+**Jackson 与 Bean 自省**
+
+Jackson 被配置为使用 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 来读写属性值和构造对象，从而实现无反射的序列化/反序列化。从性能角度来看，这是有益的，并且需要较少的配置才能在运行时（如 GraalVM 本地）中正确运行。
+
+默认情况下启用此功能；通过将 `jackson.bean-introspection-module` 配置设置为 `false` 来禁用它。
+
+:::tip 注意
+目前只支持 bean 属性（带有公共 getter/setter 的私有字段），不支持使用公共字段。
+:::
+
+:::tip 注意
+该功能目前处于试验阶段，将来可能会发生变化。
+:::
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
