@@ -9,7 +9,7 @@ sidebar_position: 30
 这是 Google [Dagger](https://google.github.io/dagger/) 等工具采用的类似方法，该工具的设计主要考虑到了 Android。另一方面，Micronaut 是为构建服务器端微服务而设计的，它提供了许多与其他框架相同的工具和实用程序，但没有使用反射或缓存过多的反射元数据。
 
 Micronaut IoC 容器的目标概括如下：
-- 将反思作为最后手段
+- 将自省作为最后手段
 - 避免代理
 - 优化启动时间
 - 减少内存占用
@@ -3155,7 +3155,7 @@ package my.package
 Java 和 Kotlin 也通过 `package-info.java` 支持此功能。Kotlin 不支持 1.3 版的 `package-ininfo.kt`。
 :::
 
-## 3..12 生命周期方法
+## 3.12 生命周期方法
 
 
 ### 当构建 Bean 时
@@ -4117,7 +4117,7 @@ Bean 事件监听器在类型转换器**前**初始化。如果事件监听器�
 
 **让 Bean 可供自省**
 
-与 JDK 的 [Introspector](https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html) 不同，不是每个类都可以自动进行内省。要使一个类可用于自省，你必须在构建中至少启用 Micronaut 的注解处理器（`micronaut-inject-java` 用于 Java 和 Kotlin，`micronaut-inject-groovy` 用于 Groovy），并确保有依赖 `micronaut-core` 的运行时。
+与 JDK 的 [Introspector](https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html) 不同，不是每个类都可以自动进行自省。要使一个类可用于自省，你必须在构建中至少启用 Micronaut 的注解处理器（`micronaut-inject-java` 用于 Java 和 Kotlin，`micronaut-inject-groovy` 用于 Groovy），并确保有依赖 `micronaut-core` 的运行时。
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
@@ -4587,13 +4587,13 @@ class Business private constructor(val name: String) {
 
 1. [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于实例化类的静态方法
 
-:::notice 提示
+:::note 提示
 可以注释多个“creator”方法。如果有一个没有参数，它将是默认的构造方法。第一个带参数的方法将用作主要构造方法。
 :::
 
 **枚举**
 
-也可以对枚举进行内省。将注解添加到枚举中，它可以通过标准 `valueOf` 方法构造。
+也可以对枚举进行自省。将注解添加到枚举中，它可以通过标准 `valueOf` 方法构造。
 
 **在配置类中使用 `@Introspected`**
 
@@ -4714,5 +4714,889 @@ Jackson 被配置为使用 [BeanIntrospection](https://docs.micronaut.io/3.8.4/a
 :::tip 注意
 该功能目前处于试验阶段，将来可能会发生变化。
 :::
+
+## 3.16 Bean 校验
+
+从 Micronaut 1.2 开始，Micronaut 就内置了对用 `javax.validation` 注解的 bean 进行验证的支持。至少应将 `micronaut-validation` 模块作为编译依赖项：
+
+<Tabs>
+  <TabItem value="Groovy" label="Gradle">
+
+```groovy
+implementation("io.micronaut:micronaut-validation")
+```
+
+  </TabItem>
+  <TabItem value="Maven" label="Maven">
+
+```xml
+<dependency>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-validation</artifactId>
+</dependency>
+```
+
+  </TabItem>
+</Tabs>
+
+注意，Micronaut 的实现目前不完全符合 [Bean Validator 规范](https://beanvalidation.org/2.0/spec/)，因为该规范严重依赖于基于反射的 API。
+
+目前不支持以下功能：
+- 泛型参数类型上的注释，因为只有 Java 语言支持此功能。
+- 与[约束元数据 API](https://beanvalidation.org/2.0/spec/#constraintmetadata) 的任何交互，因为 Micronaut 使用编译时生成的元数据。
+- 基于 XML 的配置
+
+不要使用 `javax.validation.ConstraintValidator`，而是使用 [ConstraintValidator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)(io.minout.validation.validator.constraints.ConstraintPValidator)定义自定义约束，该约束支持在编译时验证注解。
+
+Micronaut 的实现包括以下好处：
+- 反射和运行时无代理验证，减少了内存消耗
+- 由于 Hibernate Validator 又增加了 1.4MB，JAR 的大小更小
+- 由于 Hibernate Validator 增加了 200ms 以上的启动开销，因此启动速度更快
+- 可通过注解元数据进行配置
+- 支持 Reactive Bean 验证
+- 支持在编译时验证源 AST
+- 与 GraalVM 本地自动兼容，无需额外配置
+
+如果你需要完全符合 Bean Validator 2.0，请将 `micronaut-hibernate-validator` 模块添加到你的构建中，以替代 Micronaut 的实现。
+
+
+<Tabs>
+  <TabItem value="Groovy" label="Gradle">
+
+```groovy
+implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+```
+
+  </TabItem>
+  <TabItem value="Maven" label="Maven">
+
+```xml
+<dependency>
+    <groupId>io.micronaut.beanvalidation</groupId>
+    <artifactId>micronaut-hibernate-validator</artifactId>
+</dependency>
+```
+
+  </TabItem>
+</Tabs>
+
+**校验 Bean 方法**
+
+通过对参数应用 `javax.validation` 注解，可以验证任何声明为 Micronaut bean 的类的方法：
+
+*校验方法*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import jakarta.inject.Singleton;
+import javax.validation.constraints.NotBlank;
+
+@Singleton
+public class PersonService {
+    public void sayHello(@NotBlank String name) {
+        System.out.println("Hello " + name);
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import jakarta.inject.Singleton
+import javax.validation.constraints.NotBlank
+
+@Singleton
+class PersonService {
+    void sayHello(@NotBlank String name) {
+        println "Hello $name"
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import jakarta.inject.Singleton
+import javax.validation.constraints.NotBlank
+
+@Singleton
+open class PersonService {
+    open fun sayHello(@NotBlank name: String) {
+        println("Hello $name")
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+上面的示例声明调用 `sayHello` 方法时将验证 `@NotBlank` 注解。
+
+:::warning 警告
+如果使用 Kotlin，则必须将类和方法声明为 `open` 的，这样 Micronaut 才能创建编译时子类。或者，你可以使用 [@Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解类，并将 Kotlin `all-open` 插件配置为使用此类型注解的类。参阅[编译器插件](https://kotlinlang.org/docs/reference/compiler-plugins.html)部分。
+:::
+
+如果发生验证错误，将引发 `javax.validation.ConstraintViolationException` 。例如：
+
+*ConstraintViolationException 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+
+import jakarta.inject.Inject;
+import javax.validation.ConstraintViolationException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@MicronautTest
+class PersonServiceSpec {
+
+    @Inject PersonService personService;
+
+    @Test
+    void testThatNameIsValidated() {
+        final ConstraintViolationException exception =
+                assertThrows(ConstraintViolationException.class, () ->
+                personService.sayHello("") // (1)
+        );
+
+        assertEquals("sayHello.name: must not be blank", exception.getMessage()); // (2)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Specification
+
+import jakarta.inject.Inject
+import javax.validation.ConstraintViolationException
+
+@MicronautTest
+class PersonServiceSpec extends Specification {
+
+    @Inject PersonService personService
+
+    void "test person name is validated"() {
+        when:"The sayHello method is called with a blank string"
+        personService.sayHello("") // (1)
+
+        then:"A validation error occurs"
+        def e = thrown(ConstraintViolationException)
+        e.message == "sayHello.name: must not be blank" //  (2)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
+import jakarta.inject.Inject
+import javax.validation.ConstraintViolationException
+
+@MicronautTest
+class PersonServiceSpec {
+
+    @Inject
+    lateinit var personService: PersonService
+
+    @Test
+    fun testThatNameIsValidated() {
+        val exception = assertThrows(ConstraintViolationException::class.java) {
+            personService.sayHello("") // (1)
+        }
+
+        assertEquals("sayHello.name: must not be blank", exception.message) // (2)
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 方法使用空串调用
+2. 异常出现
+
+**校验数据类**
+
+要验证数据类，例如 POJO（通常用于 JSON 交换），必须用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解该类（参阅前面关于 [Bean 自省](#315-bean-自省) 的章节），或者，如果该类是外部的，则通过 `@Introsspected` 注解导入。
+
+*POJO 校验示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.Introspected;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
+@Introspected
+public class Person {
+
+    private String name;
+
+    @Min(18)
+    private int age;
+
+    @NotBlank
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.annotation.Introspected
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Introspected
+class Person {
+
+    @NotBlank
+    String name
+
+    @Min(18L)
+    int age
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.annotation.Introspected
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@Introspected
+data class Person(
+    @field:NotBlank var name: String,
+    @field:Min(18) var age: Int
+)
+```
+
+  </TabItem>
+</Tabs>
+
+:::note 提示
+[@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解可以用作元注释；像 `@javax.persistence.Entity` 这样的常见注解被视为 `@Introspected`
+:::
+
+上面的示例定义了一个 `Person` 类，该类有两个应用了约束的属性（`name` 和 `age`）。注意，在 Java 中，注解可以位于字段或 getter 上，对于 Kotlin 数据类，注解应该以字段为目标。
+
+要手动验证类，请注入 [Validator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/Validator.html) 的实例：
+
+*手动校验示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Inject
+Validator validator;
+
+@Test
+void testThatPersonIsValidWithValidator() {
+    Person person = new Person();
+    person.setName("");
+    person.setAge(10);
+
+    final Set<ConstraintViolation<Person>> constraintViolations = validator.validate(person);  // (1)
+
+    assertEquals(2, constraintViolations.size()); // (2)
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Inject Validator validator
+
+void "test person is validated with validator"() {
+    when:"The person is validated"
+    def constraintViolations = validator.validate(new Person(name: "", age: 10)) // (1)
+
+    then:"A validation error occurs"
+    constraintViolations.size() == 2 //  (2)
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Inject
+lateinit var validator: Validator
+
+@Test
+fun testThatPersonIsValidWithValidator() {
+    val person = Person("", 10)
+    val constraintViolations = validator.validate(person) // (1)
+
+    assertEquals(2, constraintViolations.size) // (2)
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 验证器验证 person
+2. 验证约束冲突
+
+或者，在 Bean 方法上，你可以使用 `javax.validation.Valid` 来触发级联验证：
+
+*ConstraintViolationException 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+public class PersonService {
+    public void sayHello(@Valid Person person) {
+        System.out.println("Hello " + person.getName());
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Inject PersonService personService
+
+void "test person name is validated"() {
+    when:"The sayHello method is called with an invalid person"
+    personService.sayHello(new Person(name: "", age: 10)) // (1)
+
+    then:"A validation error occurs"
+    def e = thrown(ConstraintViolationException)
+    e.constraintViolations.size() == 2 //  (2)
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Inject
+lateinit var personService: PersonService
+
+@Test
+fun testThatPersonIsValid() {
+    val person = Person("", 10)
+    val exception = assertThrows(ConstraintViolationException::class.java) {
+        personService.sayHello(person) // (1)
+    }
+
+    assertEquals(2, exception.constraintViolations.size) // (2)
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 已调用验证的方法
+2. 验证约束冲突
+
+**校验配置属性**
+
+你还可以验证用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类的属性，以确保配置正确。
+
+:::tip 注意
+建议你使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 注解具有验证功能的 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)，以确保在启动时进行验证
+:::
+
+**定义额外约束**
+
+要定义额外约束，请创建新注解，例如：
+
+*约束注解示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import javax.validation.Constraint;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE_USE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Retention(RUNTIME)
+@Constraint(validatedBy = { }) // (1)
+public @interface DurationPattern {
+
+    String message() default "invalid duration ({validatedValue})"; // (2)
+
+    /**
+     * Defines several constraints on the same element.
+     */
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+    @Retention(RUNTIME)
+    @Documented
+    @interface List {
+        DurationPattern[] value(); // (3)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import javax.validation.Constraint
+import java.lang.annotation.Retention
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Retention(RUNTIME)
+@Constraint(validatedBy = []) // (1)
+@interface DurationPattern {
+    String message() default "invalid duration ({validatedValue})" // (2)
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import javax.validation.Constraint
+import kotlin.annotation.AnnotationRetention.RUNTIME
+
+@Retention(RUNTIME)
+@Constraint(validatedBy = []) // (1)
+annotation class DurationPattern(
+    val message: String = "invalid duration ({validatedValue})" // (2)
+)
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注解应使用 `javax.validationConstraint` 进行注解
+2. 可以按如上所述的硬编码方式提供 `message` 模板。如果未指定，Micronaut 将尝试使用 [MessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/MessageSource.html) 接口（可选）使用 `ClassName.message` 查找 message
+3. 为了支持重复注解，可以定义内部注解（可选）
+
+:::note 提示
+可以使用 [MessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/MessageSource.html) 和  [ResourceBundleMessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/i18n/ResourceBundleMessageSource.html) 类添加消息和消息束。参阅[资源捆绑包](../core/bundle.html)文档。
+:::
+
+定义注释后，请实现一个用于验证注解的 [ConstraintValidator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)。你可以创建一个直接实现接口的 bean 类，也可以定义一个返回一个或多个验证器的工厂。
+
+如果你计划定义多个验证器，建议使用后一种方法：
+
+*约束校验器示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Factory;
+import io.micronaut.validation.validator.constraints.ConstraintValidator;
+
+import jakarta.inject.Singleton;
+
+@Factory
+public class MyValidatorFactory {
+
+    @Singleton
+    ConstraintValidator<DurationPattern, CharSequence> durationPatternValidator() {
+        return (value, annotationMetadata, context) -> {
+            context.messageTemplate("invalid duration ({validatedValue}), additional custom message"); // (1)
+            return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
+        };
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Factory
+import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
+
+import jakarta.inject.Singleton
+
+@Factory
+class MyValidatorFactory {
+
+    @Singleton
+    ConstraintValidator<DurationPattern, CharSequence> durationPatternValidator() {
+        return { CharSequence value,
+                 AnnotationValue<DurationPattern> annotation,
+                 ConstraintValidatorContext context ->
+            context.messageTemplate("invalid duration ({validatedValue}), additional custom message") // (1)
+            return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
+        } as ConstraintValidator<DurationPattern, CharSequence>
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Factory
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import jakarta.inject.Singleton
+
+@Factory
+class MyValidatorFactory {
+
+    @Singleton
+    fun durationPatternValidator() : ConstraintValidator<DurationPattern, CharSequence> {
+        return ConstraintValidator { value, annotation, context ->
+            context.messageTemplate("invalid duration ({validatedValue}), additional custom message") // (1)
+            value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$".toRegex())
+        }
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 使用内联调用重写默认消息模板，以获得对验证错误消息的更多控制。（自 `2.5.0` 起）
+
+上面的示例实现了一个验证器，它验证用 `DurationPattern` 注解的任何字段、参数等，确保可以使用 `java.time.Duration.parse` 解析字符串。
+
+:::tip 注意
+通常，`null` 被视为有效，`@NotNull` 用于约束值不为 `null`。上面的示例将 `null` 视为有效值。
+:::
+
+例如：
+
+*自定义约束使用示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+public class HolidayService {
+
+    public String startHoliday(@NotBlank String person,
+                               @DurationPattern String duration) {
+        final Duration d = Duration.parse(duration);
+        return "Person " + person + " is off on holiday for " + d.toMinutes() + " minutes";
+    }
+
+    public String startHoliday(@DurationPattern String fromDuration, @DurationPattern String toDuration, @NotBlank String person
+    ) {
+        final Duration d = Duration.parse(fromDuration);
+        final Duration e = Duration.parse(toDuration);
+        return "Person " + person + " is off on holiday from " + d + " to " + e;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+class HolidayService {
+
+    String startHoliday(@NotBlank String person,
+                        @DurationPattern String duration) {
+        final Duration d = Duration.parse(duration)
+        return "Person $person is off on holiday for ${d.toMinutes()} minutes"
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+open class HolidayService {
+
+    open fun startHoliday(@NotBlank person: String,
+                          @DurationPattern duration: String): String {
+        val d = Duration.parse(duration)
+        return "Person $person is off on holiday for ${d.toMinutes()} minutes"
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+要验证上述示例是否验证 `duration` 参数，请定义测试：
+
+*自定义约束使用测试示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Inject HolidayService holidayService;
+
+@Test
+void testCustomValidator() {
+    final ConstraintViolationException exception =
+        assertThrows(ConstraintViolationException.class, () ->
+            holidayService.startHoliday("Fred", "junk") // (1)
+        );
+
+    assertEquals("startHoliday.duration: invalid duration (junk), additional custom message", exception.getMessage()); // (2)
+}
+
+// Issue:: micronaut-core/issues/6519
+@Test
+void testCustomAndDefaultValidator() {
+    final ConstraintViolationException exception =
+            assertThrows(ConstraintViolationException.class, () ->
+                    holidayService.startHoliday( "fromDurationJunk", "toDurationJunk", "")
+            );
+
+    String notBlankValidated = exception.getConstraintViolations().stream().filter(constraintViolation -> Objects.equals(constraintViolation.getPropertyPath().toString(), "startHoliday.person")).map(ConstraintViolation::getMessage).findFirst().get();
+    String fromDurationPatternValidated = exception.getConstraintViolations().stream().filter(constraintViolation -> Objects.equals(constraintViolation.getPropertyPath().toString(), "startHoliday.fromDuration")).map(ConstraintViolation::getMessage).findFirst().get();
+    String toDurationPatternValidated = exception.getConstraintViolations().stream().filter(constraintViolation -> Objects.equals(constraintViolation.getPropertyPath().toString(), "startHoliday.toDuration")).map(ConstraintViolation::getMessage).findFirst().get();
+    assertEquals("must not be blank", notBlankValidated);
+    assertEquals("invalid duration (fromDurationJunk), additional custom message", fromDurationPatternValidated);
+    assertEquals("invalid duration (toDurationJunk), additional custom message", toDurationPatternValidated);
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+void "test test custom validator"() {
+    when:"A custom validator is used"
+    holidayService.startHoliday("Fred", "junk") // (1)
+
+    then:"A validation error occurs"
+    def e = thrown(ConstraintViolationException)
+    e.message == "startHoliday.duration: invalid duration (junk), additional custom message" //  (2)
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Inject
+lateinit var holidayService: HolidayService
+
+@Test
+fun testCustomValidator() {
+    val exception = assertThrows(ConstraintViolationException::class.java) {
+        holidayService.startHoliday("Fred", "junk") // (1)
+    }
+
+    assertEquals("startHoliday.duration: invalid duration (junk), additional custom message", exception.message) // (2)
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 已调用验证的方法
+2. 验证了约束冲突
+
+**编译时校验注解**
+
+你可以使用 Micronaut 的验证器在编译时验证注解元素，方法是在注解处理器 classpath 中包含 `micronaut-validation`：
+
+<Tabs>
+  <TabItem value="Groovy" label="Gradle">
+
+```groovy
+annotationProcessor("io.micronaut:micronaut-validation")
+```
+
+  </TabItem>
+  <TabItem value="Maven" label="Maven">
+
+```xml
+<annotationProcessorPaths>
+    <path>
+        <groupId>io.micronaut</groupId>
+        <artifactId>micronaut-validation</artifactId>
+    </path>
+</annotationProcessorPaths>
+```
+
+  </TabItem>
+</Tabs>
+
+然后，Micronaut 将在编译时验证自己用 `javax.validation` 注解的注解值。例如，考虑以下注解：
+
+*注解校验*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Retention(RUNTIME)
+public @interface TimeOff {
+    @DurationPattern
+    String duration();
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import java.lang.annotation.Retention
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME
+
+@Retention(RUNTIME)
+@interface TimeOff {
+    @DurationPattern
+    String duration()
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import kotlin.annotation.AnnotationRetention.RUNTIME
+
+@Retention(RUNTIME)
+annotation class TimeOff(
+    @DurationPattern val duration: String
+)
+```
+
+  </TabItem>
+</Tabs>
+
+如果你尝试在源代码中使用 `@TimeOff(duration="junk")`，Micronaut 将因 `duration` 值违反 `DurationPattern` 约束而导致编译失败。
+
+:::tip 注意
+如果 `duration` 是一个属性占位符，例如 `@TimeOff(duration="${my.value}")`，则验证将延迟到运行时。
+:::
+
+请注意，要在编译时使用自定义 `ConstraintValidator`，必须将验证器定义为类：
+
+*约束校验器示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.validation.validator.constraints.ConstraintValidator;
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext;
+
+public class DurationPatternValidator implements ConstraintValidator<DurationPattern, CharSequence> {
+    @Override
+    public boolean isValid(
+            @Nullable CharSequence value,
+            @NonNull AnnotationValue<DurationPattern> annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
+        return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$");
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.core.annotation.Nullable
+import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
+
+class DurationPatternValidator implements ConstraintValidator<DurationPattern, CharSequence> {
+    @Override
+    boolean isValid(
+            @Nullable CharSequence value,
+            @NonNull AnnotationValue<DurationPattern> annotationMetadata,
+            @NonNull ConstraintValidatorContext context) {
+        return value == null || value.toString() ==~ /^PT?[\d]+[SMHD]{1}$/
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.annotation.AnnotationValue
+import io.micronaut.validation.validator.constraints.ConstraintValidator
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
+
+class DurationPatternValidator : ConstraintValidator<DurationPattern, CharSequence> {
+    override fun isValid(
+            value: CharSequence?,
+            annotationMetadata: AnnotationValue<DurationPattern>,
+            context: ConstraintValidatorContext): Boolean {
+        return value == null || value.toString().matches("^PT?[\\d]+[SMHD]{1}$".toRegex())
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+此外：
+
+1. 定义引用类的 `META-INF/service/io.micronaut.validation.validator.constraints.ConstraintValidator` 文件。
+2. 类必须是公共的，并且具有公共的无参数构造函数
+3. 该类必须位于要验证的项目的注解处理器 classpath
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
