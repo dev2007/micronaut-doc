@@ -4390,7 +4390,7 @@ class User {
 2. 可变字段被视为读写属性
 
 :::tip 注意
-`accessKind` 接受一个数组，因此可以允许两种类型的访问器，但根据它们在注释中出现的顺序，更喜欢其中一种。列表中的第一个具有优先级。
+`accessKind` 接受一个数组，因此可以允许两种类型的访问器，但根据它们在注解中出现的顺序，更喜欢其中一种。列表中的第一个具有优先级。
 :::
 
 :::danger 严重
@@ -4588,7 +4588,7 @@ class Business private constructor(val name: String) {
 1. [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于实例化类的静态方法
 
 :::note 提示
-可以注释多个“creator”方法。如果有一个没有参数，它将是默认的构造方法。第一个带参数的方法将用作主要构造方法。
+可以注解多个“creator”方法。如果有一个没有参数，它将是默认的构造方法。第一个带参数的方法将用作主要构造方法。
 :::
 
 **枚举**
@@ -4742,7 +4742,7 @@ implementation("io.micronaut:micronaut-validation")
 注意，Micronaut 的实现目前不完全符合 [Bean Validator 规范](https://beanvalidation.org/2.0/spec/)，因为该规范严重依赖于基于反射的 API。
 
 目前不支持以下功能：
-- 泛型参数类型上的注释，因为只有 Java 语言支持此功能。
+- 泛型参数类型上的注解，因为只有 Java 语言支持此功能。
 - 与[约束元数据 API](https://beanvalidation.org/2.0/spec/#constraintmetadata) 的任何交互，因为 Micronaut 使用编译时生成的元数据。
 - 基于 XML 的配置
 
@@ -5015,7 +5015,7 @@ data class Person(
 </Tabs>
 
 :::note 提示
-[@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解可以用作元注释；像 `@javax.persistence.Entity` 这样的常见注解被视为 `@Introspected`
+[@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解可以用作元注解；像 `@javax.persistence.Entity` 这样的常见注解被视为 `@Introspected`
 :::
 
 上面的示例定义了一个 `Person` 类，该类有两个应用了约束的属性（`name` 和 `age`）。注意，在 Java 中，注解可以位于字段或 getter 上，对于 Kotlin 数据类，注解应该以字段为目标。
@@ -5226,7 +5226,7 @@ annotation class DurationPattern(
 可以使用 [MessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/MessageSource.html) 和  [ResourceBundleMessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/i18n/ResourceBundleMessageSource.html) 类添加消息和消息束。参阅[资源捆绑包](../core/bundle.html)文档。
 :::
 
-定义注释后，请实现一个用于验证注解的 [ConstraintValidator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)。你可以创建一个直接实现接口的 bean 类，也可以定义一个返回一个或多个验证器的工厂。
+定义注解后，请实现一个用于验证注解的 [ConstraintValidator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)。你可以创建一个直接实现接口的 bean 类，也可以定义一个返回一个或多个验证器的工厂。
 
 如果你计划定义多个验证器，建议使用后一种方法：
 
@@ -5598,5 +5598,301 @@ class DurationPatternValidator : ConstraintValidator<DurationPattern, CharSequen
 1. 定义引用类的 `META-INF/service/io.micronaut.validation.validator.constraints.ConstraintValidator` 文件。
 2. 类必须是公共的，并且具有公共的无参数构造函数
 3. 该类必须位于要验证的项目的注解处理器 classpath
+
+## 3.17 Bean 注解元数据
+
+Java 的 [AnnotatedElement](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html) API 提供的方法通常不提供在不加载注解本身的情况下自省注解的能力。它们也不提供任何自省注解原型的能力（通常称为元注解；注解原型是用另一个注解来注解注解，本质上继承其行为）。
+
+为了解决这个问题，许多框架都会生成运行时元数据或执行昂贵的反射来分析类的注解。
+
+相反，Micronaut 在编译时生成这个注解元数据，避免了昂贵的反射并节省了内存。
+
+[BeanContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanContext.html) API 可用于获取对实现 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 接口的 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 的引用。
+
+例如，下面的代码获得了用特定原型注解的所有 bean 定义：
+
+*按结构类型查找 Bean 定义*
+
+```java
+BeanContext beanContext = ... // obtain the bean context
+Collection<BeanDefinition> definitions =
+    beanContext.getBeanDefinitions(Qualifiers.byStereotype(Controller.class))
+
+for (BeanDefinition definition : definitions) {
+    AnnotationValue<Controller> controllerAnn = definition.getAnnotation(Controller.class);
+    // do something with the annotation
+}
+```
+
+上面的示例找到了所有用 `@Controller` 注解的 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 实例，无论 `@Controller` 是直接使用还是通过注解原型继承。
+
+注意，`getAnnotation` 方法及其变体返回 [AnnotationValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationValue.html) 类型，而不是 Java 注解。这是设计的，在读取注解值时通常应该尝试使用此 API，因为从性能和内存消耗的角度来看，合成代理实现更差。
+
+如果需要对注解实例的引用，则可以使用 `synthesize` 方法，该方法创建实现注解接口的运行时代理：
+
+*合成注解实例*
+
+```java
+Controller controllerAnn = definition.synthesize(Controller.class);
+```
+
+但是，不建议使用这种方法，因为它需要反射，并且由于使用运行时生成的代理而增加了内存消耗，因此应作为最后的手段使用，例如，如果你需要注解的实例与第三方库集成。
+
+**注解继承**
+
+Micronaut 将遵守 Java 的 [AnnotatedElement](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html) API 中定义的关于注解继承的规则：
+
+- 通过 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) API 的 `getAnnotation*` 方法可以使用带有 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 的注解，而直接声明的注解可以通过 `getDeclaredAnnotation*` 方法使用。
+- 未使用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 进行元注解的注解将不会包含在元数据中
+
+Micronaut 与 AnnotatedElement API 的不同之处在于，它将这些规则扩展到方法和方法参数，从而：
+
+- 任何用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 注解并出现在被子接口或类 `B` 覆盖的接口或超类 `A` 的方法上的注解，都将被继承到 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 中，该 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 可通过 [ExecutableMethod](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/ExecutableMethod.html) API 从 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 或 [AOP 拦截器](https://docs.micronaut.io/3.8.4/guide/index.html#aop)中检索。
+- 任何用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 注解并出现在被子接口或类 `B` 重写的接口或超类 `A` 的方法参数上的注解，都将被继承到 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 中，该 AnnotationMetadata 可通过 [Argument](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/type/Argument.html) 接口从 [ExecutableMethod](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/ExecutableMethod.html) API 的 `getArguments` 方法检索。
+
+通常情况下，你可能希望覆盖的行为不会默认继承，包括 [Bean 作用域](https://docs.micronaut.io/3.8.4/guide/index.html#scopes)、[Bean 限定符](https://docs.micronaut.io/3.8.4/guide/index.html#qualifiers)、[Bean 条件](https://docs.micronaut.io/3.8.4/guide/index.html#conditionalBeans)、[验证规则](https://docs.micronaut.io/3.8.4/guide/index.html#validation)等。
+
+如果你希望在子类化时继承特定范围、限定符或一组要求，那么可以定义一个用 `@inherited` 注解的元注解。例如：
+
+*定义继承元数据*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.AliasFor;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.AnnotationMetadata;
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
+
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Inherited // (1)
+@Retention(RetentionPolicy.RUNTIME)
+@Requires(property = "datasource.url") // (2)
+@Named // (3)
+@Singleton // (4)
+public @interface SqlRepository {
+    @AliasFor(annotation = Named.class, member = AnnotationMetadata.VALUE_MEMBER) // (5)
+    String value() default "";
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.AliasFor
+import io.micronaut.context.annotation.Requires
+import io.micronaut.core.annotation.AnnotationMetadata
+import jakarta.inject.Named
+import jakarta.inject.Singleton
+
+import java.lang.annotation.Inherited
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+
+@Inherited // (1)
+@Retention(RetentionPolicy.RUNTIME)
+@Requires(property = "datasource.url") // (2)
+@Named // (3)
+@Singleton // (4)
+@interface SqlRepository {
+    @AliasFor(annotation = Named.class, member = AnnotationMetadata.VALUE_MEMBER) // (5)
+    String value() default "";
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Requires
+import jakarta.inject.Named
+import jakarta.inject.Singleton
+import java.lang.annotation.Inherited
+
+@Inherited // (1)
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Requires(property = "datasource.url") // (2)
+@Named // (3)
+@Singleton // (4)
+annotation class SqlRepository(
+    val value: String = ""
+)
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注解声明为 `@Inherited`
+2. [Bean 条件](https://docs.micronaut.io/3.8.4/guide/index.html#conditionalBeans) 将由子类继承
+3. [Bean 限定符](https://docs.micronaut.io/3.8.4/guide/index.html#qualifiers) 将由子类继承
+4. [Bean 作用域](https://docs.micronaut.io/3.8.4/guide/index.html#scopes) 将由子类继承
+5. 你还可以别名注解，它们将被继承
+
+有了这个元注解，你可以将注解添加到超类中：
+
+*在超类中使用继承元注解*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@SqlRepository
+public abstract class BaseSqlRepository {
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@SqlRepository
+abstract class BaseSqlRepository {
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@SqlRepository
+abstract class BaseSqlRepository
+```
+
+  </TabItem>
+</Tabs>
+
+然后，子类将继承所有注解：
+
+*在子类中继承注解*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import jakarta.inject.Named;
+import javax.sql.DataSource;
+
+@Named("bookRepository")
+public class BookRepository extends BaseSqlRepository {
+    private final DataSource dataSource;
+
+    public BookRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import jakarta.inject.Named
+import javax.sql.DataSource
+
+@Named("bookRepository")
+class BookRepository extends BaseSqlRepository {
+    private final DataSource dataSource
+
+    BookRepository(DataSource dataSource) {
+        this.dataSource = dataSource
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import jakarta.inject.Named
+import javax.sql.DataSource
+
+@Named("bookRepository")
+class BookRepository(private val dataSource: DataSource) : BaseSqlRepository()
+```
+
+  </TabItem>
+</Tabs>
+
+:::tip 注意
+子类必须至少有一个 bean 定义注解，如作用域或限定符
+:::
+
+**别名/映射注解**
+
+有时，你可能希望将注解成员的值别名为另一个注解成员的数值。为此，请使用 [@AliasFor](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/AliasFor.html) 注解。
+
+例如，一个常见的用例是注解定义了 [value()](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 成员，但也支持其他成员。例如 `@Client` 注解：
+
+*@Client 注解*
+
+```java
+public @interface Client {
+
+    /**
+     * @return The URL or service ID of the remote service
+     */
+    @AliasFor(member = "id") (1)
+    String value() default "";
+
+    /**
+     * @return The ID of the client
+     */
+    @AliasFor(member = "value") (2)
+    String id() default "";
+}
+```
+
+1. `value` 成员也设置 `id` 成员
+2. `id` 成员也设置 `value` 成员
+
+有了这些别名，无论您是定义 `@Client("foo")` 或 `@Client(id="foo")`，都将设置 `value` 和 `id` 成员，从而更容易解析和处理注解。
+
+如果无法控制注解，另一种方法是使用 [AnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。要创建 `AnnotationMapper`，请执行以下操作：
+- 实现 [AnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html) 接口
+- 定义引用实现类的 `META-INF/service/io.micronaut.inject.annotation.AnnotationMapper` 文件
+- 将包含实现的 JAR 文件添加到 `annotationProcessor` classpath（用于 Kotlin 的 `kapt`）
+
+:::tip 注意
+由于 `AnnotationMapper` 实现必须位于注解处理器 classpath 上，因此它们通常应位于包含很少外部依赖项的项目中，以避免污染注解处理器类。
+:::
+
+下面是一个示例 `AnnotationMapper`，它改进了 JPA 实体的自省功能。
+
+*EntityIntrospectedAnnotationMapper 映射示例*
+
+```java
+public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper {
+    @NonNull
+    @Override
+    public String getName() {
+        return "javax.persistence.Entity";
+    }
+
+    @Override
+    public List<AnnotationValue<?>> map(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) { (1)
+        final AnnotationValueBuilder<Introspected> builder = AnnotationValue.builder(Introspected.class)
+                // don't bother with transients properties
+                .member("excludedAnnotations", "javax.persistence.Transient"); (2)
+        return Arrays.asList(
+                builder.build(),
+                AnnotationValue.builder(ReflectiveAccess.class).build()
+        );
+    }
+}
+```
+
+1. `map` 方法接收带有注解值的 [AnnotationValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationValue.html)。
+2. 可以返回一个或多个注解，在本例中为 `@Transient`。
+
+:::tip 注意
+上面的示例实现了 [NamedAnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/NamedAnnotationMapper.html) 接口，该接口允许注解与运行时代码混合。要针对具体的注解类型进行操作，请改用 [TypedAnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/TypedAnnotationMapper.html)，尽管注意它需要注解类本身位于注解处理器 classpath。
+:::
+
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
