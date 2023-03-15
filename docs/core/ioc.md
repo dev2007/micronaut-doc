@@ -5851,7 +5851,7 @@ public @interface Client {
 1. `value` 成员也设置 `id` 成员
 2. `id` 成员也设置 `value` 成员
 
-有了这些别名，无论您是定义 `@Client("foo")` 或 `@Client(id="foo")`，都将设置 `value` 和 `id` 成员，从而更容易解析和处理注解。
+有了这些别名，无论你是定义 `@Client("foo")` 或 `@Client(id="foo")`，都将设置 `value` 和 `id` 成员，从而更容易解析和处理注解。
 
 如果无法控制注解，另一种方法是使用 [AnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。要创建 `AnnotationMapper`，请执行以下操作：
 - 实现 [AnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html) 接口
@@ -5894,5 +5894,166 @@ public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper
 上面的示例实现了 [NamedAnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/NamedAnnotationMapper.html) 接口，该接口允许注解与运行时代码混合。要针对具体的注解类型进行操作，请改用 [TypedAnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/TypedAnnotationMapper.html)，尽管注意它需要注解类本身位于注解处理器 classpath。
 :::
 
+## 3.18 从库导入 Bean
+
+你可以使用  [@Import](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Import.html) 注解从使用 JSR-330 注解的外部已编译库中导入 bean。
+
+:::tip 注意
+Bean 导入目前仅在 Java 语言中受支持，因为其他语言在源代码处理期间对 classpath 扫描有限制。
+:::
+
+例如，要将 JSR-330 TCK 导入应用程序，请添加对 TCK 的依赖：
+
+<Tabs>
+  <TabItem value="Gradle" label="Gradle">
+
+```groovy
+implementation("io.micronaut:jakarta.inject")
+```
+
+  </TabItem>
+  <TabItem value="Maven" label="Maven">
+
+```xml
+<dependency>
+    <groupId>io.micronaut</groupId>
+    <artifactId>jakarta.inject</artifactId>
+</dependency>
+```
+
+  </TabItem>
+</Tabs>
+
+然后在 `Application` 类上定义 `@Import` 注解：
+
+```java
+package example;
+
+import io.micronaut.context.annotation.Import;
+
+@Import( (1)
+        packages = { (2)
+                "org.atinject.tck.auto",
+                "org.atinject.tck.auto.accessories"},
+        annotated = "*") (3)
+public class Application {
+}
+```
+
+1. 定义 [@Import](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Import.html)
+2. 定义了要导入的包。请注意，Micronaut 不会通过子包递归，因此需要显式列出子包
+3. 默认情况下，Micronaut 将仅导入具有作用域或限定符的类。通过使用 `*`，你可以使每种类型都成为 bean。
+
+:::tip 注意
+通常，`@Import` 应该在应用程序中使用，而不是在库中使用，因为如果两个库导入相同的 bean，结果很可能是 [NonUniqueBeaException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/NonUniqueBeanException.html)
+:::
+
+## 3.19 可为 null 注解
+
+在 Java 中，可以使用注解来显示变量是否可以为 null。这些注解不是标准库的一部分，但你可以单独添加它们。
+
+Micronaut 框架自带一组注解来声明可为空 [@Nullable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Nullable.html) 和 [@NonNull](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/NonNull.html)。
+
+**为什么 Micronaut 框架会添加自己的一组可空性注解，而不是使用现有的一个可为 null 注解库？**
+
+在整个框架的历史中，我们使用了其他可为 null 的注解库。然而，许可问题使我们多次更改了可为 null 的注解。为了避免将来必须更改可为 null 的注解，我们在 Micronaut Framework 2.4 中添加了自己的一组可为 null 注解。
+
+**Kotlin 是否认可 Micronaut 可为 null 注解？**
+
+是的，Micronaut 可为 null 注解在编译时映射到 `javax.annotation.Nullable` 和 `javax.anneration.Nonnull`。
+
+**为什么要在代码中使用可为 null 注解？**
+
+它使你的代码更容易从 Kotlin 使用。[当你从 Kotlin 代码调用 Java 代码时，Kotlin 识别可为 null 注解，并将根据它们的注解处理类型](https://kotlinlang.org/docs/java-interop.html#nullability-annotations)。
+
+此外，你可以使用 [@Nullable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Nullable.html) 注解来标记：
+
+- 可选的[控制器](../core/routing.html)方法参数。
+可选的注射点。例如，当使用构造函数注入时，可以通过添加 [@Nullable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Nullable.html) 注解将构造函数参数注解为可选参数。
+
+## 3.20 Micronaut Bean 和 Spring
+
+Micronaut 以多种形式与 Spring 集成。更多信息，参阅 [Micronaut Spring 文档](https://micronaut-projects.github.io/micronaut-spring/latest/guide)。
+
+## 3.21 Android 支持
+
+由于 Micronaut 依赖注入基于注解处理器，不依赖反射，因此在使用 Android 插件 3.0.0 或更高版本时，可以在 Android 上使用它。
+
+这使你可以为 Android 客户端和服务器实现使用相同的应用程序框架。
+
+### 配置 Android 构建
+
+要开始，请使用 `annotationProcessor` 依赖配置将 Micronaut 注解处理器添加到处理器 classpath。
+
+在 Android 构建配置的 `annotationProcessor` 和 `compileOnly` 范围中包含 Micronaut `micronaut-inject-java`：
+
+*示例：Android build.gradle*
+
+```groovy
+dependencies {
+    ...
+    annotationProcessor "io.micronaut:micronaut-inject-java:3.8.4"
+    compileOnly "io.micronaut:micronaut-inject-java:3.8.4"
+    ...
+}
+```
+
+如果你将 `lint` 作为构建的一部分，你可能还需要禁用无效包检查，因为 Android 包含一个硬编码检查，该检查将j `avax.inject` 包视为无效，除非你使用 Dagger：
+
+*示例：使用 lint 的 build.gradle*
+
+```groovy
+android {
+    ...
+    lintOptions {
+        lintOptions { warning 'InvalidPackage' }
+    }
+}
+```
+
+你可以在 Android 文档中找到有关[配置注解处理器](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#annotationProcessor_config)的更多信息。
+
+:::tip 注意
+Micronaut `inject-java` 依赖使用 [Android java 8](https://developer.android.com/studio/write/java8-support.html) 支持功能。
+:::
+
+### 启用依赖注入
+
+一旦正确配置了类路径，下一步就是启动 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html)。
+
+以下示例演示了为此创建 [android.app.Application](https://developer.android.com/reference/android/app/Application.html) 的子类：
+
+*示例：Android Application 类*
+
+```java
+import android.app.Activity;
+import android.app.Application;
+import android.os.Bundle;
+
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.env.Environment;
+
+public class BaseApplication extends Application { (1)
+
+    private ApplicationContext ctx;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ctx = ApplicationContext.run(MainActivity.class, Environment.ANDROID); (2)
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() { (3)
+            @Override
+            public void onActivityCreated(Activity activity, Bundle bundle) {
+                ctx.inject(activity);
+            }
+            ... // shortened for brevity; it is not necessary to implement other methods
+        });
+    }
+}
+```
+
+1. 继承 `android.app.Application` 类
+2. 使用 `ANDROID` 环境运行 `ApplicationContext`
+3. 注册 `ActivityLifecycleCallbacks` 实例以允许 Android `Activity` 实例的依赖注入
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
