@@ -34,6 +34,22 @@ const sidebars = {
         "core/quickstart",
         "core/ioc"
       ]
+    },
+    {
+      type: 'category',
+      label: 'Micronaut Servlet',
+      items: [
+        "servlet/introduction",
+        "servlet/releaseHistory",
+        "servlet/servletApi",
+        "servlet/warDeployment",
+        "servlet/jetty",
+        "servlet/tomcat",
+        "servlet/undertow",
+        "servlet/faq",
+        "servlet/breaks",
+        "servlet/repository"
+      ]
     }
   ],
   actionSidebar: [
@@ -45,7 +61,7 @@ const sidebars = {
       items: [
       ],
     },
-  ]
+  ],
 
   // But you can create a sidebar manually
   /*
