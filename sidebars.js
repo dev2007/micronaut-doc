@@ -32,7 +32,8 @@ const sidebars = {
       items: [
         "core/introduction",
         "core/quickstart",
-        "core/ioc"
+        "core/ioc",
+        "core/config"
       ]
     },
     {

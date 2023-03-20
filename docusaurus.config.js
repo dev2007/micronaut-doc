@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Micronaut 实战及文档',
   tagline: 'Micronaut 实战，Micronaut 文档',
-  favicon: 'img/logo.png',
+  favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
   url: 'https://micronaut.bookhub.tech',
@@ -70,7 +70,7 @@ const config = {
         title: 'Micronaut 实战及文档',
         logo: {
           alt: 'Micronaut Logo',
-          src: 'img/logo.png',
+          src: 'img/favicon.ico',
         },
         items: [
           {
