@@ -1,5 +1,5 @@
 ---
-sidebar_position: 30
+sidebar_position: 40
 ---
 
 # 4. 应用配置
@@ -354,11 +354,11 @@ datasources:
 
 要安全地外部化配置，请考虑使用 Micronaut 支持的机密管理器系统，例如：
 
-- [AWS Secrets Manager](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#secretsmanager)
-- [Google Cloud Secrets Manager](https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#secretManager)
-- [HashiCorp Vault](https://docs.micronaut.io/latest/guide/#distributedConfigurationVault)
-- [Kubernetes Secrets](https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html#config-client)
-- [Oracle Cloud Vault](https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#vault)
+- [AWS Secrets Manager](../aws/sdkv2.html#712-机密管理器)
+- [Google Cloud Secrets Manager](../gcp/secretManager.html)
+- [HashiCorp Vault](../core/cloud.html#813-HashiCorp-Vault-支持)
+- [Kubernetes Secrets](../kubernetes/config-client.html)
+- [Oracle Cloud Vault](../oracle/vault.html)
 
 **属性值占位符**
 
@@ -540,5 +540,294 @@ instance:
 **快速失败属性注入**
 
 对于注入所需属性的 bean，在请求 bean之前，不会发生注入和潜在故障。为了在启动时验证财产是否存在并可以注入，可以使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 对 bean 进行注解。上下文范围的 bean 在启动时被注入，如果缺少任何必需的属性或无法转换为必需的类型，则启动将失败。
+
+## 4.3 配置注入
+
+你可以使用 [@Value](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Value.html) 注解将配置值注入到 bean 中。
+
+**使用 `@Value` 注解**
+
+考虑以下示例：
+
+*@Value 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Value;
+
+import jakarta.inject.Singleton;
+
+@Singleton
+public class EngineImpl implements Engine {
+
+    @Value("${my.engine.cylinders:6}") // (1)
+    protected int cylinders;
+
+    @Override
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    @Override
+    public String start() {// (2)
+        return "Starting V" + getCylinders() + " Engine";
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Value
+
+import jakarta.inject.Singleton
+
+@Singleton
+class EngineImpl implements Engine {
+
+    @Value('${my.engine.cylinders:6}') // (1)
+    protected int cylinders
+
+    @Override
+    int getCylinders() {
+        cylinders
+    }
+
+    @Override
+    String start() { // (2)
+        "Starting V$cylinders Engine"
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Value
+
+import jakarta.inject.Singleton
+
+@Singleton
+class EngineImpl : Engine {
+
+    @Value("\${my.engine.cylinders:6}") // (1)
+    override var cylinders: Int = 0
+        protected set
+
+    override fun start(): String { // (2)
+        return "Starting V$cylinders Engine"
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `@Value` 注解接受一个可以嵌入占位符值的字符串（默认值可以通过在冒号 `:` 字符后指定一个值来提供）。还要尽量避免将成员可见性设置为 `private`，因为这需要 Micronaut Framework 使用反射。推荐使用 `protected`。
+2. 然后可以在代码中使用注入的值。
+
+注意，`@Value` 也可以用于注入静态值。例如，以下注入数字 10：
+
+*静态 @Value 示例*
+
+```java
+@Value("10")
+int number;
+```
+
+当用于组合静态内容和占位符的注入值时，这甚至更有用。例如，要设置 URL：
+
+*@Value 占位符*
+
+```java
+@Value("http://${my.host}:${my.port}")
+URL url;
+```
+
+在上面的示例中，URL 是由配置中必须存在的两个占位符属性构造的：`my.host` 和 `my.port`。
+
+请记住，要在占位符表达式中指定默认值，请使用冒号 `:` 字符。但是，如果指定的默认值包括冒号，则必须使用反引号转义该值。例如：
+
+*@Value 占位符*
+
+```java
+@Value("${my.url:`http://foo.com`}")
+URL url;
+```
+
+请注意，关于属性值占位符的解析，`@Value` 本身并没有什么特别之处。
+
+由于 Micronaut 对注解元数据的广泛支持，你可以在任何注解上使用属性占位符表达式。例如，要使 `@Controller` 的路径可配置，你可以执行以下操作：
+
+```java
+@Controller("${hello.controller.path:/hello}")
+class HelloController {
+    ...
+}
+```
+
+在上述例子中，如果在配置中指定了 `hello.controller.path`，则控制器将映射到指定的路径，否则将映射到 `/hello`。
+
+你还可以使 [@Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 的目标服务器可配置（尽管服务发现方法通常更好），例如：
+
+```java
+@Client("${my.server.url:`http://localhost:8080`}")
+interface HelloClient {
+    ...
+}
+```
+
+在上面的示例中，属性 `my.server.url` 可以用于配置客户端，否则客户端将返回到本地主机地址。
+
+**使用 @Property 注解**
+
+回想一下，[@Value](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Value.html) 注解接收一个 String 值，该值可以是静态内容和占位符表达式的混合。如果你试图执行以下操作，这可能会导致混乱：
+
+*不正确使用 @Value*
+
+```java
+@Value("my.url")
+String url;
+```
+
+在上面的例子中，文本字符串值 `my.url` 被注入并设置为 `url` 字段，而不是应用程序配置中 `my.url` 属性的值。这是因为 `@Value` 只解析指定给它的值中的占位符。
+
+若要注入特定的属性名称，你最好使用 [@Property](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Property.html)：
+
+*使用 @Property*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Property;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+@Singleton
+public class Engine {
+
+    @Property(name = "my.engine.cylinders") // (1)
+    protected int cylinders; // (2)
+
+    private String manufacturer;
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    @Inject
+    public void setManufacturer(@Property(name = "my.engine.manufacturer") String manufacturer) { // (3)
+        this.manufacturer = manufacturer;
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Property
+
+import jakarta.inject.Singleton
+
+@Singleton
+class Engine {
+
+    @Property(name = "my.engine.cylinders") // (1)
+    protected int cylinders // (2)
+
+    @Property(name = "my.engine.manufacturer") //(3)
+    String manufacturer
+
+    int getCylinders() {
+        cylinders
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Property
+
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
+
+
+@Singleton
+class Engine {
+
+    @field:Property(name = "my.engine.cylinders") // (1)
+    protected var cylinders: Int = 0 // (2)
+
+    @set:Inject
+    @setparam:Property(name = "my.engine.manufacturer") // (3)
+    var manufacturer: String? = null
+
+    fun cylinders(): Int {
+        return cylinders
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `my.engine.clinders` 属性从配置中解析并注入到字段中。
+2. 需要注入的字段不应是私有的，因为必须使用昂贵的反射
+3. `@Property` 注解用于通过 setter 注入
+
+:::tip 注意
+由于无法使用 `@Property` 定义默认值，因此如果该值不存在或无法转换为所需类型，则 bean 实例化将失败。
+:::
+
+相反，上面注入了从应用程序配置中解析的 `my.url` 属性的值。如果在配置中找不到属性，则会引发异常。与其他类型的注入一样，注入点也可以用 `@Nullable` 进行注解，以使注入成为可选的。
+
+你也可以使用此功能来解析子 map。例如，考虑以下配置：
+
+*application.yml 配置示例*
+
+```yaml
+datasources:
+  default:
+    name: 'mydb'
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+```
+
+要解析仅包含以 hibernate 开头的属性的展平 map，请使用 `@Property`，例如：
+
+*@Property 示例*
+
+```java
+@Property(name = "jpa.default.properties")
+Map<String, String> jpaProperties;
+```
+
+注入的映射将包含键 `hibernate.hbm2ddl.auto` 和 `hibernate.show_sql` 及其值。
+
+:::note 提示
+[@MapFormat](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可用于自定义注入的映射，具体取决于你想要嵌套键还是展开键，并且它允许通过 [StringConvention](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/naming/conventions/StringConvention.html) 枚举自定义键样式。
+:::
+
+
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
