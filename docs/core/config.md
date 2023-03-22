@@ -828,6 +828,895 @@ Map<String, String> jpaProperties;
 [@MapFormat](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可用于自定义注入的映射，具体取决于你想要嵌套键还是展开键，并且它允许通过 [StringConvention](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/naming/conventions/StringConvention.html) 枚举自定义键样式。
 :::
 
+## 4.4 配置属性
 
+您可以通过创建用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类来创建类型安全配置。
+
+Micronaut 将生成一个无反射的 `@ConfigurationProperties` bean，并在编译时计算要评估的属性路径，从而大大提高加载 `@ConfigurationProperties` 的速度和效率。
+
+例如：
+
+*@ConfigurationProperties 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.ConfigurationProperties;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") // (1)
+public class EngineConfig {
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    public CrankShaft getCrankShaft() {
+        return crankShaft;
+    }
+
+    public void setCrankShaft(CrankShaft crankShaft) {
+        this.crankShaft = crankShaft;
+    }
+
+    @NotBlank // (2)
+    private String manufacturer = "Ford"; // (3)
+
+    @Min(1L)
+    private int cylinders;
+
+    private CrankShaft crankShaft = new CrankShaft();
+
+    @ConfigurationProperties("crank-shaft")
+    public static class CrankShaft { // (4)
+
+        private Optional<Double> rodLength = Optional.empty(); // (5)
+
+        public Optional<Double> getRodLength() {
+            return rodLength;
+        }
+
+        public void setRodLength(Optional<Double> rodLength) {
+            this.rodLength = rodLength;
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.ConfigurationProperties
+
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@ConfigurationProperties('my.engine') // (1)
+class EngineConfig {
+
+    @NotBlank // (2)
+    String manufacturer = "Ford" // (3)
+
+    @Min(1L)
+    int cylinders
+
+    CrankShaft crankShaft = new CrankShaft()
+
+    @ConfigurationProperties('crank-shaft')
+    static class CrankShaft { // (4)
+        Optional<Double> rodLength = Optional.empty() // (5)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.ConfigurationProperties
+import java.util.Optional
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+
+@ConfigurationProperties("my.engine") // (1)
+class EngineConfig {
+
+    @NotBlank // (2)
+    var manufacturer = "Ford" // (3)
+
+    @Min(1L)
+    var cylinders: Int = 0
+
+    var crankShaft = CrankShaft()
+
+    @ConfigurationProperties("crank-shaft")
+    class CrankShaft { // (4)
+        var rodLength: Optional<Double> = Optional.empty() // (5)
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `@ConfigurationProperties` 注解采用配置前缀
+2. 你可以使用 `javax.validation` 注解来验证配置
+3. 可以为特性指定默认值
+4. 静态内部类可以提供嵌套配置
+5. 可选配置值可以封装在 `java.util.Optional` 中
+
+一旦您准备好了类型安全配置，就可以像任何其他 bean 一样将其注入到您的 bean 中：
+
+*@ConfigurationProperties 依赖注入*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+public class EngineImpl implements Engine {
+    private final EngineConfig config;
+
+    public EngineImpl(EngineConfig config) { // (1)
+        this.config = config;
+    }
+
+    @Override
+    public int getCylinders() {
+        return config.getCylinders();
+    }
+
+    @Override
+    public String start() {// (2)
+        return getConfig().getManufacturer() + " Engine Starting V" + getConfig().getCylinders() +
+                " [rodLength=" + getConfig().getCrankShaft().getRodLength().orElse(6d) + "]";
+    }
+
+    public final EngineConfig getConfig() {
+        return config;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+class EngineImpl implements Engine {
+    final EngineConfig config
+
+    EngineImpl(EngineConfig config) { // (1)
+        this.config = config
+    }
+
+    @Override
+    int getCylinders() {
+        config.cylinders
+    }
+
+    @Override
+    String start() { // (2)
+        "$config.manufacturer Engine Starting V$config.cylinders [rodLength=${config.crankShaft.rodLength.orElse(6.0d)}]"
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+class EngineImpl(val config: EngineConfig) : Engine {// (1)
+
+    override val cylinders: Int
+        get() = config.cylinders
+
+    override fun start(): String {// (2)
+        return "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.rodLength.orElse(6.0)}]"
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注入 `EngineConfig` bean
+2. 使用配置属性
+
+然后可以从 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例之一提供配置值。例如：
+
+*应用配置*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+Map<String, Object> map = new LinkedHashMap<>(1);
+map.put("my.engine.cylinders", "8");
+ApplicationContext applicationContext = ApplicationContext.run(map, "test");
+
+Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+System.out.println(vehicle.start());
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+ApplicationContext applicationContext = ApplicationContext.run(
+        ['my.engine.cylinders': '8'],
+        "test"
+)
+
+def vehicle = applicationContext.getBean(Vehicle)
+println(vehicle.start())
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val map = mapOf( "my.engine.cylinders" to "8")
+val applicationContext = ApplicationContext.run(map, "test")
+
+val vehicle = applicationContext.getBean(Vehicle::class.java)
+println(vehicle.start())
+```
+
+  </TabItem>
+</Tabs>
+
+以上示例打印 `"Ford Engine Starting V8 [rodLength=6.0]"`
+
+您可以直接引用 `@Requires` 注解中的配置财产，以使用以下语法有条件地加载 bean：`@Requires(bean=Config.class, beanProperty="property", value="true")`
+
+注意，对于更复杂的配置，您可以通过继承来构造 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) bean。
+
+例如，使用 `@ConfigurationProperties('bar')` 创建 `EngineConfig` 的子类将解析路径 `my.engine.bar` 下的所有属性。
+
+### 包含/排除
+
+对于配置属性类从父类继承属性的情况，可能需要从父类中排除属性。[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的 `includes` 和 `excludes` 成员允许该功能。该列表适用于本地属性和继承的属性。
+
+提供给包含/排除列表的名称必须是“属性”名称。例如，如果注入了一个 setter 方法，那么属性名称就是去大写的 setter 名称（`setConnectionTimeout` → `connectionTimeout`）。
+
+---
+
+### 变更访问器风格
+
+从 3.3 开始，Micronaut 支持为 getter 和 setter 定义不同的访问器前缀，而不是为 JavaBeans 定义的默认 `get` 和 `set`。使用 [@AccessorsStyle](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解对 POJO 或 `@ConfigurationProperties` 类进行注解。
+
+当您以流畅的方式编写 getter 和 setter 时，这很有用。例如：
+
+*使用 `@AccessorsStyle`*
+
+```java
+import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.annotation.AccessorsStyle;
+
+@AccessorsStyle(readPrefixes = "", writePrefixes = "") (1)
+@ConfigurationProperties("my.engine")
+public class EngineConfig {
+
+    private String manufacturer;
+    private int cylinders;
+
+    public EngineConfig(String manufacturer, int cylinders) {
+        this.manufacturer = manufacturer;
+        this.cylinders = cylinders;
+    }
+
+    public String manufacturer() { (2)
+        return manufacturer;
+    }
+
+    public void manufacturer(String manufacturer) { (2)
+        this.manufacturer = manufacturer;
+    }
+
+    public int cylinders() { (2)
+        return cylinders;
+    }
+
+    public void cylinders(int cylinders) { (2)
+        this.cylinders = cylinders;
+    }
+
+}
+```
+
+1. Micronaut 将为 getter 和 setter 使用一个空前缀。
+2. 使用空前缀定义 getter 和 setter。
+
+现在，您可以注入 `EngineConfig`，并将其与 `engineConfig.manufacturer()` 和 `engineConfig.clinders()` 一起使用，以从配置中检索值。
+
+---
+
+### 属性类型转换
+
+Micronaut 在解析属性时使用 [ConversionService](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/ConversionService.html) bean 转换值。通过定义实现 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html) 接口的 bean，可以为Micronaut不支持的类型注册其他转换器。
+
+Micronaut 具有一些有用的内置转换功能，具体如下。
+
+**周期转换**
+
+可以通过在单位后面附加一个数字来指定工期。支持的单位为 `s`、`ms`、`m` 等。下表总结了示例：
+
+*表 1. 周期转换*
+
+|配置值|结果值|
+|--|--|
+|10ms|10 毫秒周期|
+|10m|10 分钟周期|
+|10s|10 秒周期|
+|10d|10 天周期|
+|10h|10 小时周期|
+|10ns|10 纳秒周期|
+|PT15M|使用 ISO-8601 格式的 15 分钟周期|
+
+例如，要配置默认的 HTTP 客户端读取超时：
+
+*使用周期值*
+
+```yaml
+micronaut:
+  http:
+    client:
+      read-timeout: 15s
+```
+
+**列表/数组转换**
+
+列表和数组可以在 Java 属性文件中指定为逗号分隔的值，也可以在 YAML 中使用本地 YAML 列表。泛型类型用于转换值。例如，在 YAML 中：
+
+*在 YAML 中特定的列表或数组*
+
+```yaml
+my:
+  app:
+    integers:
+      - 1
+      - 2
+    urls:
+      - http://foo.com
+      - http://bar.com
+```
+
+或 Java 属性文件格式：
+
+*在 Java 属性中指定以逗号分隔的列表或数组*
+
+```yaml
+my.app.integers=1,2
+my.app.urls=http://foo.com,http://bar.com
+```
+
+或者，您可以使用索引：
+
+*使用索引指定 Java 属性中的列表或数组*
+
+```yaml
+my.app.integers[0]=1
+my.app.integers[1]=2
+```
+
+对于上述示例配置，您可以使用泛型提供的目标类型定义要绑定的属性：
+
+```java
+List<Integer> integers;
+List<URL> urls;
+```
+
+**可读字节**
+
+您可以用 [@ReadableBytes](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/ReadableBytes.html) 注解任何 setter 参数，以允许使用指定字节、千字节等的简写语法来设置值。例如，以下内容取自 [HttpClientConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClientConfiguration.html)：
+
+*使用 `@ReadableBytes`*
+
+```java
+public void setMaxContentLength(@ReadableBytes int maxContentLength) {
+    this.maxContentLength = maxContentLength;
+}
+```
+
+有了以上内容，您可以使用以下值设置 `micronaut.http.client.max-content-length`：
+
+*表 2.@ReadableBytes 转换*
+
+|配置值|结果值|
+|--|--|
+|10mb|10 兆字节|
+|10kb|10 千字节|
+|10gb|10 十亿字节|
+|1024|原始字节长度|
+
+**格式化日期**
+
+在 setter 上可以使用 [@Format](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/Format.html) 注解来指定绑定 `java.time` 日期对象时要使用的日期格式。
+
+*对日期使用 `@Format`*
+
+```java
+public void setMyDate(@Format("yyyy-MM-dd") LocalDate date) {
+    this.myDate = date;
+}
+```
+
+---
+
+### 配置构造器
+
+许多框架和工具已经使用构造器风格的类来构建配置。
+
+您可以使用 [@ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 注解来用配置值填充生成器样式类。[ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 可以应用于用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类中的字段或方法。
+
+由于在 Java 世界中没有一致的方法来定义构造器，因此可以在注解中指定一个或多个方法前缀，以支持像 `withXxx` 或 `setXxx` 这样的构造器方法。如果构造器方法没有前缀，请为参数指定一个空字符串。
+
+还可以指定配置前缀来告诉 Micronaut 在哪里查找配置值。默认情况下，构建器方法使用类级别 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解中指定的配置前缀。
+
+例如：
+
+*@ConfigurationBuilder 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.ConfigurationBuilder;
+import io.micronaut.context.annotation.ConfigurationProperties;
+
+@ConfigurationProperties("my.engine") // (1)
+class EngineConfig {
+
+    @ConfigurationBuilder(prefixes = "with") // (2)
+    EngineImpl.Builder builder = EngineImpl.builder();
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") // (3)
+    CrankShaft.Builder crankShaft = CrankShaft.builder();
+
+    private SparkPlug.Builder sparkPlug = SparkPlug.builder();
+
+    SparkPlug.Builder getSparkPlug() {
+        return sparkPlug;
+    }
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug") // (4)
+    void setSparkPlug(SparkPlug.Builder sparkPlug) {
+        this.sparkPlug = sparkPlug;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.ConfigurationBuilder
+import io.micronaut.context.annotation.ConfigurationProperties
+
+@ConfigurationProperties('my.engine') // (1)
+class EngineConfig {
+
+    @ConfigurationBuilder(prefixes = "with") // (2)
+    EngineImpl.Builder builder = EngineImpl.builder()
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "crank-shaft") // (3)
+    CrankShaft.Builder crankShaft = CrankShaft.builder()
+
+    SparkPlug.Builder sparkPlug = SparkPlug.builder()
+
+    @ConfigurationBuilder(prefixes = "with", configurationPrefix = "spark-plug") // (4)
+    void setSparkPlug(SparkPlug.Builder sparkPlug) {
+        this.sparkPlug = sparkPlug
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.ConfigurationBuilder
+import io.micronaut.context.annotation.ConfigurationProperties
+
+@ConfigurationProperties("my.engine") // (1)
+internal class EngineConfig {
+
+    @ConfigurationBuilder(prefixes = ["with"])  // (2)
+    val builder = EngineImpl.builder()
+
+    @ConfigurationBuilder(prefixes = ["with"], configurationPrefix = "crank-shaft") // (3)
+    val crankShaft = CrankShaft.builder()
+
+    @set:ConfigurationBuilder(prefixes = ["with"], configurationPrefix = "spark-plug") // (4)
+    var sparkPlug = SparkPlug.builder()
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. `@ConfigurationProperties` 注解采用配置前缀
+2. 可以在没有类配置前缀的情况下配置第一构造器；它继承了上面的内容。
+3. 第二个构造器可以用类配置前缀 + `configurationPrefix` 值进行配置。
+4. 第三个构造器演示了注解既可以应用于方法，也可以应用于属性。
+
+:::tip 注意
+默认情况下，只支持单参数生成器方法。对于没有参数的方法，请将注解的 `allowZeroArgs` 参数设置为 `true`。
+:::
+
+与前面的例子一样，我们可以构造一个 `EngineImpl`。由于我们使用的是构造器，所以我们可以使用工厂类从构造器中构建引擎。
+
+*工厂 Bean*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.Factory;
+
+import jakarta.inject.Singleton;
+
+@Factory
+class EngineFactory {
+
+    @Singleton
+    EngineImpl buildEngine(EngineConfig engineConfig) {
+        return engineConfig.builder.build(engineConfig.crankShaft, engineConfig.getSparkPlug());
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.Factory
+
+import jakarta.inject.Singleton
+
+@Factory
+class EngineFactory {
+
+    @Singleton
+    EngineImpl buildEngine(EngineConfig engineConfig) {
+        engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.Factory
+import jakarta.inject.Singleton
+
+@Factory
+internal class EngineFactory {
+
+    @Singleton
+    fun buildEngine(engineConfig: EngineConfig): EngineImpl {
+        return engineConfig.builder.build(engineConfig.crankShaft, engineConfig.sparkPlug)
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+然后，可以在需要发动机的任何地方将返回的发动机进行注入。
+
+可以从 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例之一提供配置值。例如：
+
+*应用配置*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("my.engine.cylinders"             ,"4");
+        properties.put("my.engine.manufacturer"          , "Subaru");
+        properties.put("my.engine.crank-shaft.rod-length", 4);
+        properties.put("my.engine.spark-plug.name"       , "6619 LFR6AIX");
+        properties.put("my.engine.spark-plug.type"       , "Iridium");
+        properties.put("my.engine.spark-plug.companyName", "NGK");
+        ApplicationContext applicationContext = ApplicationContext.run(properties, "test");
+
+        Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+        System.out.println(vehicle.start());
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+        ApplicationContext applicationContext = ApplicationContext.run(
+                ['my.engine.cylinders'             : '4',
+                 'my.engine.manufacturer'          : 'Subaru',
+                 'my.engine.crank-shaft.rod-length': 4,
+                 'my.engine.spark-plug.name'       : '6619 LFR6AIX',
+                 'my.engine.spark-plug.type'       : 'Iridium',
+                 'my.engine.spark-plug.companyName': 'NGK'
+                ],
+                "test"
+        )
+
+        Vehicle vehicle = applicationContext.getBean(Vehicle)
+        println(vehicle.start())
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+        val applicationContext = ApplicationContext.run(
+                mapOf(
+                        "my.engine.cylinders" to "4",
+                        "my.engine.manufacturer" to "Subaru",
+                        "my.engine.crank-shaft.rod-length" to 4,
+                        "my.engine.spark-plug.name" to "6619 LFR6AIX",
+                        "my.engine.spark-plug.type" to "Iridium",
+                        "my.engine.spark-plug.company" to "NGK"
+                ),
+                "test"
+        )
+
+        val vehicle = applicationContext.getBean(Vehicle::class.java)
+        println(vehicle.start())
+```
+
+  </TabItem>
+</Tabs>
+
+以上示例打印：`"Subaru Engine Starting V4 [rodLength=4.0, sparkPlug=Iridium(NGK 6619 LFR6AIX)]"`
+
+---
+
+### MapFormat
+
+对于某些用例，可能需要接受可提供给 bean 的任意配置属性的 map，特别是如果 bean 代表第三方 API，其中并非所有可能的配置属性都已知。例如，数据源可以接受特定于特定数据库驱动程序的配置属性 map，允许用户在 map 中指定任何所需的选项，而无需显式编码每个属性。
+
+为此，使用 [MapFormat](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可以将映射绑定到单个配置属性，并指定是接受键到值的平面 map，还是接受嵌套 map（其中值可以是其他 map）。
+
+*@MapFormat 格式*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.convert.format.MapFormat;
+
+import javax.validation.constraints.Min;
+import java.util.Map;
+
+@ConfigurationProperties("my.engine")
+public class EngineConfig {
+
+    @Min(1L)
+    private int cylinders;
+
+    @MapFormat(transformation = MapFormat.MapTransformation.FLAT) //(1)
+    private Map<Integer, String> sensors;
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    public Map<Integer, String> getSensors() {
+        return sensors;
+    }
+
+    public void setSensors(Map<Integer, String> sensors) {
+        this.sensors = sensors;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.convert.format.MapFormat
+
+import javax.validation.constraints.Min
+
+@ConfigurationProperties('my.engine')
+class EngineConfig {
+
+    @Min(1L)
+    int cylinders
+
+    @MapFormat(transformation = MapFormat.MapTransformation.FLAT) //(1)
+    Map<Integer, String> sensors
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.convert.format.MapFormat
+import javax.validation.constraints.Min
+
+@ConfigurationProperties("my.engine")
+class EngineConfig {
+
+    @Min(1L)
+    var cylinders: Int = 0
+
+    @MapFormat(transformation = MapFormat.MapTransformation.FLAT) //(1)
+    var sensors: Map<Int, String>? = null
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注意注解中的 `transformation` 参数；可能的值为 `MapTransformation.FLAT`（用于平面 map）和 `MapTransformation.NESTED`（用于嵌套 map）
+
+*EngineImpl*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+public class EngineImpl implements Engine {
+
+    @Inject
+    EngineConfig config;
+
+    @Override
+    public Map getSensors() {
+        return config.getSensors();
+    }
+
+    @Override
+    public String start() {
+        return "Engine Starting V" + getConfig().getCylinders() +
+               " [sensors=" + getSensors().size() + "]";
+    }
+
+    public EngineConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(EngineConfig config) {
+        this.config = config;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+class EngineImpl implements Engine {
+
+    @Inject EngineConfig config
+
+    @Override
+    Map getSensors() {
+        config.sensors
+    }
+
+    @Override
+    String start() {
+        "Engine Starting V$config.cylinders [sensors=${sensors.size()}]"
+    }
+} 
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+class EngineImpl : Engine {
+
+    override val sensors: Map<*, *>?
+        get() = config!!.sensors
+
+    @Inject
+    var config: EngineConfig? = null
+
+    override fun start(): String {
+        return "Engine Starting V${config!!.cylinders} [sensors=${sensors!!.size}]"
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+现在可以向 `my.engine.sensors` 配置属性提供属性的 map。
+
+*使用 Map 配置*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+Map<String, Object> map = new LinkedHashMap<>(2);
+map.put("my.engine.cylinders", "8");
+
+Map<Integer, String> map1 = new LinkedHashMap<>(2);
+map1.put(0, "thermostat");
+map1.put(1, "fuel pressure");
+
+map.put("my.engine.sensors", map1);
+
+ApplicationContext applicationContext = ApplicationContext.run(map, "test");
+
+Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+System.out.println(vehicle.start());
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+ApplicationContext applicationContext = ApplicationContext.run(
+        ['my.engine.cylinders': '8',
+         'my.engine.sensors'  : [0: 'thermostat',
+                                 1: 'fuel pressure']],
+        "test"
+)
+
+def vehicle = applicationContext.getBean(Vehicle)
+println(vehicle.start())
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val subMap = mapOf(
+    0 to "thermostat",
+    1 to "fuel pressure"
+)
+val map = mapOf(
+    "my.engine.cylinders" to "8",
+    "my.engine.sensors" to subMap
+)
+
+val applicationContext = ApplicationContext.run(map, "test")
+
+val vehicle = applicationContext.getBean(Vehicle::class.java)
+println(vehicle.start())
+```
+
+  </TabItem>
+</Tabs>
+
+以上例子打印：`"Engine Starting V8 [sensors=2]"`
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
