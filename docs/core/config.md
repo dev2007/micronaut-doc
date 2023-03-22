@@ -830,7 +830,7 @@ Map<String, String> jpaProperties;
 
 ## 4.4 配置属性
 
-您可以通过创建用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类来创建类型安全配置。
+你可以通过创建用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类来创建类型安全配置。
 
 Micronaut 将生成一个无反射的 `@ConfigurationProperties` bean，并在编译时计算要评估的属性路径，从而大大提高加载 `@ConfigurationProperties` 的速度和效率。
 
@@ -962,7 +962,7 @@ class EngineConfig {
 4. 静态内部类可以提供嵌套配置
 5. 可选配置值可以封装在 `java.util.Optional` 中
 
-一旦您准备好了类型安全配置，就可以像任何其他 bean 一样将其注入到您的 bean 中：
+一旦你准备好了类型安全配置，就可以像任何其他 bean 一样将其注入到你的 bean 中：
 
 *@ConfigurationProperties 依赖注入*
 
@@ -1086,9 +1086,9 @@ println(vehicle.start())
 
 以上示例打印 `"Ford Engine Starting V8 [rodLength=6.0]"`
 
-您可以直接引用 `@Requires` 注解中的配置财产，以使用以下语法有条件地加载 bean：`@Requires(bean=Config.class, beanProperty="property", value="true")`
+你可以直接引用 `@Requires` 注解中的配置财产，以使用以下语法有条件地加载 bean：`@Requires(bean=Config.class, beanProperty="property", value="true")`
 
-注意，对于更复杂的配置，您可以通过继承来构造 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) bean。
+注意，对于更复杂的配置，你可以通过继承来构造 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) bean。
 
 例如，使用 `@ConfigurationProperties('bar')` 创建 `EngineConfig` 的子类将解析路径 `my.engine.bar` 下的所有属性。
 
@@ -1104,7 +1104,7 @@ println(vehicle.start())
 
 从 3.3 开始，Micronaut 支持为 getter 和 setter 定义不同的访问器前缀，而不是为 JavaBeans 定义的默认 `get` 和 `set`。使用 [@AccessorsStyle](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解对 POJO 或 `@ConfigurationProperties` 类进行注解。
 
-当您以流畅的方式编写 getter 和 setter 时，这很有用。例如：
+当你以流畅的方式编写 getter 和 setter 时，这很有用。例如：
 
 *使用 `@AccessorsStyle`*
 
@@ -1146,7 +1146,7 @@ public class EngineConfig {
 1. Micronaut 将为 getter 和 setter 使用一个空前缀。
 2. 使用空前缀定义 getter 和 setter。
 
-现在，您可以注入 `EngineConfig`，并将其与 `engineConfig.manufacturer()` 和 `engineConfig.clinders()` 一起使用，以从配置中检索值。
+现在，你可以注入 `EngineConfig`，并将其与 `engineConfig.manufacturer()` 和 `engineConfig.clinders()` 一起使用，以从配置中检索值。
 
 ---
 
@@ -1209,7 +1209,7 @@ my.app.integers=1,2
 my.app.urls=http://foo.com,http://bar.com
 ```
 
-或者，您可以使用索引：
+或者，你可以使用索引：
 
 *使用索引指定 Java 属性中的列表或数组*
 
@@ -1218,7 +1218,7 @@ my.app.integers[0]=1
 my.app.integers[1]=2
 ```
 
-对于上述示例配置，您可以使用泛型提供的目标类型定义要绑定的属性：
+对于上述示例配置，你可以使用泛型提供的目标类型定义要绑定的属性：
 
 ```java
 List<Integer> integers;
@@ -1227,7 +1227,7 @@ List<URL> urls;
 
 **可读字节**
 
-您可以用 [@ReadableBytes](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/ReadableBytes.html) 注解任何 setter 参数，以允许使用指定字节、千字节等的简写语法来设置值。例如，以下内容取自 [HttpClientConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClientConfiguration.html)：
+你可以用 [@ReadableBytes](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/ReadableBytes.html) 注解任何 setter 参数，以允许使用指定字节、千字节等的简写语法来设置值。例如，以下内容取自 [HttpClientConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClientConfiguration.html)：
 
 *使用 `@ReadableBytes`*
 
@@ -1237,7 +1237,7 @@ public void setMaxContentLength(@ReadableBytes int maxContentLength) {
 }
 ```
 
-有了以上内容，您可以使用以下值设置 `micronaut.http.client.max-content-length`：
+有了以上内容，你可以使用以下值设置 `micronaut.http.client.max-content-length`：
 
 *表 2.@ReadableBytes 转换*
 
@@ -1266,7 +1266,7 @@ public void setMyDate(@Format("yyyy-MM-dd") LocalDate date) {
 
 许多框架和工具已经使用构造器风格的类来构建配置。
 
-您可以使用 [@ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 注解来用配置值填充生成器样式类。[ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 可以应用于用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类中的字段或方法。
+你可以使用 [@ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 注解来用配置值填充生成器样式类。[ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 可以应用于用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类中的字段或方法。
 
 由于在 Java 世界中没有一致的方法来定义构造器，因此可以在注解中指定一个或多个方法前缀，以支持像 `withXxx` 或 `setXxx` 这样的构造器方法。如果构造器方法没有前缀，请为参数指定一个空字符串。
 
@@ -1718,5 +1718,193 @@ println(vehicle.start())
 </Tabs>
 
 以上例子打印：`"Engine Starting V8 [sensors=2]"`
+
+## 4.5 自定义类型转换器
+
+Micronaut 包括一个可扩展的类型转换机制。要添加额外的类型转换器，你需要注册类型为 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html) 的 bean。
+
+以下示例显示了如何使用内置转换器之一（映射到对象）或创建自己的转换器。
+
+请考虑以下 [ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+private static ApplicationContext ctx;
+
+@BeforeClass
+public static void setupCtx() {
+    ctx = ApplicationContext.run(
+            new LinkedHashMap<String, Object>() {{
+                put("myapp.updatedAt", // (1)
+                        new LinkedHashMap<String, Integer>() {{
+                            put("day", 28);
+                            put("month", 10);
+                            put("year", 1982);
+                        }}
+                );
+            }}
+    );
+}
+
+@AfterClass
+public static void teardownCtx() {
+    if(ctx != null) {
+        ctx.stop();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@AutoCleanup
+@Shared
+ApplicationContext ctx = ApplicationContext.run(
+        "myapp.updatedAt": [day: 28, month: 10, year: 1982]  // (1)
+)
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+lateinit var ctx: ApplicationContext
+
+@BeforeEach
+fun setup() {
+    ctx = ApplicationContext.run(
+        mapOf(
+            "myapp.updatedAt" to mapOf( // (1)
+                "day" to 28,
+                "month" to 10,
+                "year" to 1982
+            )
+        )
+    )
+}
+
+@AfterEach
+fun teardown() {
+    ctx?.close()
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注意我们如何在上面的 `MyConfigurationProperties` 类中匹配 `myapp` 前缀和 `updatedAt` 属性名称
+
+默认情况下，这将不起作用，因为没有从 `Map` 到 `LocalDate` 的内置转换。要解决此问题，请定义一个自定义 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html)：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.convert.ConversionContext;
+import io.micronaut.core.convert.ConversionService;
+import io.micronaut.core.convert.TypeConverter;
+
+import jakarta.inject.Singleton;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.Optional;
+
+@Singleton
+public class MapToLocalDateConverter implements TypeConverter<Map, LocalDate> { // (1)
+    @Override
+    public Optional<LocalDate> convert(Map propertyMap, Class<LocalDate> targetType, ConversionContext context) {
+        Optional<Integer> day = ConversionService.SHARED.convert(propertyMap.get("day"), Integer.class);
+        Optional<Integer> month = ConversionService.SHARED.convert(propertyMap.get("month"), Integer.class);
+        Optional<Integer> year = ConversionService.SHARED.convert(propertyMap.get("year"), Integer.class);
+        if (day.isPresent() && month.isPresent() && year.isPresent()) {
+            try {
+                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())); // (2)
+            } catch (DateTimeException e) {
+                context.reject(propertyMap, e); // (3)
+                return Optional.empty();
+            }
+        }
+
+        return Optional.empty();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.core.convert.ConversionContext
+import io.micronaut.core.convert.ConversionService
+import io.micronaut.core.convert.TypeConverter
+
+import jakarta.inject.Singleton
+import java.time.DateTimeException
+import java.time.LocalDate
+
+@Singleton
+class MapToLocalDateConverter implements TypeConverter<Map, LocalDate> { // (1)
+    @Override
+    Optional<LocalDate> convert(Map propertyMap, Class<LocalDate> targetType, ConversionContext context) {
+        Optional<Integer> day = ConversionService.SHARED.convert(propertyMap.day, Integer)
+        Optional<Integer> month = ConversionService.SHARED.convert(propertyMap.month, Integer)
+        Optional<Integer> year = ConversionService.SHARED.convert(propertyMap.year, Integer)
+        if (day.present && month.present && year.present) {
+            try {
+                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())) // (2)
+            } catch (DateTimeException e) {
+                context.reject(propertyMap, e) // (3)
+                return Optional.empty()
+            }
+        }
+        return Optional.empty()
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.core.convert.ConversionContext
+import io.micronaut.core.convert.ConversionService
+import io.micronaut.core.convert.TypeConverter
+import java.time.DateTimeException
+import java.time.LocalDate
+import java.util.Optional
+import jakarta.inject.Singleton
+
+@Singleton
+class MapToLocalDateConverter : TypeConverter<Map<*, *>, LocalDate> { // (1)
+    override fun convert(propertyMap: Map<*, *>, targetType: Class<LocalDate>, context: ConversionContext): Optional<LocalDate> {
+        val day = ConversionService.SHARED.convert(propertyMap["day"], Int::class.java)
+        val month = ConversionService.SHARED.convert(propertyMap["month"], Int::class.java)
+        val year = ConversionService.SHARED.convert(propertyMap["year"], Int::class.java)
+        if (day.isPresent && month.isPresent && year.isPresent) {
+            try {
+                return Optional.of(LocalDate.of(year.get(), month.get(), day.get())) // (2)
+            } catch (e: DateTimeException) {
+                context.reject(propertyMap, e) // (3)
+                return Optional.empty()
+            }
+        }
+
+        return Optional.empty()
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 该类实现了 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html)，它有两个泛型参数，一个是从中转换的类型，另一个是转换为的类型
+2. 实现委托给默认的共享转换服务，以转换用于创建 `LocalDate` 的 Map 中的值
+3. 如果绑定过程中发生异常，请调用 `reject(..)`，它会将附加信息传播到容器
+
+
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
