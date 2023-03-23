@@ -539,7 +539,7 @@ instance:
 
 **快速失败属性注入**
 
-对于注入所需属性的 bean，在请求 bean之前，不会发生注入和潜在故障。为了在启动时验证财产是否存在并可以注入，可以使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 对 bean 进行注解。上下文范围的 bean 在启动时被注入，如果缺少任何必需的属性或无法转换为必需的类型，则启动将失败。
+对于注入所需属性的 bean，在请求 bean之前，不会发生注入和潜在故障。为了在启动时验证属性是否存在并可以注入，可以使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 对 bean 进行注解。上下文范围的 bean 在启动时被注入，如果缺少任何必需的属性或无法转换为必需的类型，则启动将失败。
 
 ## 4.3 配置注入
 
@@ -1086,7 +1086,7 @@ println(vehicle.start())
 
 以上示例打印 `"Ford Engine Starting V8 [rodLength=6.0]"`
 
-你可以直接引用 `@Requires` 注解中的配置财产，以使用以下语法有条件地加载 bean：`@Requires(bean=Config.class, beanProperty="property", value="true")`
+你可以直接引用 `@Requires` 注解中的配置属性，以使用以下语法有条件地加载 bean：`@Requires(bean=Config.class, beanProperty="property", value="true")`
 
 注意，对于更复杂的配置，你可以通过继承来构造 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) bean。
 
@@ -2305,6 +2305,342 @@ val firstConfig = applicationContext.getBean(
 1. 我们在这里证明了确实有两个数据来源。我们如何才能得到一个特别的？
 2. 通过使用 `Qualifier.byName("one")`，我们可以选择要引用的两个 bean 中的哪一个
 
+## 4.8 不可变配置
 
+自 1.3 以来，Micronaut 支持不可变配置的定义。
+
+有两种方法可以定义不可变的配置。首选的方法是定义一个用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的接口。例如：
+
+*@ConfigurationProperties 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.core.bind.annotation.Bindable;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.context.annotation.ConfigurationInject;
+import io.micronaut.context.annotation.ConfigurationProperties;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") // (1)
+public class EngineConfig {
+
+    private final String manufacturer;
+    private final int cylinders;
+    private final CrankShaft crankShaft;
+
+    @ConfigurationInject // (2)
+    public EngineConfig(
+            @Bindable(defaultValue = "Ford") @NotBlank String manufacturer, // (3)
+            @Min(1L) int cylinders, // (4)
+            @NotNull CrankShaft crankShaft) {
+        this.manufacturer = manufacturer;
+        this.cylinders = cylinders;
+        this.crankShaft = crankShaft;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public CrankShaft getCrankShaft() {
+        return crankShaft;
+    }
+
+    @ConfigurationProperties("crank-shaft")
+    public static class CrankShaft { // (5)
+        private final Double rodLength; // (6)
+
+        @ConfigurationInject
+        public CrankShaft(@Nullable Double rodLength) {
+            this.rodLength = rodLength;
+        }
+
+        public Optional<Double> getRodLength() {
+            return Optional.ofNullable(rodLength);
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.ConfigurationInject
+import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+
+import javax.annotation.Nullable
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+
+@ConfigurationProperties("my.engine") // (1)
+class EngineConfig {
+
+    final String manufacturer
+    final int cylinders
+    final CrankShaft crankShaft
+
+    @ConfigurationInject // (2)
+    EngineConfig(
+            @Bindable(defaultValue = "Ford") @NotBlank String manufacturer, // (3)
+            @Min(1L) int cylinders, // (4)
+            @NotNull CrankShaft crankShaft) {
+        this.manufacturer = manufacturer
+        this.cylinders = cylinders
+        this.crankShaft = crankShaft
+    }
+
+    @ConfigurationProperties("crank-shaft")
+    static class CrankShaft { // (5)
+        private final Double rodLength // (6)
+
+        @ConfigurationInject
+        CrankShaft(@Nullable Double rodLength) {
+            this.rodLength = rodLength
+        }
+
+        Optional<Double> getRodLength() {
+            Optional.ofNullable(rodLength)
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.ConfigurationInject
+import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.core.bind.annotation.Bindable
+import java.util.Optional
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+
+@ConfigurationProperties("my.engine") // (1)
+data class EngineConfig @ConfigurationInject // (2)
+    constructor(
+        @Bindable(defaultValue = "Ford") @NotBlank val manufacturer: String, // (3)
+        @Min(1) val cylinders: Int, // (4)
+        @NotNull val crankShaft: CrankShaft) {
+
+    @ConfigurationProperties("crank-shaft")
+    data class CrankShaft @ConfigurationInject
+    constructor(// (5)
+            private val rodLength: Double? // (6)
+    ) {
+
+        fun getRodLength(): Optional<Double> {
+            return Optional.ofNullable(rodLength)
+        }
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解采用配置前缀
+2. [@ConfigurationInject](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationInject.html) 注解是在构造函数上定义的
+3. 你可以使用 [@Bindable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/annotation/Bindable.html) 设置默认值
+4. 验证注解也可以使用
+5. 你可以嵌套不可变的配置
+6. 可选配置可以用 `@Nullable` 表示
+
+[@ConfigurationInject](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationInject.html) 注解为 Micronaut 提供了一个提示，提示其优先考虑配置中的绑定值，而不是注入 bean。
+
+:::tip 注意
+使用这种方法，为了使配置可刷新，还可以向类中添加 [@Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 注解。这允许在[运行时配置刷新事件](../core/ioc.html#372-refreshable-作用域)的情况下重新创建 bean。
+:::
+
+这个规则有几个例外。如果满足以下任何条件，Micronaut 将不会对参数执行配置绑定：
+- 参数用 `@Value`（显式绑定）进行注解
+- 参数使用 `@Property`（显式绑定）进行注解
+- 参数用 `@Parameter`（参数化 bean 处理）进行注解
+- 参数用 `@Inject`（泛型 bean 注入）进行注解
+- 参数的类型用 bean 作用域（例如 `@Singleton`）进行注解
+
+一旦你准备好了类型安全配置，就可以像任何其他 bean 一样将其注入到你的 bean 中：
+
+*@ConfigurationProperties 依赖注入*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Singleton
+public class Engine {
+    private final EngineConfig config;
+
+    public Engine(EngineConfig config) {// (1)
+        this.config = config;
+    }
+
+    public int getCylinders() {
+        return config.getCylinders();
+    }
+
+    public String start() {// (2)
+        return getConfig().getManufacturer() + " Engine Starting V" + getConfig().getCylinders() +
+                " [rodLength=" + getConfig().getCrankShaft().getRodLength().orElse(6.0d) + "]";
+    }
+
+    public final EngineConfig getConfig() {
+        return config;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Singleton
+class Engine {
+    private final EngineConfig config
+
+    Engine(EngineConfig config) {// (1)
+        this.config = config
+    }
+
+    int getCylinders() {
+        return config.cylinders
+    }
+
+    String start() {// (2)
+        return "$config.manufacturer Engine Starting V$config.cylinders [rodLength=${config.crankShaft.rodLength.orElse(6.0d)}]"
+    }
+
+    final EngineConfig getConfig() {
+        return config
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Singleton
+class Engine(val config: EngineConfig)// (1)
+{
+    val cylinders: Int
+        get() = config.cylinders
+
+    fun start(): String {// (2)
+        return  "${config.manufacturer} Engine Starting V${config.cylinders} [rodLength=${config.crankShaft.getRodLength().orElse(6.0)}]"
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注入 `EngineConfig` bean
+2. 使用配置属性
+
+然后可以在运行应用程序时提供配置值。例如：
+
+*应用配置*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+ApplicationContext applicationContext = ApplicationContext.run(CollectionUtils.mapOf(
+        "my.engine.cylinders", "8",
+        "my.engine.crank-shaft.rod-length", "7.0"
+));
+
+Vehicle vehicle = applicationContext.getBean(Vehicle.class);
+System.out.println(vehicle.start());
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+ApplicationContext applicationContext = ApplicationContext.run(
+        "my.engine.cylinders": "8",
+        "my.engine.crank-shaft.rod-length": "7.0"
+)
+
+Vehicle vehicle = applicationContext.getBean(Vehicle)
+System.out.println(vehicle.start())
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val map = mapOf(
+        "my.engine.cylinders" to "8",
+        "my.engine.crank-shaft.rod-length" to "7.0"
+)
+val applicationContext = ApplicationContext.run(map)
+
+val vehicle = applicationContext.getBean(Vehicle::class.java)
+println(vehicle.start())
+```
+
+  </TabItem>
+</Tabs>
+
+以上示例打印：`"Ford Engine Starting V8 [rodLength=7B.0]"`
+
+### 自定义访问器
+
+如[变更访问器样式]()中所述，在创建不可变配置属性时，也可以自定义访问器：
+
+```java
+import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.annotation.AccessorsStyle;
+import io.micronaut.core.bind.annotation.Bindable;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
+
+@ConfigurationProperties("my.engine") (1)
+@AccessorsStyle(readPrefixes = "read") (2)
+public interface EngineConfigAccessors {
+
+    @Bindable(defaultValue = "Ford")
+    @NotBlank
+    String readManufacturer(); (3)
+
+    @Min(1L)
+    int readCylinders(); (3)
+
+    @NotNull
+    CrankShaft readCrankShaft(); (3)
+
+    @ConfigurationProperties("crank-shaft")
+    @AccessorsStyle(readPrefixes = "read") (4)
+    interface CrankShaft {
+        Optional<Double> readRodLength(); (5)
+    }
+}
+```
+
+1. [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解采用配置前缀，并在接口上声明
+2. [@AccessorsStyle](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解将 `readPrefix` 定义为 `read`。
+3. getter 都以 `read` 为前缀。
+4. 嵌套的不可变配置也可以用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 进行注解。
+5. getter 的前缀是 `read`。
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
