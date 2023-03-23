@@ -2603,7 +2603,7 @@ println(vehicle.start())
 
 ### 自定义访问器
 
-如[变更访问器样式]()中所述，在创建不可变配置属性时，也可以自定义访问器：
+如[变更访问器风格](#变更访问器风格)中所述，在创建不可变配置属性时，也可以自定义访问器：
 
 ```java
 import io.micronaut.context.annotation.ConfigurationProperties;
