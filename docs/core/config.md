@@ -2198,4 +2198,113 @@ class RateLimitsConfiguration
 2. 如果检索bean时顺序很重要，则实现 `Ordered`
 3. 索引被注入构造函数
 
+## 4.7 使用 @EachBean 驱动配置
+
+[@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 注解是驱动动态配置的好方法，但通常你希望将该配置注入另一个依赖于它的 bean。注入带有硬编码限定符的单个实例不是一个好的解决方案，因此 `@EachProperties` 通常与 [@EachBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachBean.html) 组合使用：
+
+*使用 @EachBean*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Factory // (1)
+public class DataSourceFactory {
+
+    @EachBean(DataSourceConfiguration.class) // (2)
+    DataSource dataSource(DataSourceConfiguration configuration) { // (3)
+        URI url = configuration.getUrl();
+        return new DataSource(url);
+    }
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Factory // (1)
+class DataSourceFactory {
+
+    @EachBean(DataSourceConfiguration) // (2)
+    DataSource dataSource(DataSourceConfiguration configuration) { // (3)
+        URI url = configuration.url
+        return new DataSource(url)
+    }
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Factory // (1)
+class DataSourceFactory {
+
+    @EachBean(DataSourceConfiguration::class) // (2)
+    internal fun dataSource(configuration: DataSourceConfiguration): DataSource { // (3)
+        val url = configuration.url
+        return DataSource(url)
+    }
+```
+
+  </TabItem>
+</Tabs>
+
+1. 上面的例子定义了一个 bean [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)，该工厂创建 `javax.sql.DataSource` 的实例。
+2. [@EachBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachBean.html) 注解表示将为上一节中定义的每个 `DataSourceConfiguration` 创建一个新的 `DataSource` bean。
+3. `DataSourceConfiguration` 实例作为方法参数注入，用于驱动每个 `javax.sql.DataSource` 的配置
+
+请注意，`@EachBean` 要求父 bean 具有 `@Named` 限定符，因为该限定符由 `@EachBean` 创建的每个 bean 继承。
+
+换句话说，要检索 `test.DataSource.one` 创建的 `DataSource`，你可以执行以下操作：
+
+*使用限定符*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+Collection<DataSource> beansOfType = applicationContext.getBeansOfType(DataSource.class);
+assertEquals(2, beansOfType.size()); // (1)
+
+DataSource firstConfig = applicationContext.getBean(
+        DataSource.class,
+        Qualifiers.byName("one") // (2)
+);
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+when:
+Collection<DataSource> beansOfType = applicationContext.getBeansOfType(DataSource)
+assertEquals(2, beansOfType.size()) // (1)
+
+DataSource firstConfig = applicationContext.getBean(
+        DataSource,
+        Qualifiers.byName("one") // (2)
+)
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val beansOfType = applicationContext.getBeansOfType(DataSource::class.java)
+assertEquals(2, beansOfType.size) // (1)
+
+val firstConfig = applicationContext.getBean(
+        DataSource::class.java,
+        Qualifiers.byName("one") // (2)
+)
+```
+
+  </TabItem>
+</Tabs>
+
+1. 我们在这里证明了确实有两个数据来源。我们如何才能得到一个特别的？
+2. 通过使用 `Qualifier.byName("one")`，我们可以选择要引用的两个 bean 中的哪一个
+
+
+
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
