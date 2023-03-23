@@ -1905,6 +1905,297 @@ class MapToLocalDateConverter : TypeConverter<Map<*, *>, LocalDate> { // (1)
 2. 实现委托给默认的共享转换服务，以转换用于创建 `LocalDate` 的 Map 中的值
 3. 如果绑定过程中发生异常，请调用 `reject(..)`，它会将附加信息传播到容器
 
+## 4.6 使用 @EachProperty 驱动配置
 
+[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解非常适合单个配置类，但有时你需要多个实例，每个实例都有自己独特的配置。这时就是 [EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 出场了。
+
+[@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 注解为给定属性中的每个子属性创建一个 `ConfigurationProperties` bean。例如，考虑以下类别：
+
+*使用 @EachProperty*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import io.micronaut.context.annotation.Parameter;
+import io.micronaut.context.annotation.EachProperty;
+
+@EachProperty("test.datasource")  // (1)
+public class DataSourceConfiguration {
+
+    private final String name;
+    private URI url = new URI("localhost");
+
+    public DataSourceConfiguration(@Parameter String name) // (2)
+            throws URISyntaxException {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public URI getUrl() { // (3)
+        return url;
+    }
+
+    public void setUrl(URI url) {
+        this.url = url;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.EachProperty
+import io.micronaut.context.annotation.Parameter
+
+@EachProperty("test.datasource") // (1)
+class DataSourceConfiguration {
+
+    final String name
+    URI url = new URI("localhost") // (3)
+
+    DataSourceConfiguration(@Parameter String name) // (2)
+            throws URISyntaxException {
+        this.name = name
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+
+```
+
+  </TabItem>
+</Tabs>
+
+1. `@EachProperty` 注解定义了要处理的属性名称。
+2. `@Parameter` 注解可用于注入子属性的名称，该子属性定义 bean 的名称（也是 bean 限定符）
+3. bean 的每个属性都绑定到配置。
+
+上面的 `DataSourceConfiguration` 定义了一个 `url` 属性来配置一个或多个数据源。URL 本身可以使用对 Micronaut 求值的任何 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html0) 实例进行配置
+
+*为 @EachProperty 提供配置*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
+        "test",
+        CollectionUtils.mapOf(
+                "test.datasource.one.url", "jdbc:mysql://localhost/one",
+                "test.datasource.two.url", "jdbc:mysql://localhost/two")
+));
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+ApplicationContext applicationContext = ApplicationContext.run(PropertySource.of(
+        "test",
+        [
+                "test.datasource.one.url": "jdbc:mysql://localhost/one",
+                "test.datasource.two.url": "jdbc:mysql://localhost/two"
+        ]
+))
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val applicationContext = ApplicationContext.run(PropertySource.of(
+        "test",
+        mapOf(
+                "test.datasource.one.url" to "jdbc:mysql://localhost/one",
+                "test.datasource.two.url" to "jdbc:mysql://localhost/two"
+        )
+))
+```
+
+  </TabItem>
+</Tabs>
+
+在上面的示例中，在@EachProperty注解中前面定义的test.datasource前缀下定义了两个数据源（称为一个和两个）。这些配置条目中的每一个都会触发创建一个新的DataSourceConfiguration bean，从而使以下测试成功：
+
+*评估 @EachProperty 构建的 Bean*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+Collection<DataSourceConfiguration> beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class);
+assertEquals(2, beansOfType.size()); // (1)
+
+DataSourceConfiguration firstConfig = applicationContext.getBean(
+        DataSourceConfiguration.class,
+        Qualifiers.byName("one") // (2)
+);
+
+assertEquals(
+        new URI("jdbc:mysql://localhost/one"),
+        firstConfig.getUrl()
+);
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+when:
+Collection<DataSourceConfiguration> beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.class)
+assertEquals(2, beansOfType.size()) // (1)
+
+DataSourceConfiguration firstConfig = applicationContext.getBean(
+        DataSourceConfiguration.class,
+        Qualifiers.byName("one") // (2)
+)
+
+then:
+new URI("jdbc:mysql://localhost/one") == firstConfig.getUrl()
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+val beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration::class.java)
+assertEquals(2, beansOfType.size) // (1)
+
+val firstConfig = applicationContext.getBean(
+        DataSourceConfiguration::class.java,
+        Qualifiers.byName("one") // (2)
+)
+
+assertEquals(
+        URI("jdbc:mysql://localhost/one"),
+        firstConfig.url
+)
+```
+
+  </TabItem>
+</Tabs>
+
+1. 可以使用 `getBeansOfType` 检索 `DataSourceConfiguration` 类型的所有 bean
+2. 可以使用 `byName` 限定符检索单个 bean
+
+**基于 List 的绑定**
+
+[@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 的默认行为是从映射样式的配置绑定，其中键是 bean 的命名限定符，值是要绑定的数据。对于映射样式配置没有意义的情况，可以通知 Micronaut 该类是从列表绑定的。只需将注解上的 `list` 成员设置为 true 即可。
+
+*@EachProperty List 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.EachProperty;
+import io.micronaut.context.annotation.Parameter;
+import io.micronaut.core.order.Ordered;
+
+import java.time.Duration;
+
+@EachProperty(value = "ratelimits", list = true) // (1)
+public class RateLimitsConfiguration implements Ordered { // (2)
+
+    private final Integer index;
+    private Duration period;
+    private Integer limit;
+
+    RateLimitsConfiguration(@Parameter Integer index) { // (3)
+        this.index = index;
+    }
+
+    @Override
+    public int getOrder() {
+        return index;
+    }
+
+    public Duration getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Duration period) {
+        this.period = period;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+import io.micronaut.context.annotation.EachProperty
+import io.micronaut.context.annotation.Parameter
+import io.micronaut.core.order.Ordered
+
+import java.time.Duration
+
+@EachProperty(value = "ratelimits", list = true) // (1)
+class RateLimitsConfiguration implements Ordered { // (2)
+
+    private final Integer index
+    Duration period
+    Integer limit
+
+    RateLimitsConfiguration(@Parameter Integer index) { // (3)
+        this.index = index
+    }
+
+    @Override
+    int getOrder() {
+        index
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+import io.micronaut.context.annotation.EachProperty
+import io.micronaut.context.annotation.Parameter
+import io.micronaut.core.order.Ordered
+import java.time.Duration
+
+@EachProperty(value = "ratelimits", list = true) // (1)
+class RateLimitsConfiguration
+    constructor(@param:Parameter private val index: Int) // (3)
+    : Ordered { // (2)
+
+    var period: Duration? = null
+    var limit: Int? = null
+
+    override fun getOrder(): Int {
+        return index
+    }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. 注解的 `list` 成员设置为 `true`
+2. 如果检索bean时顺序很重要，则实现 `Ordered`
+3. 索引被注入构造函数
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
