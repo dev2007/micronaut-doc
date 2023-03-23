@@ -2643,4 +2643,37 @@ public interface EngineConfigAccessors {
 4. 嵌套的不可变配置也可以用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 进行注解。
 5. getter 的前缀是 `read`。
 
+## 4.9 引导配置
+
+大多数应用程序配置存储在 `application.yml` 中；特定于环境的文件，如 `application-{environment}.{extension}`；环境和系统属性等。这些配置应用程序上下文。但在应用程序启动期间，在创建应用程序上下文之前，可以创建一个“引导”上下文来存储检索主上下文的附加配置所需的配置。通常，该附加配置位于某个远程源中。
+
+根据以下条件启用引导上下文。按以下顺序检查条件：
+
+- 如果设置了 [BOOTSTRAP_CONTEXT_PROPERTY](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/Environment.html#BOOTSTRAP_CONTEXT_PROPERTY) 系统属性，则该值将确定是否启用引导程序上下文。
+- 如果设置了应用程序上下文生成器选项 [bootstrapEnvironment](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html#bootstrapEnvironment)，则该值确定是否启用了引导上下文。
+- 如果存在 [BootstrapPropertySourceLocator](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/BootstrapPropertySourceLocator.html) bean，则会启用引导上下文。通常情况下，这来自于 `micronaut-discovery-client` 依赖。
+
+解析应用程序上下文配置属性之前必须存在的配置属性（例如，在使用分布式配置时）存储在引导配置文件中。一旦确定启用了引导上下文（如上所述），就使用与常规应用程序配置相同的规则来读取引导配置文件。有关详细信息，请参阅[属性源](https://docs.micronaut.io/3.8.4/guide/index.html#propertySource)文档。唯一的区别是前缀（`bootstrap` 替代 `application`）。
+
+文件名前缀 `bootstrap` 可使用系统属性 [micronaut.bootstrap.name](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/Environment.html#BOOTSTRAP_NAME_PROPERTY) 进行配置。
+
+:::tip 注意
+引导上下文配置会自动传递到主上下文，因此不需要在主上下文中复制配置属性。此外，引导上下文配置的优先级高于主上下文，这意味着如果配置属性出现在两个上下文中，则该值将首先从引导上下文中获取。
+:::
+
+这意味着，如果两个地方都需要一个配置属性，那么它应该进入引导上下文配置。
+
+有关与常见[分布式配置](../core/cloud.html#811-分页式配置)解决方案的集成列表，参阅文档的分布式配置部分。
+
+**引导上下文 Bean**
+
+为了在引导上下文中解析 bean，必须使用 [@BootstrapContextCompatible](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/BootstrapContextCompatible.html) 对其进行注解。如果任何给定的 bean 都没有注解，那么它将无法在引导上下文中解析。通常，任何参与检索分布式配置过程的 bean 都需要进行注解。
+
+
+## 4.10 JMX 支持
+
+Micronaut为 JMX 提供基本支持。
+
+更多信息，参阅 micronaut-jmx 项目的[文档](../jmx/introduction.html)。
+
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
