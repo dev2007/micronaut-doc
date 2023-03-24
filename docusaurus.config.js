@@ -53,6 +53,10 @@ const config = {
     {
       src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8380975615223941',
       crossorigin: 'anonymous'
+    },
+    {
+      src: 'https://hm.baidu.com/hm.js?2bb640b3d02f2dfa0c0b4ef151d1d852',
+      async: true
     }
   ],
 
