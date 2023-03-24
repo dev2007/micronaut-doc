@@ -52,7 +52,8 @@ const sidebars = {
         "servlet/repository"
       ]
     },
-    "jmx/jmx"
+    "jmx/jmx",
+    "aot/aot"
   ],
   actionSidebar: [
     "action/guide",

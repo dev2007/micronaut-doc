@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # 2. 快速开始
 
-以下部分将引导您快速入门，了解如何使用 Micronaut 设置基本的“Hello World”应用程序。
+以下部分将引导你快速入门，了解如何使用 Micronaut 设置基本的“Hello World”应用程序。
 
 开始之前，请确保安装了 Java 8 或更高版本的 JDK，建议你使用[合适的 IDE](#设置一个-IDE)，如 IntelliJ IDEA。
 
@@ -16,12 +16,12 @@ Micronaut CLI 是创建 Micronaut 应用程序的可选但方便的方法。在 
 
 ## 2.2 创建服务器应用程序
 
-使用 Micronaut CLI，您可以在 Groovy、Java 或 Kotlin（默认为 Java）中创建一个新的 Micronaut 应用程序。
+使用 Micronaut CLI，你可以在 Groovy、Java 或 Kotlin（默认为 Java）中创建一个新的 Micronaut 应用程序。
 
 以下命令使用 Gradle 在 Java 中创建一个新的 “Hello World” 服务器应用程序：
 
 :::tip 注意
-通过我们的 CLI 生成的应用程序包括 Gradle 或 Maven 包装器，因此甚至不需要在您的机器上安装 Gradle 或 Maven 即可开始运行应用程序。只需使用 mvnw 或 gradlew 命令，如下所述。
+通过我们的 CLI 生成的应用程序包括 Gradle 或 Maven 包装器，因此甚至不需要在你的机器上安装 Gradle 或 Maven 即可开始运行应用程序。只需使用 mvnw 或 gradlew 命令，如下所述。
 :::
 
 ```bash
@@ -221,7 +221,7 @@ Micronaut 需要 Eclipse IDE 4.9 或更高版本
 
 安装这些文件后，通过选择 `File → Import` 导入项目，并选择 `Maven → Existing Maven Project` 并导航到项目的根目录（`pom.xml` 文件所在的位置）。
 
-然后通过打开 `Eclipse → Preferences` 启用注释处理，并导航到 `Maven → Annotation Processing` 和选择选项 `Automatically configure JDT APT`。
+然后通过打开 `Eclipse → Preferences` 启用注解处理，并导航到 `Maven → Annotation Processing` 和选择选项 `Automatically configure JDT APT`。
 
 ### 2.3.3 Visual Studio Code
 
@@ -377,7 +377,7 @@ class HelloControllerSpec {
 
 除了低级客户端之外，Micronaut 还具有一个[声明性的编译时 HTTP 客户端](/core/httpclient.html#73-带有-client-的声明性-http-客户端)，由[客户端](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html)注解提供支持。
 
-要创建客户端，请创建一个用 `@Client` 注释的接口，例如：
+要创建客户端，请创建一个用 `@Client` 注解的接口，例如：
 
 *src/main/java/hello/world/HelloClient.java*
 
