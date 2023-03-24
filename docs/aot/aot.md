@@ -10,7 +10,7 @@ Micronaut AOT 是一个为 Micronaut 应用程序和库实现提前（AOT）优�
 
 Micronaut AOT 可以为不同的环境生成特定的优化，特别是，它可以区分 JIT 模式（传统 JVM 应用程序）和本地模式（使用 GraalVM `native-image` 编译的应用程序）所需的优化。
 
-:::warning 警告
+:::caution 警告
 与其他 Micronaut 模块不同，Micronaut AOT 不是一个需要添加到应用程序中的依赖项：它是一个需要与构建过程集成的框架：它通常旨在集成到构建工具插件中。
 :::
 

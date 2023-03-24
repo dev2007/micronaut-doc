@@ -31,7 +31,7 @@ implementation("io.micronaut.servlet:micronaut-http-server-undertow:3.3.5")
   </TabItem>
 </Tabs>
 
-:::warning 警告
+:::caution 警告
 GraalVM 本地镜像不支持 Undertow。如果需要本地镜像支持，请使用 [Jetty](../servlet/jetty.html) 或 [Tomcat](../servlet/tomcat.html)。参阅 [UNDERTOW-1408](https://issues.redhat.com/projects/UNDERTOW/issues/UNDERTOW-1408)。
 :::
 

@@ -2883,7 +2883,7 @@ class BookFactory {
   </TabItem>
 </Tabs>
 
-:::warning 警告
+:::caution 警告
 要完全替换工厂，工厂方法必须与替换工厂中所有方法的返回类型匹配。
 :::
 
@@ -3565,7 +3565,7 @@ class SampleEventEmitterBean {
   </TabItem>
 </Tabs>
 
-:::warning 警告
+:::caution 警告
 默认情况下，发布事件是**同步**的！在执行所有侦听器之前，`publishEvent` 方法不会返回。如果时间密集，将此工作移到线程池。
 :::
 
@@ -4836,7 +4836,7 @@ open class PersonService {
 
 上面的示例声明调用 `sayHello` 方法时将验证 `@NotBlank` 注解。
 
-:::warning 警告
+:::caution 警告
 如果使用 Kotlin，则必须将类和方法声明为 `open` 的，这样 Micronaut 才能创建编译时子类。或者，你可以使用 [@Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解类，并将 Kotlin `all-open` 插件配置为使用此类型注解的类。参阅[编译器插件](https://kotlinlang.org/docs/reference/compiler-plugins.html)部分。
 :::
 
