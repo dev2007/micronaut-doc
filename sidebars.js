@@ -62,6 +62,8 @@ const sidebars = {
       label: '2. 第一个应用',
       link: {type: 'doc',id: 'action/firstapp'},
       items: [
+        "action/application",
+        "action/controller"
       ],
     },
   ],
