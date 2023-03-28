@@ -33,7 +33,8 @@ const sidebars = {
         "core/introduction",
         "core/quickstart",
         "core/ioc",
-        "core/config"
+        "core/config",
+        "core/aop"
       ]
     },
     {
