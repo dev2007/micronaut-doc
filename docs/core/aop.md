@@ -734,15 +734,15 @@ public @interface EventListener {
 
 ## 5.4 Bean 生命周期通知
 
-有时您可能需要将建议应用于 bean 的生命周期。在这种情况下，有三种类型的建议适用：
+有时你可能需要将建议应用于 bean 的生命周期。在这种情况下，有三种类型的建议适用：
 
 - 拦截 bean 的构造
 - 拦截 bean 的 `@PostConstruct` 调用
 - 拦截 bean 的 `@PreDestroy` 调用
 
-Micronaut 通过允许定义额外的 [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 元注释来支持这3个用例。
+Micronaut 通过允许定义额外的 [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 元注解来支持这3个用例。
 
-考虑以下注释定义：
+考虑以下注解定义：
 
 *AroundConstruct 示例*
 
@@ -803,14 +803,14 @@ annotation class ProductBean
   </TabItem>
 </Tabs>
 
-1. 添加 [@AroundConstruct](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/AroundConstruct.html) 注释以指示应该发生对构造函数的拦截
+1. 添加 [@AroundConstruct](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/AroundConstruct.html) 注解以指示应该发生对构造函数的拦截
 2. [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 定义用于指示应进行 @PostConstruct 拦截
 3. [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 定义用于指示应进行 @PreDestroy 拦截
 4. bean 被定义为 [@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html)，因此每个注入点都需要一个新的实例
 
-请注意，如果您不需要 `@PostConstruct` 和 `@PreDestroy` 拦截，您可以简单地删除这些绑定。
+请注意，如果你不需要 `@PostConstruct` 和 `@PreDestroy` 拦截，你可以简单地删除这些绑定。
 
-然后可以在目标类上使用 `@ProductBean` 注释：
+然后可以在目标类上使用 `@ProductBean` 注解：
 
 *使用 AroundConstruct 元注解*
 
@@ -894,11 +894,11 @@ class Product(@param:Parameter val productName: String ) { // (2)
   </TabItem>
 </Tabs>
 
-1. `@ProductBean` 注释是在 `Product` 类型的类上定义的
-2. [@Parameter](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Parameter.html) 注释指示此 bean 需要一个参数来完成构造
+1. `@ProductBean` 注解是在 `Product` 类型的类上定义的
+2. [@Parameter](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Parameter.html) 注解指示此 bean 需要一个参数来完成构造
 3. 任何 `@PreDestroy` 或 `@PostConstruct` 方法都是在拦截器链中最后执行的
 
-现在，您可以为构造函数拦截定义 [ConstructorInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/ConstructorInterceptor.html) bean，为 `@PostConstruct` 或 `@PreDestroy` 拦截定义 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html)  bean。
+现在，你可以为构造函数拦截定义 [ConstructorInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/ConstructorInterceptor.html) bean，为 `@PostConstruct` 或 `@PreDestroy` 拦截定义 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html)  bean。
 
 以下工厂定义了一个 [ConstructorInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/ConstructorInterceptor.html)，它拦截 `Product` 实例的构造，并将它们注册到一个假设的 `ProductService` 中，首先验证产品名称：
 
@@ -1004,7 +1004,7 @@ fun aroundConstruct(): ConstructorInterceptor<Product> { // (1)
 2. 构造函数参数值可以根据需要进行检索和修改
 3. 构造函数可以使用 `processed()` 方法调用
 
-定义拦截 `@PostConstruct` 和 `@PreDestroy` 方法的 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 实例与为常规方法定义拦截器没有什么不同。然而，请注意，您可以使用传递的 [MethodInvocationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInvocationContext.html) 来识别正在发生的拦截类型，并相应地调整代码，如以下示例所示：
+定义拦截 `@PostConstruct` 和 `@PreDestroy` 方法的 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 实例与为常规方法定义拦截器没有什么不同。然而，请注意，你可以使用传递的 [MethodInvocationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInvocationContext.html) 来识别正在发生的拦截类型，并相应地调整代码，如以下示例所示：
 
 *定义一个构造函数拦截器*
 
@@ -1084,11 +1084,11 @@ fun  aroundInvoke(): MethodInterceptor<Product, Any> { // (1)
 
 ## 5.5 验证通知
 
-验证通知是您可能希望在应用程序中使用的最常见的通知类型之一。
+验证通知是你可能希望在应用程序中使用的最常见的通知类型之一。
 
-验证通知建立在 [Bean Validation JSR 380](https://beanvalidation.org/2.0/spec/) 之上，这是一种用于 Bean 验证的 Java API 规范，它使用 `javax.Validation` 注释，如 `@NotNull`、`@Min` 和 `@Max`，确保 bean 的属性符合特定标准。
+验证通知建立在 [Bean Validation JSR 380](https://beanvalidation.org/2.0/spec/) 之上，这是一种用于 Bean 验证的 Java API 规范，它使用 `javax.Validation` 注解，如 `@NotNull`、`@Min` 和 `@Max`，确保 bean 的属性符合特定标准。
 
-Micronaut 为带有 `micronaut-validation` 依赖的 `javax.validation` 注释提供本机支持：
+Micronaut 为带有 `micronaut-validation` 依赖的 `javax.validation` 注解提供本机支持：
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
@@ -1134,7 +1134,7 @@ implementation("io.micronaut:micronaut-hibernate-validator")
 
 ## 5.6 缓存通知
 
-与 Spring 和 Grails 一样，Micronaut 在 [io.Micronaut.cache](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/package-summary.html) 包中提供缓存注释。
+与 Spring 和 Grails 一样，Micronaut 在 [io.Micronaut.cache](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/package-summary.html) 包中提供缓存注解。
 
 [CacheManager](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/CacheManager.html) 接口允许根据需要插入不同的缓存实现。
 
@@ -1142,13 +1142,13 @@ implementation("io.micronaut:micronaut-hibernate-validator")
 
 ### 缓存注解
 
-支持以下缓存注释：
+支持以下缓存注解：
 
 - [@Cacheable ](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/annotation/Cacheable.html)——表示方法在指定的缓存中是可缓存的
 - [@CachePut](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/annotation/CachePut.html)——指示应该缓存方法调用的返回值。与 `@Cacheable` 不同的是，从未跳过原始操作。
 - [@CacheInvalidate](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/annotation/CacheInvalidate.html)——指示方法的调用应导致一个或多个缓存失效。
 
-使用其中一个注释会激活 [CacheInterceptor](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/interceptor/CacheInterceptor)，在 `@Cacheable` 的情况下，它会缓存方法的返回值。
+使用其中一个注解会激活 [CacheInterceptor](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/interceptor/CacheInterceptor)，在 `@Cacheable` 的情况下，它会缓存方法的返回值。
 
 如果方法返回类型是非阻塞类型（[CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html) 或 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 实例），则会缓存发出的结果。
 
@@ -1172,10 +1172,10 @@ micronaut:
 :::tip 注意
 *命名缓存*
 
-以 kebab 风格（小写和连字符分隔）定义 `micronaut.caches` 下的缓存名称；如果使用驼峰风格，则名称将标准化为 kebab 风格。例如， `myCache` 将成为 `my-cache`。引用 [@Cacheable](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/annotation/Cacheable.html) 注释中的缓存时，必须使用 kebab 风格。
+以 kebab 风格（小写和连字符分隔）定义 `micronaut.caches` 下的缓存名称；如果使用驼峰风格，则名称将标准化为 kebab 风格。例如， `myCache` 将成为 `my-cache`。引用 [@Cacheable](https://micronaut-projects.github.io/micronaut-cache/latest/api/io/micronaut/cache/annotation/Cacheable.html) 注解中的缓存时，必须使用 kebab 风格。
 :::
 
-要配置与 `maximumWeight` 配置一起使用的权重，请创建一个实现 `io.micronaut.caffeine.cache.weigher` 的 bean。要将给定的权重仅与特定的缓存关联，请使用 `@Named(<cache name>)` 注释 bean。没有命名限定符的权重适用于所有没有命名权重的缓存。如果没有找到 bean，则使用默认实现。
+要配置与 `maximumWeight` 配置一起使用的权重，请创建一个实现 `io.micronaut.caffeine.cache.weigher` 的 bean。要将给定的权重仅与特定的缓存关联，请使用 `@Named(<cache name>)` 注解 bean。没有命名限定符的权重适用于所有没有命名权重的缓存。如果没有找到 bean，则使用默认实现。
 
 有关所有可用的配置选项，参阅[配置参考](https://micronaut-projects.github.io/micronaut-cache/latest/guide/configurationreference.html#io.micronaut.cache.caffeine.DefaultCacheConfiguration)。
 
@@ -1188,5 +1188,489 @@ micronaut:
 ### 其他缓存实现
 
 详细信息，参阅 [Micronaut Cache](../cache/introduction.html) 项目。
+
+## 5.7 重试通知
+
+在分布式系统和微服务环境中，失败是你必须计划的事情，如果操作失败，尝试重试是很常见的。如果第一次没有成功，请再试一次！
+
+考虑到这一点，Micronaut 包含了一个 [Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 注解。
+
+### 简单重试
+
+最简单的重试形式就是将 `@Retryable` 注解添加到类型或方法中。`@Retryable` 的默认行为是重试三次，每次重试之间有一秒的指数延迟。（第一次尝试延迟 1s，第二次尝试延迟2s，第三次尝试延迟3s）。
+
+例如：
+
+*简单重试示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Retryable
+public List<Book> listBooks() {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Retryable
+List<Book> listBooks() {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Retryable
+open fun listBooks(): List<Book> {
+    // ...
+```
+
+  </TabItem>
+</Tabs>
+
+在上面的例子中，如果 `listBooks()` 方法抛出 RuntimeException，则会重试，直到达到最大尝试次数。
+
+`@Retryable` 注解的 `multiplier` 可用于配置用于计算重试之间延迟的乘数，从而支持指数重试。
+
+要自定义重试行为，请设置 `attempts` 和 `delay` 成员。例如，配置五次延迟两秒的尝试：
+
+*设置重试尝试*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Retryable(attempts = "5",
+           delay = "2s")
+public Book findBook(String title) {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Retryable(attempts = "5",
+           delay = "2s")
+Book findBook(String title) {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Retryable(attempts = "5",
+           delay = "2s")
+open fun findBook(title: String): Book {
+    // ...
+```
+
+  </TabItem>
+</Tabs>
+
+请注意，`attempts` 和 `delay` 是如何定义为字符串的。这是为了通过注解元数据支持可配置性。例如，你可以允许使用属性占位符解析来配置重试策略：
+
+*通过配置设置重试*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Retryable(attempts = "${book.retry.attempts:3}",
+           delay = "${book.retry.delay:1s}")
+public Book getBook(String title) {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Retryable(attempts = '${book.retry.attempts:3}',
+           delay = '${book.retry.delay:1s}')
+Book getBook(String title) {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Retryable(attempts = "\${book.retry.attempts:3}",
+           delay = "\${book.retry.delay:1s}")
+open fun getBook(title: String): Book {
+    // ...
+```
+
+  </TabItem>
+</Tabs>
+
+有了以上内容，如果在配置中指定了 `book.retry.attempts`，它将通过注解元数据绑定到 `@Retryable` 注解的 `attempts` 成员的值。
+
+---
+
+### 响应式重试
+
+`@Retryable` 通知也可以应用于返回响应类型的方法，例如 `Publisher`（[Project Reactor](https://projectreactor.io/) 的 `Flux` 或 [RxJava](https://github.com/ReactiveX/RxJava) 的 `Flowable`）。例如：
+
+*将重试策略应用于响应类型*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Retryable
+public Publisher<Book> streamBooks() {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Retryable
+Flux<Book> streamBooks() {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Retryable
+open fun streamBooks(): Flux<Book> {
+    // ...
+```
+
+  </TabItem>
+</Tabs>
+
+在这个例子中，`@Retryable` 建议将重试策略应用于响应类型。
+
+---
+
+### 断路器
+
+重试在微服务环境中很有用，但在某些情况下，由于客户端反复尝试失败的操作，过多的重试可能会使系统不堪重负。
+
+[断路器](https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern)模式旨在解决此问题，方法是允许一定数量的失败请求，然后打开一个在允许额外重试之前保持打开状态一段时间的电路。
+
+[CircuitBreaker](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/CircuitBreaker.html) 注解是 `@Retryable` 注解的变体，它支持一个 `reset` 成员，该成员指示环路在重置之前应保持断开的时间（默认值为 20 秒）。
+
+*应用 CircuitBreaker 通知*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@CircuitBreaker(reset = "30s")
+public List<Book> findBooks() {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@CircuitBreaker(reset = "30s")
+List<Book> findBooks() {
+    // ...
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@CircuitBreaker(reset = "30s")
+open fun findBooks(): List<Book> {
+    // ...
+```
+
+  </TabItem>
+</Tabs>
+
+上面的示例重试 `findBooks` 方法三次，然后断开环路 30 秒，重新抛出原始异常并防止潜在的下游流量，如 HTTP 请求和 I/O 操作淹没系统。
+
+---
+
+### 工厂 Bean 重试
+
+当 [@Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 被应用于 bean 工厂方法时，它的行为就像注解被放置在要返回的类型上一样。当调用返回对象上的方法时，将应用重试行为。请注意，**不会**重试 bean 工厂方法本身。如果你希望重试创建 bean 的功能，则应该将其委托给另一个应用了 [@Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 注解的单例。
+
+例如：
+
+```java
+@Factory (1)
+public class Neo4jDriverFactory {
+    ...
+    @Retryable(ServiceUnavailableException.class) (2)
+    @Bean(preDestroy = "close")
+    public Driver buildDriver() {
+        ...
+    }
+}
+```
+
+1. 创建了一个工厂 bean，它定义了创建 bean 的方法
+2. [@Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 注解用于捕获 `Driver` 上执行的方法引发的异常
+
+### 重试事件
+
+你可以将 [RetryEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/RetryEventListener.html) 实例注册为 bean，以侦听每次重试操作时发布的 [RetryEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/RetryEvent.html) 事件。
+
+此外，你可以为 [CircuitOpenEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/CircuitOpenEvent.html) 注册事件侦听器，以在断路器环路打开时得到通知，或为 [CircuitClosedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/CircuitClosedEvent.html) 注册，以便当环路关闭时得到通知。
+
+## 5.8 调度任务
+
+与 Spring 和 Grails 类似，Micronaut 具有用于调度后台任务的 [Scheduled](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/Scheduled.html) 注解。
+
+### 使用 @Scheduled 注解
+
+[Scheduled](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/Scheduled.html) 注解可以添加到 bean 的任何方法中，并且你应该设置 `fixedRate`、`fixedDelay` 或 `cron` 其中一个成员。
+
+:::tip 注意
+请记住，bean 的范围会影响行为。每次执行调度的方法时，`@Singleton` bean 都会共享状态（实例的字段），而对于 `@Prototype` bean，每次执行都会创建一个新实例。
+:::
+
+**固定频率调度**
+
+要按固定频率调度任务，请使用 `fixedRate` 成员。例如：
+
+*固定频率示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Scheduled(fixedDelay = "5m")
+void fiveMinutesAfterLastExecution() {
+    System.out.println("Executing fiveMinutesAfterLastExecution()");
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Scheduled(fixedDelay = "5m")
+void fiveMinutesAfterLastExecution() {
+    println "Executing fiveMinutesAfterLastExecution()"
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Scheduled(fixedDelay = "5m")
+internal fun fiveMinutesAfterLastExecution() {
+    println("Executing fiveMinutesAfterLastExecution()")
+}
+```
+
+  </TabItem>
+</Tabs>
+
+**Cron 任务调度**
+
+要调度 [Cron](https://en.wikipedia.org/wiki/Cron) 任务，请使用 `cron` 成员：
+
+*Cron 示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Scheduled(cron = "0 15 10 ? * MON")
+void everyMondayAtTenFifteenAm() {
+    System.out.println("Executing everyMondayAtTenFifteenAm()");
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Scheduled(cron = "0 15 10 ? * MON")
+void everyMondayAtTenFifteenAm() {
+    println "Executing everyMondayAtTenFifteenAm()"
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Scheduled(cron = "0 15 10 ? * MON")
+internal fun everyMondayAtTenFifteenAm() {
+    println("Executing everyMondayAtTenFifteenAm()")
+}
+```
+
+  </TabItem>
+</Tabs>
+
+上面的示例每周一上午 10:15 在服务器的时区运行任务。
+
+**只有初始延迟的调度**
+
+要调度任务，使其在服务器启动后运行一次，请使用 `initialDelay` 成员：
+
+*初始延迟示例*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Scheduled(initialDelay = "1m")
+void onceOneMinuteAfterStartup() {
+    System.out.println("Executing onceOneMinuteAfterStartup()");
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Scheduled(initialDelay = "1m")
+void onceOneMinuteAfterStartup() {
+    println "Executing onceOneMinuteAfterStartup()"
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Scheduled(initialDelay = "1m")
+internal fun onceOneMinuteAfterStartup() {
+    println("Executing onceOneMinuteAfterStartup()")
+}
+```
+
+  </TabItem>
+</Tabs>
+
+上面的示例只运行一次，即服务器启动后一分钟。
+
+### 编程调用任务
+
+要以编程方式调度任务，请使用 [TaskScheduler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskScheduler.html) bean，该 bean 可以按如下方式注入：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Inject
+@Named(TaskExecutors.SCHEDULED)
+TaskScheduler taskScheduler;
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Inject
+@Named(TaskExecutors.SCHEDULED)
+TaskScheduler taskScheduler
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Inject
+@Named(TaskExecutors.SCHEDULED)
+lateinit var taskScheduler: TaskScheduler
+```
+
+  </TabItem>
+</Tabs>
+
+### 使用注解元数据配置计划任务
+
+要使应用程序的任务可配置，可以使用注解元数据和属性占位符配置。例如：
+
+*允许任务被配置*
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Scheduled(fixedRate = "${my.task.rate:5m}",
+        initialDelay = "${my.task.delay:1m}")
+void configuredTask() {
+    System.out.println("Executing configuredTask()");
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Scheduled(fixedRate = '${my.task.rate:5m}',
+        initialDelay = '${my.task.delay:1m}')
+void configuredTask() {
+    println "Executing configuredTask()"
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Scheduled(fixedRate = "\${my.task.rate:5m}",
+        initialDelay = "\${my.task.delay:1m}")
+internal fun configuredTask() {
+    println("Executing configuredTask()")
+}
+```
+
+  </TabItem>
+</Tabs>
+
+上述示例允许使用属性 `my.task.rate` 配置任务执行频率，并使用属性 `my_task.delay` 配置初始延迟。
+
+### 配置调度任务线程池
+
+默认情况下，由 `@Scheduled` 执行的任务在 [ScheduledExecutorService](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html) 上运行，该服务配置为具有两倍于可用处理器的线程数。
+
+你可以使用 `application.yml` 配置此线程池，例如：
+
+*配置调度任务线程池*
+
+```yaml
+micronaut:
+  executors:
+    scheduled:
+      type: scheduled
+      core-pool-size: 30
+```
+
+*表 1. [UserExecutorConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html) 的配置属性*
+
+|属性|类型|描述|
+|--|--|--|
+|micronaut.executors.*.n-threads|java.lang.Integer||
+|micronaut.executors.*.type|[ExecutorType](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/ExecutorType.html)||
+|micronaut.executors.*.parallelism|java.lang.Integer||
+|micronaut.executors.*.core-pool-size|java.lang.Integer||
+|micronaut.executors.*.thread-factory-class|java.lang.Class||
+|micronaut.executors.*.name|java.lang.String|设置执行器名字。|
+|micronaut.executors.*.number-of-threads|java.lang.Integer|设置 [FIXED](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED) 的线程数。默认值（ 2 * Java 虚拟机可用的处理器数量）|
+
+---
+
+### 异常处理
+
+默认情况下，Micronaut 包括一个 [DefaultTaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/DefaultTaskExceptionHandler.html) bean，它实现 [TaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskExceptionHandler.html) 接口，并在调用计划任务时发生错误时简单地记录异常。
+
+如果你有自定义需求，你可以用自己的实现来替换这个 bean（例如发送电子邮件或关闭上下文以快速失败）。要做到这一点，请编写自己的 [TaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskExceptionHandler.html)，并用 @Replaces(DefaultTaskExceptionHandler.class) 对其进行注解。
 
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#aop)
