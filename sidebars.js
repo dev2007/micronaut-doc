@@ -39,6 +39,22 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Micronaut Cache',
+      items: [
+        "cache/introduction",
+        "cache/releaseHistory",
+        "cache/cache-abstraction",
+        "cache/jcache",
+        "cache/redis",
+        "cache/ehcache",
+        "cache/hazelcast",
+        "cache/infinispan",
+        "cache/microstream",
+        "cache/repository"
+      ]
+    },
+    {
+      type: 'category',
       label: 'Micronaut Servlet',
       items: [
         "servlet/introduction",
