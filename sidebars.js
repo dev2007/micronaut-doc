@@ -55,6 +55,22 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Micronaut Redis',
+      items: [
+        "redis/introduction",
+        "redis/releaseHistory",
+        "redis/setup",
+        "redis/config",
+        "redis/testing",
+        "redis/cache",
+        "redis/sessions",
+        "redis/graalvm",
+        "redis/repository",
+        "redis/appendix"
+      ]
+    },
+    {
+      type: 'category',
       label: 'Micronaut Servlet',
       items: [
         "servlet/introduction",

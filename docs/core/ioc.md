@@ -2513,7 +2513,7 @@ internal class EngineFactory {
 
 ## 3.9 条件 Bean
 
-有时，你可能希望基于各种潜在因素，包括类路径、配置、其他bean的存在等，有条件地加载bean。
+有时，你可能希望基于各种潜在因素，包括 classpath、配置、其他bean的存在等，有条件地加载bean。
 
 [Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 注解提供了在 bean 上定义一个或多个条件的能力。
 
@@ -2643,7 +2643,7 @@ public class JdbcBookService implements BookService {
 |要求具有可选值的属性|`@Requires(property="data-source.url")`|
 |要求属性不是配置的一部分|`@Requires(missingProperty="data-source.url")`|
 |要求文件系统中存在一个或多个文件|`@Requires(resources="file:/path/to/file")`|
-|要求存在一个或多个类路径资源|`@Requires(resources="classpath:myFile.properties")`|
+|要求存在一个或多个 classpath 资源|`@Requires(resources="classpath:myFile.properties")`|
 |要求当前操作系统在列表中|`@Requires(os={Requires.Family.WINDOWS})`|
 |要求当前操作系统**不**在列表中|`@Requires(notOs={Requires.Family.WINDOWS})`|
 |如果未指定 beanProperty，则要求 bean|`@Requires(bean=Config.class)`|
@@ -6019,7 +6019,7 @@ Micronaut `inject-java` 依赖使用 [Android java 8](https://developer.android.
 
 ### 启用依赖注入
 
-一旦正确配置了类路径，下一步就是启动 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html)。
+一旦正确配置了 classpath，下一步就是启动 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html)。
 
 以下示例演示了为此创建 [android.app.Application](https://developer.android.com/reference/android/app/Application.html) 的子类：
 

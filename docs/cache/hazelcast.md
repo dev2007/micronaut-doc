@@ -52,7 +52,7 @@ hazelcast:
     addresses: ['121.0.0.1:5701']
 ```
 
-如果你在工作目录或类路径中提供 Hazelcast 配置文件（例如：`hazelcast.xml`、`hazelcast.yml`、`hazelcast-client.xml` 或 `Hazelcast-client.yml`），Micronaut 将使用此配置文件来配置 Hazelccast 实例。
+如果你在工作目录或 classpath 中提供 Hazelcast 配置文件（例如：`hazelcast.xml`、`hazelcast.yml`、`hazelcast-client.xml` 或 `Hazelcast-client.yml`），Micronaut 将使用此配置文件来配置 Hazelccast 实例。
 
 当使用 [@Cacheable](https://micronaut-projects.github.io/micronaut-cache/3.5.0/api/io/micronaut/cache/annotation/Cacheable.html) 和其他缓存注解时，Micronaut 将创建 Hazelcast 客户端，并使用服务器上的底层 [IMap](https://docs.hazelcast.org/docs/latest/javadoc/com/hazelcast/core/IMap.html) 缓存数据存储。
 
