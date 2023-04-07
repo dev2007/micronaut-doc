@@ -71,6 +71,24 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Micronaut MicorStream',
+      items: [
+        "microstream/introduction",
+        "microstream/releaseHistory",
+        "microstream/dependency",
+        "microstream/configuration",
+        "microstream/rootInstance",
+        "microstream/annotations",
+        "microstream/storage",
+        "microstream/cache",
+        "microstream/microstreamMetrics",
+        "microstream/storageHealth",
+        "microstream/rest",
+        "microstream/repository"
+      ]
+    },
+    {
+      type: 'category',
       label: 'Micronaut Servlet',
       items: [
         "servlet/introduction",
@@ -86,7 +104,7 @@ const sidebars = {
       ]
     },
     "jmx/jmx",
-    "aot/aot"
+    "aot/aot",
   ],
   actionSidebar: [
     "action/guide",
