@@ -34,7 +34,20 @@ const sidebars = {
         "core/quickstart",
         "core/ioc",
         "core/config",
-        "core/aop"
+        "core/aop",
+        {
+          type: 'category',
+          label: '6. HTTP 服务器',
+          link: {type: 'doc',id: "core/httpServer"},
+          items: [
+            "core/httpserver/runningServer",
+            "core/httpserver/runningSpecificPort",
+            "core/httpserver/routing",
+            "core/httpserver/binding",
+            "core/httpserver/customArgumentBinding",
+            "core/httpserver/localeResolution"
+          ]
+        }
       ]
     },
     {
@@ -111,7 +124,7 @@ const sidebars = {
     {
       type: 'category',
       label: '2. 第一个应用',
-      link: {type: 'doc',id: 'action/firstapp'},
+      link: { type: 'doc', id: 'action/firstapp' },
       items: [
         "action/application",
         "action/controller"
