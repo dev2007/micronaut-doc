@@ -45,7 +45,10 @@ const sidebars = {
             "core/httpserver/routing",
             "core/httpserver/binding",
             "core/httpserver/customArgumentBinding",
-            "core/httpserver/localeResolution"
+            "core/httpserver/localeResolution",
+            "core/httpserver/clientIpAddress",
+            "core/httpserver/requestResponse",
+            "core/httpserver/statusAnnotation"
           ]
         }
       ]
