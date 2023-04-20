@@ -48,7 +48,10 @@ const sidebars = {
             "core/httpserver/localeResolution",
             "core/httpserver/clientIpAddress",
             "core/httpserver/requestResponse",
-            "core/httpserver/statusAnnotation"
+            "core/httpserver/statusAnnotation",
+            "core/httpserver/producesAnnotation",
+            "core/httpserver/consumesAnnotation",
+            "core/httpserver/reactiveServer"
           ]
         }
       ]
