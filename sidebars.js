@@ -51,7 +51,8 @@ const sidebars = {
             "core/httpserver/statusAnnotation",
             "core/httpserver/producesAnnotation",
             "core/httpserver/consumesAnnotation",
-            "core/httpserver/reactiveServer"
+            "core/httpserver/reactiveServer",
+            "core/httpserver/jsonBinding"
           ]
         }
       ]
