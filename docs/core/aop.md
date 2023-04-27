@@ -1084,7 +1084,7 @@ fun  aroundInvoke(): MethodInterceptor<Product, Any> { // (1)
 
 ## 5.5 验证通知
 
-验证通知是你可能希望在应用程序中使用的最常见的通知类型之一。
+验证通知（Validation Advice）是你可能希望在应用程序中使用的最常见的通知类型之一。
 
 验证通知建立在 [Bean Validation JSR 380](https://beanvalidation.org/2.0/spec/) 之上，这是一种用于 Bean 验证的 Java API 规范，它使用 `javax.Validation` 注解，如 `@NotNull`、`@Min` 和 `@Max`，确保 bean 的属性符合特定标准。
 

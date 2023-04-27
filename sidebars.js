@@ -52,7 +52,8 @@ const sidebars = {
             "core/httpserver/producesAnnotation",
             "core/httpserver/consumesAnnotation",
             "core/httpserver/reactiveServer",
-            "core/httpserver/jsonBinding"
+            "core/httpserver/jsonBinding",
+            "core/httpserver/datavalidation"
           ]
         }
       ]
