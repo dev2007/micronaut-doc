@@ -55,7 +55,8 @@ const sidebars = {
             "core/httpserver/jsonBinding",
             "core/httpserver/datavalidation",
             "core/httpserver/staticResources",
-            "core/httpserver/errorHandling"
+            "core/httpserver/errorHandling",
+            "core/httpserver/apiVersioning"
           ]
         }
       ]

@@ -419,4 +419,12 @@ class OutOfStockExceptionHandler(private val errorResponseProcessor: ErrorRespon
 
 1. 默认的 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 用于创建响应的主体
 
+## 6.17.5 错误格式化
+
+Micronaut 通过 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 类型的 bean 生成错误响应体。
+
+默认的响应主体是 [vnd.error](https://github.com/blongden/vnd.error)，但是您可以创建自己的 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 类型的实现来控制响应。
+
+如果需要自定义响应而不是与错误相关的项，则需要重写正在处理异常的异常处理程序。
+
 > [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#errorHandling)
