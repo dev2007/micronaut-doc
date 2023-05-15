@@ -57,7 +57,10 @@ const sidebars = {
             "core/httpserver/staticResources",
             "core/httpserver/errorHandling",
             "core/httpserver/apiVersioning",
-            "core/httpserver/formData"
+            "core/httpserver/formData",
+            "core/httpserver/serverIO",
+            "core/httpserver/uploads",
+            "core/httpserver/transfers"
           ]
         }
       ]
