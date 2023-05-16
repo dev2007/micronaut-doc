@@ -60,7 +60,8 @@ const sidebars = {
             "core/httpserver/formData",
             "core/httpserver/serverIO",
             "core/httpserver/uploads",
-            "core/httpserver/transfers"
+            "core/httpserver/transfers",
+            "core/httpserver/filters"
           ]
         }
       ]
