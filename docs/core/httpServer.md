@@ -9,7 +9,7 @@ sidebar_position: 60
 如果使用 Micronaut CLI `create-app` 命令创建项目，则默认情况下会包含 `http-server` 依赖。
 :::
 
-Micronau t包括基于 [Netty](https://netty.io/) 的非阻塞 HTTP 服务器和客户端 API。
+Micronaut 包括基于 [Netty](https://netty.io/) 的非阻塞 HTTP 服务器和客户端 API。
 
 Micronaut 中 HTTP 服务器的设计针对微服务之间的消息交换进行了优化，通常采用 JSON，而不是作为一个完整的服务器端 MVC 框架。例如，目前不支持服务器端视图或传统服务器端 MVC 框架的典型功能。
 
