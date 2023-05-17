@@ -62,7 +62,8 @@ const sidebars = {
             "core/httpserver/uploads",
             "core/httpserver/transfers",
             "core/httpserver/filters",
-            "core/httpserver/sessions"
+            "core/httpserver/sessions",
+            "core/httpserver/sse"
           ]
         }
       ]
