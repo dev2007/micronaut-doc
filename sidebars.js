@@ -64,7 +64,8 @@ const sidebars = {
             "core/httpserver/filters",
             "core/httpserver/sessions",
             "core/httpserver/sse",
-            "core/httpserver/websocket"
+            "core/httpserver/websocket",
+            "core/httpserver/http2Server"
           ]
         }
       ]
