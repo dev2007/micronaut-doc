@@ -610,6 +610,51 @@ annotation class V8
   <TabItem value="Groovy" label="Groovy">
 
 ```groovy
+@Inject Vehicle(@V8 Engine engine) {
+    this.engine = engine
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Inject constructor(@V8 val engine: Engine) {
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## 按注解成员限定
+
+从 Micronaut 3.0 开始，注解限定符也可以使用注解成员来解决正确的 bean 注入。例如，考虑下面这个注解：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+import io.micronaut.context.annotation.NonBinding;
+import jakarta.inject.Qualifier;
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Qualifier // (1)
+@Retention(RUNTIME)
+public @interface Cylinders {
+    int value();
+
+    @NonBinding // (2)
+    String description() default "";
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
 import io.micronaut.context.annotation.NonBinding
 import jakarta.inject.Qualifier
 import java.lang.annotation.Retention
@@ -780,16 +825,8 @@ class V8Engine : Engine { // (2)
   <TabItem value="Java" label="Java" default>
 
 ```java
-public interface Engine<T extends CylinderProvider> { // (1)
-    default int getCylinders() {
-        return getCylinderProvider().getCylinders();
-    }
-
-    default String start() {
-        return "Starting " + getCylinderProvider().getClass().getSimpleName();
-    }
-
-    T getCylinderProvider();
+@Inject Vehicle(@Cylinders(8) Engine engine) {
+    this.engine = engine;
 }
 ```
 
@@ -1532,7 +1569,7 @@ Micronaut 具有基于 JSR-330 的可扩展 bean 作用域机制。支持以下�
 
 ### 3.7.1 内置作用域
 
-*表1。Micronaut 内置作用域*
+*表 1.Micronaut 内置作用域*
 
 |类型|描述|
 |--|--|

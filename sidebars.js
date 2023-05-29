@@ -149,7 +149,9 @@ const sidebars = {
       link: { type: 'doc', id: 'action/firstapp' },
       items: [
         "action/application",
-        "action/controller"
+        "action/controller",
+        "action/service",
+        "action/polymorphism"
       ],
     },
   ],
