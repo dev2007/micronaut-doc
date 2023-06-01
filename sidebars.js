@@ -142,6 +142,7 @@ const sidebars = {
         "servlet/repository"
       ]
     },
+    "graphql/graphql",
     "jmx/jmx",
     "aot/aot",
   ],
