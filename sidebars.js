@@ -67,7 +67,8 @@ const sidebars = {
             "core/httpserver/sse",
             "core/httpserver/websocket",
             "core/httpserver/http2Server",
-            "core/httpserver/serverEvents"
+            "core/httpserver/serverEvents",
+            "core/httpserver/serverConfiguration"
           ]
         }
       ]
