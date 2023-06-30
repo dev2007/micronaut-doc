@@ -71,7 +71,15 @@ const sidebars = {
             "core/httpserver/serverConfiguration",
             "core/httpserver/views",
             "core/httpserver/openapi",
-            "core/httpserver/graphql"
+            "core/httpserver/graphql",
+          ]
+        },
+        {
+          type: 'category',
+          label: '7. HTTP 客户端',
+          link: {type: 'doc',id: 'core/httpClient'},
+          items: [
+            'core/httpclient/lowLevelHttpClient'
           ]
         }
       ]
