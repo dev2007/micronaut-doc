@@ -79,7 +79,8 @@ const sidebars = {
           label: '7. HTTP 客户端',
           link: {type: 'doc',id: 'core/httpClient'},
           items: [
-            'core/httpclient/lowLevelHttpClient'
+            'core/httpclient/lowLevelHttpClient',
+            'core/httpclient/proxyClient'
           ]
         }
       ]
@@ -152,6 +153,7 @@ const sidebars = {
     },
     "graphql/graphql",
     "jmx/jmx",
+    "multitenancy/multitenancy",
     "aot/aot",
   ],
   actionSidebar: [
