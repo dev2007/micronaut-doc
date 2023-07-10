@@ -1150,9 +1150,9 @@ micronaut {
 ```
 
   </TabItem>
-    <TabItem value="Hocon" label="Hocon">
+    <TabItem value="Hoon" label="Hoon">
 
-```hocon
+```hoonn
 {
   micronaut {
     http {
@@ -1245,9 +1245,9 @@ micronaut {
 ```
 
   </TabItem>
-    <TabItem value="Hocon" label="Hocon">
+    <TabItem value="Hoon" label="Hoon">
 
-```hocon
+```hoonn
 {
   micronaut {
     http {
@@ -1399,9 +1399,9 @@ micronaut {
 ```
 
   </TabItem>
-    <TabItem value="Hocon" label="Hocon">
+    <TabItem value="Hoon" label="Hoon">
 
-```hocon
+```hoonn
 {
   micronaut {
     http {
@@ -1504,9 +1504,9 @@ micronaut {
 ```
 
   </TabItem>
-    <TabItem value="Hocon" label="Hocon">
+    <TabItem value="Hoon" label="Hoon">
 
-```hocon
+```hoonn
 {
   micronaut {
     netty {
@@ -1610,9 +1610,9 @@ micronaut {
 ```
 
   </TabItem>
-    <TabItem value="Hocon" label="Hocon">
+    <TabItem value="Hoon" label="Hoon">
 
-```hocon
+```hoonn
 {
   micronaut {
     netty {
@@ -1693,9 +1693,9 @@ micronaut {
 ```
 
   </TabItem>
-    <TabItem value="Hocon" label="Hocon">
+    <TabItem value="Hoon" label="Hoon">
 
-```hocon
+```hoonn
 {
   micronaut {
     http {
