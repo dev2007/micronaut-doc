@@ -154,6 +154,7 @@ const sidebars = {
     "graphql/graphql",
     "jmx/jmx",
     "multitenancy/multitenancy",
+    "groovy/groovy",
     "aot/aot",
   ],
   actionSidebar: [

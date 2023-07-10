@@ -94,7 +94,7 @@ micronaut:
 
 GORM 支持多租户，并与 Micronaut 多租户支持集成。
 
-参阅 [Micronaut Groovy 模块](./groovy/groovy.html#51-多租户-GORM)以了解更多信息。
+参阅 [Micronaut Groovy 模块](../groovy#51-多租户-GORM)以了解更多信息。
 
 ## 4. 仓库
 
