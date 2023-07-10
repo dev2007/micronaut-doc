@@ -155,7 +155,7 @@ const sidebars = {
     "jmx/jmx",
     "multitenancy/multitenancy",
     "groovy/groovy",
-    "aot/aot",
+    "aot/aot"
   ],
   actionSidebar: [
     "action/guide",
