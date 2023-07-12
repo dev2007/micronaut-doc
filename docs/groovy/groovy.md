@@ -4,7 +4,7 @@
 
 ## 1. 介绍
 
-该项目包括各种子项目，以改善Groovy用户的Micronaut体验。
+该项目包括各种子项目，以改善 Groovy 用户的 Micronaut 体验。
 
 ## 2. 发布历史
 
