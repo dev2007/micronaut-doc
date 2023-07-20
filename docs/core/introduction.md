@@ -33,4 +33,4 @@ Micronaut 旨在提供构建 JVM 应用程序所需的所有工具，包括：
 
 Micronaut 中的许多 API 深受 Spring 和 Grails 的启发。这是经过设计的，有助于开发人员快速跟上进度。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html)

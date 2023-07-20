@@ -327,4 +327,4 @@ fun helloReactor(): Mono<HttpResponse<String>?>? {
 
 使用上下文来检索请求是响应流的最佳方法，因为 Project Reactor 传播上下文，并且它不依赖于像 [ServerRequestContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/context/ServerRequestContext.html) 这样的本地线程。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#requestResponse)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#requestResponse)

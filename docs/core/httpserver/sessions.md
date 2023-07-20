@@ -409,5 +409,5 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // (2)
 |[SessionExpiredEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/SessionExpiredEvent.html)|当一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 过期时触发|
 |[SessionDestroyedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/SessionDestroyedEvent.html)|`SessionDeletedEvent` 和 `SessionExpiredEvent` 的父类|
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#sessions)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#sessions)
 

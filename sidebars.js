@@ -80,7 +80,8 @@ const sidebars = {
           link: {type: 'doc',id: 'core/httpClient'},
           items: [
             'core/httpclient/lowLevelHttpClient',
-            'core/httpclient/proxyClient'
+            'core/httpclient/proxyClient',
+            'core/httpclient/clientAnnotation'
           ]
         }
       ]

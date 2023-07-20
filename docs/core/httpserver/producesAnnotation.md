@@ -112,4 +112,4 @@ class ProducesController {
 2. 用 `@Produces` 注解控制器操作以更改响应内容类型。
 3. 设置方法注释的 `produces` 成员也会更改内容类型。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#producesAnnotation)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#producesAnnotation)

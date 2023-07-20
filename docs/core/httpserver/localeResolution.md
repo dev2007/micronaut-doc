@@ -25,4 +25,4 @@ Micronaut 支持几种策略来解析给定请求的区域设置。[getLocale--]
 
 如果任何内置方法都不符合你的用例，请创建 [HttpLocaleResolver](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/util/locale/HttpLocaleResolver.html) 类型的 bean，并设置其相对于现有解析器的顺序（通过 `getOrder` 方法）。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#localeResolution)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#localeResolution)

@@ -17,7 +17,7 @@ HttpResponse upload( ... )
 
 方法参数类型决定如何接收文件。数据可以在一次或上传完成时以块的形式接收。
 
-:::note 注意
+:::note 提示
 如果路由参数名称不能或不应与请求中 part 的名称匹配，请将 [Part](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Part.html) 注解添加到参数中，并在请求中指定所需的名称。
 :::
 
@@ -846,4 +846,4 @@ class WholeBodyUploadController {
   </TabItem>
 </Tabs>
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#uploads)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#uploads)

@@ -131,7 +131,7 @@ String hello(String name) {
 
 ### 为 Hibernate 使用 GORM
 
-:::note 注意
+:::note 提示
 *使用 CLI*
 
  如果你使用 Micronaut CLI 创建你的项目，提供 `hibernate-gorm` 功能，在你的项目中包括 GORM，一个基本的连接池配置，和一个默认的 H2 数据库驱动：
@@ -267,7 +267,7 @@ class MicronautTestBookServiceSpec extends Specification {
 
 ### 为 MongoDB 使用 GORM
 
-:::note 注意
+:::note 提示
 *使用 CLI*
 
 如果你正在使用 Micronaut CLI 创建你的项目，提供 `mongo-gorm` 功能，在你的项目中为 MongoDB 配置 GORM：
@@ -315,7 +315,7 @@ implementation("io.micronaut.groovy:micronaut-mongo-gorm")
 
 ### 为 Neo4j 使用 GORM
 
-:::note 注意
+:::note 提示
 *使用 CLI*
 
 如果你是使用 Micronaut CLI 创建你的项目，提供 `neo4j-gorm` 功能，在你的项目中为 Neo4j 配置 GORM：

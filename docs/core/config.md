@@ -2676,4 +2676,4 @@ Micronaut为 JMX 提供基本支持。
 
 更多信息，参阅 micronaut-jmx 项目的[文档](../jmx/introduction.html)。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#config)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#config)

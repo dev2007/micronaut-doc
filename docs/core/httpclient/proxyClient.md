@@ -169,4 +169,4 @@ class ProxyFilter(
 [ProxyHttpClient](https://docs.micronaut.io/latest/api/io/micronaut/http/client/ProxyHttpClient.html) API 是一个低级别的 API，可以用来建立一个更高级别的抽象，如 API 网关。
 :::
 
-> [英文链接](https://docs.micronaut.io/latest/guide/#proxyClient)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/#proxyClient)

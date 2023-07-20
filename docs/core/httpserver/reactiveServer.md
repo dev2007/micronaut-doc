@@ -112,7 +112,7 @@ class PersonController (private val personService: PersonService) {
 
 [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解的值可以是在 `micronat.executors` 下定义的任何命名的执行器。
 
-:::note 注意
+:::note 提示
 一般来说，对于数据库操作，你需要配置一个与数据库连接池中指定的最大连接数相匹配的线程池。
 :::
 
@@ -460,4 +460,4 @@ Micronaut 支持从任何控制器方法返回常见的响应类型，如 [Mono]
 返回响应式类型时，其类型会影响返回的响应。例如，当返回 [Flux](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html) 时，Micronaut 无法知道响应的大小，因此使用了 `Chunked` 的 `Transfer-Encoding` 类型。而对于发出单个结果的类型，如 [Mono](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html)，则填充 `Content-Length` 头。
 :::
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#reactiveServer)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#reactiveServer)

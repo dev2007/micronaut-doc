@@ -30,4 +30,4 @@ sidebar_position: 60
 
 上述配置还支持允许的主机列表。配置此列表可确保任何解析的主机与提供的正则表达式模式之一匹配。这有助于防止主机缓存投毒攻击，建议进行配置。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#hostResolution)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#hostResolution)

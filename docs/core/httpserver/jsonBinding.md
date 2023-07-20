@@ -237,7 +237,7 @@ fun save(@Body person: Person): HttpResponse<Person> {
 
 Micronaut 只在以非阻塞方式读取数据后才执行你的方法。
 
-:::note 注意
+:::note 提示
 Jackson 产生的输出可以通过多种方式进行定制，从定义 Jackson 模块到使用 [Jackson 注解](https://github.com/FasterXML/jackson-annotations/wiki/Jackson-Annotations)
 :::
 
@@ -333,4 +333,4 @@ jackson:
     useBigDecimalForFloats: true
 ```
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#jsonBinding)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#jsonBinding)

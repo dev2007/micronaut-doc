@@ -573,4 +573,4 @@ Micronaut 尝试按以下顺序填充方法参数：
 
 
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#binding)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#binding)

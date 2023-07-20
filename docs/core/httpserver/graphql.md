@@ -8,4 +8,4 @@ sidebar_position: 320
 
 关于如何使用 Micronaut 构建 GraphQL 应用程序的更多信息，参阅 [Micronaut GraphQL](/graphql/graphql.html) 的文档。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#graphql)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#graphql)

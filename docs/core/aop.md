@@ -1673,4 +1673,4 @@ micronaut:
 
 如果你有自定义需求，你可以用自己的实现来替换这个 bean（例如发送电子邮件或关闭上下文以快速失败）。要做到这一点，请编写自己的 [TaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskExceptionHandler.html)，并用 @Replaces(DefaultTaskExceptionHandler.class) 对其进行注解。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#aop)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#aop)

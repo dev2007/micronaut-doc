@@ -310,4 +310,4 @@ class BooksController {
 如果内容类型为 JSON，则使用空的 `Publisher` 或 `Flux` 进行响应会导致返回空数组。
 :::
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#serverIO)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#serverIO)

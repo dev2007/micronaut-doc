@@ -16,4 +16,4 @@ sidebar_position: 160
 |micronaut.router.static-resources.*.paths|java.util.List|以 `classpath:` 或 `file:` 开头的路径列表。你可以从磁盘或 classpath 上的任何位置提供文件。例如，要从 `src/main/resources/public` 提供静态资源，可以使用 `classpath:public` 作为路径。|
 |micronaut.router.static-resources.*.mapping|java.lang.String|应该从这里提供的路径资源。使用 ant 路径匹配。默认值（“/**”）|
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#staticResources)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#staticResources)

@@ -43,4 +43,4 @@ implementation("io.micronaut:micronaut-http-client")
 
 由于高级 API 是建立在低级 HTTP 客户端上的，所以我们首先介绍低级的客户端。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#httpClient)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#httpClient)

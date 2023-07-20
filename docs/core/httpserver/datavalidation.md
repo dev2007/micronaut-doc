@@ -773,4 +773,4 @@ def "invoking /email/send parse parameters in a POJO and validates using FinalVa
   </TabItem>
 </Tabs>
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#datavalidation)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#datavalidation)

@@ -14,4 +14,4 @@ sidebar_position: 80
 
 可以使用 `micronaut.server.client-address-header` 配置第一优先级头名称。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#clientIpAddress)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#clientIpAddress)

@@ -573,4 +573,4 @@ fun loadCart(shoppingCart: ShoppingCart): HttpResponse<*> { //(1)
 
 1. 该参数是使用 TypedRequestArgumentBinder 中为此类型定义的自定义逻辑绑定的
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#customArgumentBinding)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#customArgumentBinding)

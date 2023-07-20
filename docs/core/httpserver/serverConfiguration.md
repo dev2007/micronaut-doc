@@ -1398,5 +1398,5 @@ lateinit var embeddedServer : EmbeddedServer // (2)
 1. 使用服务器名称按 ID 注入一个客户端
 2. 使用 `@Named` 注解作为限定词来注入嵌入式服务器实例
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#serverConfiguration)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#serverConfiguration)
 

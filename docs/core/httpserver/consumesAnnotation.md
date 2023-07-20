@@ -125,4 +125,4 @@ micronaut:
         - ...
 ```
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#consumesAnnotation)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#consumesAnnotation)

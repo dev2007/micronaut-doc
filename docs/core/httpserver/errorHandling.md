@@ -427,4 +427,4 @@ Micronaut 通过 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io
 
 如果需要自定义响应而不是与错误相关的项，则需要重写正在处理异常的异常处理程序。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#errorHandling)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#errorHandling)

@@ -69,4 +69,4 @@ public StreamedFile download() {
 |`netty.responses.file.cache-control`|[FileTypeHandlerConfiguration$CacheControlConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html)|设置缓存控制配置。|
 |`netty.responses.file.cache-control.public`|boolean|设置是否缓存控制是公开的。默认值（false）。|
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#transfers)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#transfers)

@@ -49,7 +49,7 @@ redis:
     uri: redis://localhost
 ```
 
-:::note 注意
+:::note 提示
 `redis.uri` 设置的格式应与 Lettuce wiki 的 [连接 URI](https://github.com/lettuce-io/lettuce-core/wiki/Redis-URI-and-connection-details) 部分所述的格式相同
 :::
 

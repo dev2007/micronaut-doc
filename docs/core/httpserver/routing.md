@@ -566,4 +566,4 @@ String lock(String name)
 
 此注解可以在任何可以使用标准方法注解的地方使用，包括控制器和声明式 HTTP 客户端。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#routing)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#routing)

@@ -6093,4 +6093,4 @@ public class BaseApplication extends Application { (1)
 2. 使用 `ANDROID` 环境运行 `ApplicationContext`
 3. 注册 `ActivityLifecycleCallbacks` 实例以允许 Android `Activity` 实例的依赖注入
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#ioc)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#ioc)

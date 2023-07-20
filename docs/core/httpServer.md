@@ -101,4 +101,4 @@ class HelloController {
 2. 该方法响应对 `/hello` 的 GET 请求，并返回一个 `text/plain` 类型的响应
 3. 通过定义一个名为 `index` 的方法，按照惯例，该方法通过 `/hello` URI 暴露
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#httpServer)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#httpServer)

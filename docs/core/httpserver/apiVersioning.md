@@ -277,4 +277,4 @@ micronaut:
 
 上面使用了一个名为 `greeting-service` 的键，该键可用于配置用 `@Client（'greeting-service'）` 注解的客户端。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#apiVersioning)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#apiVersioning)

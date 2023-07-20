@@ -1152,7 +1152,7 @@ micronaut {
   </TabItem>
     <TabItem value="Hoon" label="Hoon">
 
-```hoonn
+```hoon
 {
   micronaut {
     http {
@@ -1247,7 +1247,7 @@ micronaut {
   </TabItem>
     <TabItem value="Hoon" label="Hoon">
 
-```hoonn
+```hoon
 {
   micronaut {
     http {
@@ -1401,7 +1401,7 @@ micronaut {
   </TabItem>
     <TabItem value="Hoon" label="Hoon">
 
-```hoonn
+```hoon
 {
   micronaut {
     http {
@@ -1506,7 +1506,7 @@ micronaut {
   </TabItem>
     <TabItem value="Hoon" label="Hoon">
 
-```hoonn
+```hoon
 {
   micronaut {
     netty {
@@ -1612,7 +1612,7 @@ micronaut {
   </TabItem>
     <TabItem value="Hoon" label="Hoon">
 
-```hoonn
+```hoon
 {
   micronaut {
     netty {
@@ -1695,7 +1695,7 @@ micronaut {
   </TabItem>
     <TabItem value="Hoon" label="Hoon">
 
-```hoonn
+```hoon
 {
   micronaut {
     http {
@@ -1879,4 +1879,4 @@ def "after an HttpClientException the response body can be bound to a POJO"() {
 1. 成功类型
 2. 错误类型
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#lowLevelHttpClient)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#lowLevelHttpClient)

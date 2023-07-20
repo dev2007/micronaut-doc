@@ -230,4 +230,4 @@ class HeadlineController {
 
  你可以使用 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 接口的方法来定制发回的服务器发送事件数据，包括关联事件 id、评论、重试超时等。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#sse)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#sse)

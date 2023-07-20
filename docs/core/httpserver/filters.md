@@ -290,4 +290,4 @@ override fun doFilter(request: HttpRequest<*>,
 |`customer/**`|customer/adam、customer/adam/id、customer/adam/name|
 |`customer/*/.html`|customer/index.html、customer/adam/profile.html、customer/adam/job/description.html 另一种选择是基于正则表达式的匹配。若要使用正则表达式，请设置 `patternStyle=FilterPatternStyle.REGEX`。`pattern` 属性应包含一个正则表达式，该正则表达式应与提供的URL完全匹配（使用 [Matcher#matches](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Matcher.html#matches--)）。注意：首选使用 `FilterPatternStyle.ANT`，因为模式匹配比使用正则表达式更具性能。当无法使用 Ant 正确编写模式时，应使用 FilterPatternStyle.REGEX。== 错误状态 从 `chain.proceed` 返回的发布者不应发出错误。在上游过滤器发出错误或路由本身引发异常的情况下，应该发出错误响应而不是异常。在某些情况下，可能需要知道错误响应的原因，为此，如果响应是由于发出或抛出异常而创建的，则响应上存在一个属性。原始原因存储为属性 [EXCEPTION](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpAttributes.html#EXCEPTION)。|
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#filters)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#filters)

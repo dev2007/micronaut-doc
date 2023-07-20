@@ -106,4 +106,4 @@ Micronaut 框架 3.2 中增加了对服务器推送的支持。服务器推送�
 
 在触发额外的请求之前，应该调用 `isServerPushSupported()` 方法以确保该功能是可用的。一旦知道该功能被支持，使用 `serverPush(HttpRequest)` 方法来触发额外的请求。例如：`request.serverPush(HttpRequest.GET("/static/style.css"))`。
 
-> [英文链接](https://docs.micronaut.io/3.8.4/guide/index.html#http2Server)
+> [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#http2Server)
