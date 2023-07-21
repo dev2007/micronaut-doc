@@ -81,7 +81,17 @@ const sidebars = {
           items: [
             'core/httpclient/lowLevelHttpClient',
             'core/httpclient/proxyClient',
-            'core/httpclient/clientAnnotation'
+            'core/httpclient/clientAnnotation',
+            'core/httpclient/clientFilter',
+            'core/httpclient/clientHttp2',
+            'core/httpclient/clientSample'
+          ]
+        },
+        {
+          type: 'category',
+          label: '8. 云原生特性',
+          link: {type: 'doc',id: 'core/cloud'},
+          items: [
           ]
         }
       ]
