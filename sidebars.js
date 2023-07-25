@@ -94,7 +94,8 @@ const sidebars = {
           items: [
             'core/cloud/cloudConfiguration',
             'core/cloud/serviceDiscovery',
-            'core/cloud/clientSideLoadBalancing'
+            'core/cloud/clientSideLoadBalancing',
+            'core/cloud/distributedTracing'
           ]
         }
       ]
