@@ -93,7 +93,8 @@ const sidebars = {
           link: {type: 'doc',id: 'core/cloud'},
           items: [
             'core/cloud/cloudConfiguration',
-            'core/cloud/serviceDiscovery'
+            'core/cloud/serviceDiscovery',
+            'core/cloud/clientSideLoadBalancing'
           ]
         }
       ]
