@@ -92,6 +92,7 @@ const sidebars = {
           label: '8. 云原生特性',
           link: {type: 'doc',id: 'core/cloud'},
           items: [
+            'core/cloud/cloudConfiguration'
           ]
         }
       ]
