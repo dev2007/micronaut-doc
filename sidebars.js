@@ -98,7 +98,8 @@ const sidebars = {
             'core/cloud/distributedTracing'
           ]
         },
-        'core/serverlessFunctions'
+        'core/serverlessFunctions',
+        'core/messaging'
       ]
     },
     {
