@@ -6,7 +6,7 @@ sidebar_position: 30
 
 当从 Consul、Eureka 或其他服务发现服务器[发现服务](./serviceDiscovery)时，[DiscoveryClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/discovery/DiscoveryClient.html) 会发出一个可用的 [ServiceInstance](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/discovery/ServiceInstance.html) 列表。
 
-默认情况下，Micronaut 会使用该列表中的服务器自动执行轮循客户端负载均衡。这与[重试通知](../../core/aop#57-重试通知)相结合，为你的微服务基础设施增加了额外的弹性。
+默认情况下，Micronaut 会使用该列表中的服务器自动执行轮循客户端负载均衡。这与[重试通知](/core/aop#57-重试通知)相结合，为你的微服务基础设施增加了额外的弹性。
 
 负载均衡由 [LoadBalancer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/LoadBalancer.html) 接口处理，该接口有一个 [LoadBalancer.select()](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/LoadBalancer.html#select--) 方法，该方法会返回一个会发出一个服务实例的 `Publisher`。
 
@@ -16,7 +16,7 @@ sidebar_position: 30
 
 例如，你可能希望在特定区域的服务之间实现负载均衡，或者在总体响应时间最佳的服务器之间实现负载均衡。
 
-要替换 [LoaderBalancer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/LoadBalancer.html)，可定义一个 Bean 来[替换](../../core/ioc#310-bean-替换) [DiscoveryClientLoadBalancerFactory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/loadbalance/DiscoveryClientLoadBalancerFactory.html)。
+要替换 [LoaderBalancer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/LoadBalancer.html)，可定义一个 Bean 来[替换](/core/ioc#310-bean-替换) [DiscoveryClientLoadBalancerFactory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/loadbalance/DiscoveryClientLoadBalancerFactory.html)。
 
 事实上，这正是 Netflix Ribbon 支持所要做的，将在下一节中介绍。
 

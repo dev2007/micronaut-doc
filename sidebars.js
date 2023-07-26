@@ -97,7 +97,8 @@ const sidebars = {
             'core/cloud/clientSideLoadBalancing',
             'core/cloud/distributedTracing'
           ]
-        }
+        },
+        'core/serverlessFunctions'
       ]
     },
     {

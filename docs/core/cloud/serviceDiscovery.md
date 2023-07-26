@@ -6,21 +6,21 @@ sidebar_position: 20
 
 服务发现可让微服务在不知道相关服务的物理位置或 IP 地址的情况下找到彼此。
 
-Micronaut 与多种工具和库集成。参阅 [Micronaut 服务发现文档](../../discoveryclient.html) 了解更多。
+Micronaut 与多种工具和库集成。参阅 [Micronaut 服务发现文档](/discoveryclient.html) 了解更多。
 
 ## 8.2.1 Consul 支持
 
-参阅 [Micronaut Consul 文档](../../discoveryclient.html#3-consul-支持)。
+参阅 [Micronaut Consul 文档](/discoveryclient.html#3-consul-支持)。
 
 ## 8.2.2 Eureka 支持
 
-参阅 [Micronaut Eureka 文档](../../discoveryclient.html#4-eureka-支持)。
+参阅 [Micronaut Eureka 文档](/discoveryclient.html#4-eureka-支持)。
 
 ## 8.2.3 Kubernetes 支持
 
 Kubernetes 是一种容器运行时，具有集成服务发现和分布式配置等多种功能。
 
-Micronaut 包括与 Kubernetes 的一级集成。更多详情，参阅 [Micronaut Kubernetes 文档](../../kubernetes.html)。
+Micronaut 包括与 Kubernetes 的一级集成。更多详情，参阅 [Micronaut Kubernetes 文档](/kubernetes.html)。
 
 ## 8.2.4 AWS Route 53 支持
 
