@@ -99,7 +99,8 @@ const sidebars = {
           ]
         },
         'core/serverlessFunctions',
-        'core/messaging'
+        'core/messaging',
+        'core/commandLineApps'
       ]
     },
     {
