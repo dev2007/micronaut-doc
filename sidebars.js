@@ -110,7 +110,15 @@ const sidebars = {
             'core/configurations/dataAccess'
           ]
         },
-        'core/logging'
+        'core/logging',
+        {
+          type: 'category',
+          label: '14. 语言支持',
+          link: {type: 'doc',id: 'core/languageSupport'},
+          items: [
+            'core/languageSupport/java'
+          ]
+        },
       ]
     },
     {
