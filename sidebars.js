@@ -100,7 +100,16 @@ const sidebars = {
         },
         'core/serverlessFunctions',
         'core/messaging',
-        'core/commandLineApps'
+        'core/commandLineApps',
+        {
+          type: 'category',
+          label: '12. 配置',
+          link: {type: 'doc',id: 'core/configurations'},
+          items: [
+            'core/configurations/reactiveConfigs',
+            'core/configurations/dataAccess'
+          ]
+        }
       ]
     },
     {
