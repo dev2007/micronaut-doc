@@ -1239,7 +1239,7 @@ Micronaut 为服务器发送事件（SSE）提供了一个本地客户端，由�
 
 你可以使用该客户端从任何服务器发送 SSE 事件。
 
-:::tip 注意
+:::tip 提示
 尽管 SSE 流通常由浏览器 `EventSource` 消费，但在某些情况下，你可能希望通过 [SseClient](https://docs.micronaut.io/latest/api/io/micronaut/http/client/sse/SseClient.html) 消耗 SSE 流，例如在单元测试中或当 Micronaut 服务作为另一个服务的网关时。
 :::
 
@@ -1611,7 +1611,7 @@ public interface EurekaClient {
 
 用于 JSON 的 Eureka 序列化格式使用了 Jackson 的 `WRAP_ROOT_VALUE` 序列化功能，因此它仅为该客户端启用。
 
-:::tip 提示
+:::note 提示
 如果 `JacksonFeatures` 提供的自定义功能还不够，你还可以为 `ObjectMapper` 编写一个 [BeanCreatedEventListener](https://docs.micronaut.io/latest/api/io/micronaut/context/event/BeanCreatedEventListener.html)，并添加任何你需要的自定义功能。
 :::
 
@@ -1792,7 +1792,7 @@ String hello(String name) {
 }
 ```
 
-:::tip 注意
+:::tip 提示
 这适用于 Flux 等响应式返回类型，响应式类型将封装在 `HystrixObservableCommand` 中。
 :::
 

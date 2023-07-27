@@ -194,7 +194,7 @@ Netty worker 的事件循环使用 "default" 命名的事件循环组。这可�
 |micronaut.server.netty.worker.shutdown-quiet-period|java.time.Duration|设置关机静默期|
 |micronaut.server.netty.worker.shutdown-timeout|java.time.Duration|设置关机超时（必须>= shutdownQuietPeriod）。|
 
-:::tip 提示
+:::note 提示
 父事件循环可以用 `micronaut.server.netty.parent` 配置，配置选项相同。
 :::
 

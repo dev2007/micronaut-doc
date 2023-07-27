@@ -378,7 +378,7 @@ class Message {
   </TabItem>
 </Tabs>
 
-:::tip 注意
+:::tip 提示
 Jackson 注解被用来映射构造函数
 :::
 

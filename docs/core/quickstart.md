@@ -28,7 +28,7 @@ Micronaut CLI 是创建 Micronaut 应用程序的可选但方便的方法。在 
 $ mn create-app hello-world
 ```
 
-:::tip 提示
+:::tip 注意
 提供 `--build maven` 以创建基于 maven 的构建
 :::
 
@@ -40,7 +40,7 @@ unzip hello-world.zip
 cd hello-world
 ```
 
-:::tip 提示
+:::tip 注意
 添加 `?build=maven` 到传递给 `curl` 的 URL 中以生成一个 Maven 项目。
 :::
 
@@ -246,7 +246,7 @@ GraalVM 扩展包还包括 [GraalVM Tools for Micronaut](https://marketplace.vis
 
 首先安装 [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)。
 
-:::tip 提示
+:::tip 注意
 你还可以选择安装 [STS](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-spring-boot) 以启用 `application.yml` 的代码完成。
 :::
 

@@ -109,7 +109,8 @@ const sidebars = {
             'core/configurations/reactiveConfigs',
             'core/configurations/dataAccess'
           ]
-        }
+        },
+        'core/logging'
       ]
     },
     {

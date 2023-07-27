@@ -215,7 +215,7 @@ class HeadlineController {
 4. [Emitter](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html) 接口的 `onNext` 方法发射的是 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 类型的对象。[Event.of(ET)](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html#of-ET-) 工厂方法构建了事件。
 5. [Emitter](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html) 接口的 `onComplete` 方法指示何时完成发送服务器发送的事件。
 
-:::tip 提示
+:::note 提示
 你通常想在一个单独的执行器上安排 SSE 事件流。前面的例子使用 [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 在 I/O 执行器上执行该流。
 :::
 

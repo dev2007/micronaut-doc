@@ -45,7 +45,7 @@ $ brew install --cask micronaut-projects/tap/micronaut
 
 现在应该可以运行 Micronaut CLI 了。
 
-:::tip 提示
+:::note 提示
 在 macOS 上，你可能会收到一条警告消息，`“mn” cannot be opened because the developer cannot be verified.`。要解决此问题，请单击 Apple 菜单，然后选择 **System Settings（系统设置）**。然后浏览到 **Privacy & Security（隐私和安全）**，并向下滚动到 **Security（安全部分）**。应该有一个警告，`"mn" was blocked`，并带有 **Allow Anyway（无论如何允许）**按钮。单击此按钮将解决此问题。
 :::
 

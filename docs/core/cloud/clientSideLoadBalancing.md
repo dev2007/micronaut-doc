@@ -22,7 +22,7 @@ sidebar_position: 30
 
 ## 8.3.1 Netflix Ribbon 支持
 
-:::tip 提示
+:::note 提示
 *使用 CLI*
 
 如果使用 Micronaut CLI 创建项目，请使用 `netflix-ribbon` 特性在项目中配置 Netflix Ribbon：

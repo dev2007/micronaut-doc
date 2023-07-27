@@ -456,7 +456,7 @@ Micronaut 支持从任何控制器方法返回常见的响应类型，如 [Mono]
 |[CharSequence](https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html)|任意 CharSequence 的实现|`String hello()`|
 |T|任意简单的 POJO 类型|`Book show()`|
 
-:::tip 提示
+:::note 提示
 返回响应式类型时，其类型会影响返回的响应。例如，当返回 [Flux](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html) 时，Micronaut 无法知道响应的大小，因此使用了 `Chunked` 的 `Transfer-Encoding` 类型。而对于发出单个结果的类型，如 [Mono](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html)，则填充 `Content-Length` 头。
 :::
 

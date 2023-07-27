@@ -33,7 +33,7 @@ Micronaut 的[环境](./core/config#41-环境)概念默认为云平台感知，�
 
 此外，使用上表中定义的常量值可以创建特定环境的配置文件。例如，如果创建了 `src/main/resources/application-gcp.yml` 文件，只有在 Google Compute 上运行时才会加载该文件。
 
-:::tip 提示
+:::note 提示
 环境中的任何配置属性也可以通过[环境](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/Environment.html)变量来设置。例如，设置 `CONSUL_CLIENT_HOST`  环境变量可覆盖 [ConsulConfiguration](https://micronaut-projects.github.io/micronaut-discovery-client/latest/api/io/micronaut/discovery/consul/ConsulConfiguration.html) 中的 `host` 属性。
 :::
 
@@ -41,7 +41,7 @@ Micronaut 的[环境](./core/config#41-环境)概念默认为云平台感知，�
 
 当 Micronaut 检测到它在受支持的云平台上运行时，它就会在启动时填充 [ComputeInstanceMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/discovery/cloud/ComputeInstanceMetadata.html) 接口。
 
-:::tip 提示
+:::note 提示
 从 Micronaut 2.1.x 开始，这一逻辑取决于是否存在 Oracle Cloud、AWS 或 GCP 的相应核心云模块。
 :::
 
@@ -241,7 +241,7 @@ consul {
 
 一种方法是直接在 Consul 中存储键和值。在这种情况下，默认情况下 Micronaut 会在 Consul `/config` 目录中查找配置。
 
-:::tip 提示
+:::note 提示
 你可以通过设置 `consul.client.config.path` 来改变搜索路径。
 :::
 
@@ -273,7 +273,7 @@ curl -X PUT -d @- localhost:8500/v1/kv/config/application/foo.bar <<< myvalue
 
 有些 Consul 用户喜欢用某种格式的 blob 来存储配置，比如 YAML。Micronaut 支持这种模式，并支持以 YAML、JSON 或 Java 属性格式存储配置。
 
-:::tip 提示
+:::note 提示
 [ConfigDiscoveryConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/discovery/config/ConfigDiscoveryConfiguration.html) 有许多配置选项，用于配置如何发现分布式配置。
 :::
 

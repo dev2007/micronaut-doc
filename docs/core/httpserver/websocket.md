@@ -162,7 +162,7 @@ class ChatServerWebSocket(private val broadcaster: WebSocketBroadcaster) {
 4. 你可以使用 [WebSocketBroadcaster](https://docs.micronaut.io/3.8.4/api/io/micronaut/websocket/WebSocketBroadcaster.html) 来向每个 WebSocket 会话广播消息。你可以用 `Predicate` 过滤要发送给哪些会话。此外，你还可以使用 [WebSocketSession](https://docs.micronaut.io/3.8.4/api/io/micronaut/websocket/WebSocketSession.html) 实例，用 `WebSocketSession::send` 向其发送消息。
 5. [@OnClose](https://docs.micronaut.io/3.8.4/api/io/micronaut/websocket/annotation/OnClose.html) 注解声明了 WebSocket 关闭时要调用的方法。
 
-:::tip 提示
+:::note 提示
 在 [Micronaut Guides](https://guides.micronaut.io/latest/micronaut-websocket.html) 上可以找到一个 WebSockets 的工作实例。
 :::
 
