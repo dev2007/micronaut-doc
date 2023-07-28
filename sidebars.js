@@ -116,7 +116,8 @@ const sidebars = {
           label: '14. 语言支持',
           link: {type: 'doc',id: 'core/languageSupport'},
           items: [
-            'core/languageSupport/java'
+            'core/languageSupport/java',
+            'core/languageSupport/groovy'
           ]
         },
       ]
