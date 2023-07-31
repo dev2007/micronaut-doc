@@ -117,7 +117,9 @@ const sidebars = {
           link: {type: 'doc',id: 'core/languageSupport'},
           items: [
             'core/languageSupport/java',
-            'core/languageSupport/groovy'
+            'core/languageSupport/groovy',
+            'core/languageSupport/kotlin',
+            'core/languageSupport/graal'
           ]
         },
       ]
