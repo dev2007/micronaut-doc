@@ -131,6 +131,8 @@ const sidebars = {
             'core/management/providedEndpoints'
           ]
         },
+        'core/security',
+        'core/multitenancy'
       ]
     },
     {
