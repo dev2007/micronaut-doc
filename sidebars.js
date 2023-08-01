@@ -122,6 +122,15 @@ const sidebars = {
             'core/languageSupport/graal'
           ]
         },
+        {
+          type: 'category',
+          label: '15. 管理与监控',
+          link: {type: 'doc',id: 'core/management'},
+          items: [
+            'core/management/buildingEndpoints',
+            'core/management/providedEndpoints'
+          ]
+        },
       ]
     },
     {
