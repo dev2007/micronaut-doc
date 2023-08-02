@@ -66,7 +66,7 @@ class HelloBean {
 }
 ```
 
-:::warning 警告
+:::caution 警告
 Groovy 会自动导入 `groovy.lang.Singleton`，这可能会造成混乱，因为它与 `javax.inject.Singleton` 相冲突。在声明 Micronaut 单例 Bean 时，请确保使用 `javax.inject.Singleton`，以避免出现令人惊讶的行为。
 :::
 

@@ -165,7 +165,7 @@ class HelloControllerSpec {
 3. 测试使用 Micronaut HTTP 客户端进行调用
 4. `retrieve` 方法以 `String` 的形式返回控制器的响应
 
-:::danger 警告
+:::caution 警告
 如果没有明确的端口配置，端口将是 8080，除非应用程序是在端口随机的 `test` 环境下运行的。当应用程序上下文从测试类的上下文开始时，会自动添加测试环境。
 :::
 

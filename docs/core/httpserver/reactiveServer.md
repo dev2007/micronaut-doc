@@ -418,7 +418,7 @@ open fun echoFlow(@Body text: Publisher<String>): Publisher<HttpResponse<String>
 2. 此示例使用 [Project Reactor](https://projectreactor.io/) 并返回单个项。因此，响应类型也使用 [SingleResult](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/async/annotation/SingleResult.html) 进行注解。Micronaut 仅在操作完成后才发出响应，而不会阻塞。
 3. 在这个模拟示例中，`collect` 方法用于累积数据，但例如，它可以逐块将数据写入日志服务、数据库等
 
-:::danger 警告
+:::caution 警告
 不需要转换的类型的 Body 参数会导致 Micronaut 跳过对请求的解码！
 :::
 

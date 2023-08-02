@@ -411,7 +411,7 @@ bean类必须使用 `@Introspected` 进行自省。它可以是以下其中一�
 1. 有 setter 和 getter 的可变 Bean 类
 2. 具有 getter 和全参数构造函数（或构造函数或静态方法上的 `@Creator` 注解）的不可变 Bean 类。构造函数的参数必须与字段名匹配，这样对象就可以在没有反射的情况下实例化。
 
-:::warning 警告
+:::caution 警告
 由于 Java 在字节码中不保留参数名，所以必须使用 `-parameters` 编译代码，才能使用另一个 jar 中的不可变 bean 类。另一种选择是在源代码中扩展 Bean 类。
 :::
 

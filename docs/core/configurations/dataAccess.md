@@ -34,7 +34,7 @@ compile "io.micronaut.mongodb:micronaut-mongo-reactive"
 
 对于 Groovy 用户，Micronaut 为 [GORM](https://gorm.grails.org/) 提供特殊支持。
 
-:::warning 警告
+:::caution 警告
 使用 Hibernate 的 GORM 时，不能同时依赖 `hibernate-jpa` 和 `hibernate-gorm`。
 :::
 

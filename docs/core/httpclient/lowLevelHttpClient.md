@@ -1285,7 +1285,7 @@ micronaut {
 
 - `read-timeout` 被应用于 `foo` 客户端。
 
-:::warning 警告
+:::caution 警告
 这个客户端配置可以和 `@Client` 注解一起使用，可以直接注入一个 `HttpClient` 或者在客户端接口上使用。在任何情况下，除了服务 id，注解上的所有其他属性都将被忽略。
 :::
 

@@ -43,7 +43,7 @@ tasks.withType(JavaCompile) {
 }
 ```
 
-:::warning 警告
+:::caution 警告
 如果你不启用自定义注解的处理功能，Micronaut 将忽略这些注解，这可能会破坏你的应用程序。
 :::
 

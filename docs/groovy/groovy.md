@@ -302,7 +302,7 @@ implementation("io.micronaut.groovy:micronaut-mongo-gorm")
   </TabItem>
 </Tabs>
 
-:::warning 警告
+:::caution 警告
 对于 MongoDB 的 GORM，你将需要单独配置数据库名称，作为 `application.yml` 中的 `grails.mongodb.datataseName` 属性。
 :::
 

@@ -15,7 +15,7 @@ HTTP 服务器发出一些 [Bean 事件](https://docs.micronaut.io/3.8.4/guide/i
 |[ServiceReadyEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/discovery/event/ServiceReadyEvent.html)|在所有的 [ServerStartupEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/server/event/ServerStartupEvent.html) 监听器被调用后发出，暴露了 [EmbeddedServerInstance](https://docs.micronaut.io/3.8.4/api/io/micronaut/discovery/EmbeddedServerInstance.html)|
 |[ServiceStoppedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/discovery/event/ServiceStoppedEvent.html)|在所有 [ServerShutdownEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/server/event/ServerShutdownEvent.html) 监听器被调用后发出，暴露 [EmbeddedServerInstance](https://docs.micronaut.io/3.8.4/api/io/micronaut/discovery/EmbeddedServerInstance.html)|
 
-:::warning 警告
+:::caution 警告
 在 [ServerStartupEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/server/event/ServerStartupEvent.html) 的监听器中做大量工作会增加启动时间。
 :::
 

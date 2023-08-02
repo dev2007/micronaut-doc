@@ -219,7 +219,7 @@ fun helloStatic(): HttpResponse<String> {
 
 1. [ServerRequestContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/context/ServerRequestContext.html) 用于检索请求。
 
-:::danger 警告
+:::caution 警告
 一般来说，[ServerRequestContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/context/ServerRequestContext.html) 在响应流中是可用的，但推荐的方法是将请求作为参数使用，如前面的示例所示。如果下游方法中需要请求，则应将其作为参数传递给这些方法。在某些情况下，由于使用了其他线程来发送数据，因此上下文不会传播。
 :::
 

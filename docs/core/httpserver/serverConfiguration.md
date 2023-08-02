@@ -900,7 +900,7 @@ implementation("org.bouncycastle:bcpkix-jdk15on")
   </TabItem>
 </Tabs>
 
-:::warning 警告
+:::caution 警告
 这种配置将在浏览器中产生一个警告。
 :::
 

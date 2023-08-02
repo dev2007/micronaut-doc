@@ -295,7 +295,7 @@ interface PetClient : PetOperations { // (2)
 2. 该接口延伸自 `PetOperations`
 3. `save` 方法被重写了。见下面的警告。
 
-:::warning 警告
+:::caution 警告
 注意在上面的例子中，我们覆盖了 `save` 方法。如果你在编译时没有使用 `-parameters` 选项，这是必要的，因为否则 Java 不会在字节码中保留参数名称。如果你在编译时使用了 `-parameters`，则不需要覆盖。此外，当覆盖方法时，你应该确保再次声明任何验证注解，因为这些注解不是[继承](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html)的。
 :::
 

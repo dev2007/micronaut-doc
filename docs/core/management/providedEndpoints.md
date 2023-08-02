@@ -30,7 +30,7 @@ sidebar_position: 20
 |[CachesEndpoint](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/guide/index.html#cachesEndpoint)|`/caches`|返回缓存的相关信息，并允许对其进行无效处理（参阅 [CachesEndpoint](#1528-缓存端点)）|
 |[ServerStopEndpoint](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/stop/ServerStopEndpoint.html)|`/stop`|关闭应用服务器（参阅 [ServerStopEndpoint](#1529-服务器停止端点)）|
 
-:::warning 警告
+:::caution 警告
 可以通过定义 `endpoints.all.sensitive：false`，开放所有端点供未经身份验证的访问，但应谨慎使用，因为私人和敏感信息会被暴露出来。
 :::
 

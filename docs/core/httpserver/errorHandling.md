@@ -229,7 +229,7 @@ fun notFound(request: HttpRequest<*>): HttpResponse<JsonError> { // (1)
 2. 为所有 404 响应返回 [JsonError](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
 3. 返回 [NOT_FOUND](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html#NOT_FOUND) 响应
 
-:::danger 警告
+:::caution 警告
 关于 [@Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 注解需要注意的几点。不能声明相同的全局 `@Error` 注解。不能在同一控制器中声明相同的非全局 `@Error` 注解。如果具有相同参数的 `@Error` 注解以全局形式存在，而另一个以本地形式存在，则本地注解优先。
 :::
 
@@ -237,7 +237,7 @@ fun notFound(request: HttpRequest<*>): HttpResponse<JsonError> { // (1)
 
 或者，你可以实现 [ExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/ExceptionHandler.html)，这是一个用于处理 HTTP 请求执行过程中发生的异常的通用钩子。
 
-:::danger 警告
+:::caution 警告
 捕获异常的 `@Error` 注解优先于捕获同一异常的 `ExceptionHandler` 的实现。
 :::
 
