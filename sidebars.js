@@ -132,7 +132,19 @@ const sidebars = {
           ]
         },
         'core/security',
-        'core/multitenancy'
+        'core/multitenancy',
+        {
+          type: 'category',
+          label: '18. Micronaut CLI',
+          link: {type: 'doc',id: 'core/cli'},
+          items: [
+            'core/cli/createProject',
+            'core/cli/features',
+            'core/cli/commands',
+            'core/cli/reloading',
+            'core/cli/proxy'
+          ]
+        },
       ]
     },
     {
