@@ -145,7 +145,8 @@ const sidebars = {
             'core/cli/proxy'
           ]
         },
-        'core/i18n'
+        'core/i18n',
+        'core/appendix'
       ]
     },
     {
