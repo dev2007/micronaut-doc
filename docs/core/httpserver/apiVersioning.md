@@ -4,7 +4,7 @@ sidebar_position: 180
 
 # 6.18 API 版本化
 
-自 1.1.x 以来，Micronaut 通过专用的 [@Version](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/version/annotation/Version.html) 注解支持 API 版本控制。
+自 1.1.x 以来，Micronaut 通过专用的 [@Version](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/version/annotation/Version.html) 注解支持 API 版本控制。
 
 以下示例演示如何对 API 进行版本控制：
 
@@ -127,7 +127,7 @@ micronaut:
 4. 启用或禁用基于标头的版本控制
 5. 将头名称指定为列表
 
-如果这还不够，你还可以实现 [RequestVersionResolver](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/version/resolution/RequestVersionResolver.html) 接口，该接口接收 [HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html) 并可以实现你选择的任何策略
+如果这还不够，你还可以实现 [RequestVersionResolver](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/version/resolution/RequestVersionResolver.html) 接口，该接口接收 [HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html) 并可以实现你选择的任何策略
 
 **默认版本**
 
@@ -155,9 +155,9 @@ micronaut:
 
 **版本化客户端请求**
 
-Micronaut 的 [声明式 HTTP 客户端](/core/httpClient/clientAnnotation)还支持通过 [@Version](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/version/annotation/Version.html) 注解对传出请求进行自动版本控制。
+Micronaut 的 [声明式 HTTP 客户端](/core/httpClient/clientAnnotation)还支持通过 [@Version](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/version/annotation/Version.html) 注解对传出请求进行自动版本控制。
 
-默认情况下，如果使用 [@Version](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/version/annotation/Version.html) 注解客户端接口，则使用 `X-API-VERSION` 标头包含提供给注解的值。
+默认情况下，如果使用 [@Version](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/version/annotation/Version.html) 注解客户端接口，则使用 `X-API-VERSION` 标头包含提供给注解的值。
 
 例如：
 
@@ -233,12 +233,12 @@ interface HelloClient {
   </TabItem>
 </Tabs>
 
-1. [@Version](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/version/annotation/Version.html) 注解可以在类型级别使用，以指定要用于所有方法的版本
+1. [@Version](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/version/annotation/Version.html) 注解可以在类型级别使用，以指定要用于所有方法的版本
 2. 当在方法级别定义时，它仅用于该方法
 
-可以使用 [DefaultClientVersioningConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html) 配置每个调用的版本发送方式的默认行为：
+可以使用 [DefaultClientVersioningConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html) 配置每个调用的版本发送方式的默认行为：
 
-*表 1. [DefaultClientVersioningConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html) 的配置属性*
+*表 1. [DefaultClientVersioningConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/interceptor/configuration/DefaultClientVersioningConfiguration.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|

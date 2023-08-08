@@ -219,7 +219,7 @@ $ ./hello-world
 15:15:15.153 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 14ms. Server Running: http://localhost:8080
 ```
 
-如您所见，本机图像启动只需几毫秒即可完成，内存消耗不包括 JVM 的开销（一个本机 Micronaut 应用程序仅需 20 MB 内存即可运行）。
+如你所见，本机图像启动只需几毫秒即可完成，内存消耗不包括 JVM 的开销（一个本机 Micronaut 应用程序仅需 20 MB 内存即可运行）。
 
 **生成资源文件**
 

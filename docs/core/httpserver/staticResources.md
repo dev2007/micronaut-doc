@@ -8,7 +8,7 @@ sidebar_position: 160
 
 有关可用的配置选项，请参阅以下信息：
 
-*表 1. [StaticResourceConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/resource/StaticResourceConfiguration.html) 配置属性*
+*表 1. [StaticResourceConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/resource/StaticResourceConfiguration.html) 配置属性*
 
 |属性|类型|描述|
 |--|--|--|

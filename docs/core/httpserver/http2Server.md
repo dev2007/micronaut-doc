@@ -98,10 +98,10 @@ runtimeOnly "io.netty:netty-tcnative-boringssl-static:2.0.46.Final:${Os.isFamily
 
 Micronaut 框架 3.2 中增加了对服务器推送的支持。服务器推送允许一个单一的请求触发多个响应。这最常用于基于浏览器的资源的情况。其目的是为了改善客户端的延迟，因为他们不必再手动请求该资源，并可以节省一个往返的时间。
 
-一个新的接口，[PushCapableHttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/PushCapableHttpRequest.html)，已经被创建来支持这个功能。只需在控制器方法中添加一个 [PushCapableHttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/PushCapableHttpRequest.html) 参数，并使用其 API 来触发额外的请求。
+一个新的接口，[PushCapableHttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/PushCapableHttpRequest.html)，已经被创建来支持这个功能。只需在控制器方法中添加一个 [PushCapableHttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/PushCapableHttpRequest.html) 参数，并使用其 API 来触发额外的请求。
 
 :::tip 注意
-[PushCapableHttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/PushCapableHttpRequest.html) 扩展了 [HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html)，所以没有必要在控制器方法中把两者作为参数。
+[PushCapableHttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/PushCapableHttpRequest.html) 扩展了 [HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html)，所以没有必要在控制器方法中把两者作为参数。
 :::
 
 在触发额外的请求之前，应该调用 `isServerPushSupported()` 方法以确保该功能是可用的。一旦知道该功能被支持，使用 `serverPush(HttpRequest)` 方法来触发额外的请求。例如：`request.serverPush(HttpRequest.GET("/static/style.css"))`。

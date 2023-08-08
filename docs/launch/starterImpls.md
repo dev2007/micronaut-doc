@@ -293,7 +293,7 @@ Github Actions 使用自定义 AWS Lambda Runtime 将 Micronaut Starter API 作�
 
 **在本地运行函数**
 
-首先从 `starter-azure-function/build.grade` 中取消注释 Azure 插件：
+首先从 `starter-azure-function/build.grade` 中取消注解 Azure 插件：
 
 ```bash
 ./gradlew clean starter-azure-function:azureFunctionsRun
@@ -311,7 +311,7 @@ Micronaut Starter API 作为无服务器 Java 应用程序持续部署到 Azure 
 
 **自行部署功能**
 
-首先从 `starter-azure-function/build.grade` 中取消注释 Azure 插件，然后运行：
+首先从 `starter-azure-function/build.grade` 中取消注解 Azure 插件，然后运行：
 
 ```bash
 ./gradlew clean starter-azure-function:azureFunctionsDeploy

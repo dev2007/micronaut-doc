@@ -87,7 +87,7 @@ endpoints:
 ```
 
 :::tip 注意
-有关详细信息，参阅用户指南中关于[内置端点](https://docs.micronaut.io/latest/guide/index.html#providedEndpoints)的部分。
+有关详细信息，参阅用户指南中关于[内置端点](core/management/providedEndpoints)的部分。
 :::
 
 ---

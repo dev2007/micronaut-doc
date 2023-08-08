@@ -10,7 +10,7 @@ Micronaut 支持通过几种简单的方式将文件发送到客户端。
 
 可以从控制器方法返回 File 对象，数据将返回到客户端。文件响应的 `Content-Type` 头是根据文件的名称计算的。
 
-要控制要发送的文件的媒体类型，或设置要下载的文件（即使用 `Content-Disposition` 头），请使用要使用的文件构造 [SystemFile](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/types/files/SystemFile.html)。例如：
+要控制要发送的文件的媒体类型，或设置要下载的文件（即使用 `Content-Disposition` 头），请使用要使用的文件构造 [SystemFile](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/types/files/SystemFile.html)。例如：
 
 *发送一个 SystemFile*
 
@@ -27,7 +27,7 @@ public SystemFile download() {
 
 ## 发送一个 InputStream
 
-对于无法引用 `File` 对象的情况（例如 JAR 文件中的资源），Micronaut 支持传输输入流。要从控制器方法返回数据的流，请构造 [StreamedFile](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/types/files/StreamedFile.html)。
+对于无法引用 `File` 对象的情况（例如 JAR 文件中的资源），Micronaut 支持传输输入流。要从控制器方法返回数据的流，请构造 [StreamedFile](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/types/files/StreamedFile.html)。
 
 :::note 提示
 为了方便起见，`StreamedFile` 的构造函数也接受 `java.net.URL`。
@@ -56,17 +56,17 @@ public StreamedFile download() {
 
 默认情况下，文件响应包括缓存头。以下选项决定了 `Cache-Control` 头的构建方式。
 
-*表 1.[FileTypeHandlerConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.html) 的配置属性*
+*表 1.[FileTypeHandlerConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|
 |`netty.responses.file.cache-seconds`|int|缓存秒数。默认值（60）。|
 
-*表 2.[CacheControlConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html) 的配置属性*
+*表 2.[CacheControlConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|
-|`netty.responses.file.cache-control`|[FileTypeHandlerConfiguration$CacheControlConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html)|设置缓存控制配置。|
+|`netty.responses.file.cache-control`|[FileTypeHandlerConfiguration$CacheControlConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/types/files/FileTypeHandlerConfiguration.CacheControlConfiguration.html)|设置缓存控制配置。|
 |`netty.responses.file.cache-control.public`|boolean|设置是否缓存控制是公开的。默认值（false）。|
 
 > [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#transfers)

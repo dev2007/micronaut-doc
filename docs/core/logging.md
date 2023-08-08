@@ -297,6 +297,6 @@ Logback 1.3.x+ 包含一个破坏性的二进制更改，可能会妨碍其与 M
 
 ## 13.4 日志系统
 
-Micronaut 框架有一个日志系统的概念。简而言之，这是一个简单的应用程序接口，用于在运行时设置日志执行中的日志级别。为 Logback 和 Log4j2 提供了默认实现。您可以创建自己的 [LoggingSystem](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/logging/LoggingSystem.html) 实现，并使用 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解替换正在使用的实现，从而重写日志系统的行为。
+Micronaut 框架有一个日志系统的概念。简而言之，这是一个简单的应用程序接口，用于在运行时设置日志执行中的日志级别。为 Logback 和 Log4j2 提供了默认实现。你可以创建自己的 [LoggingSystem](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/logging/LoggingSystem.html) 实现，并使用 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解替换正在使用的实现，从而重写日志系统的行为。
 
 > [英文链接](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/guide/index.html#logging)

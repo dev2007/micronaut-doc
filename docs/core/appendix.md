@@ -33,18 +33,18 @@ Micronaut 编译器会访问终端用户代码，并生成额外的字节码，�
 
 ### 20.1.2 注解元数据
 
-Micronaut 是基于注解的编程模型的实现。也就是说，注释构成了该框架 API 设计的基本组成部分。
+Micronaut 是基于注解的编程模型的实现。也就是说，注解构成了该框架 API 设计的基本组成部分。
 
-鉴于这一设计决定，我们制定了一个编译时模型，以解决在运行时评估注释的难题。
+鉴于这一设计决定，我们制定了一个编译时模型，以解决在运行时评估注解的难题。
 
-[AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) API 是框架组件在编译时和运行时都要使用的结构。`AnnotationMetadata` 表示特定类型、字段、构造函数、方法或 bean 属性的注释信息的计算融合，既包括源代码中声明的注释，也包括可在运行时用于实现框架逻辑的合成元注释。
+[AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) API 是框架组件在编译时和运行时都要使用的结构。`AnnotationMetadata` 表示特定类型、字段、构造函数、方法或 bean 属性的注解信息的计算融合，既包括源代码中声明的注解，也包括可在运行时用于实现框架逻辑的合成元注解。
 
 在 [Micronaut 编译器](#2011-编译器)中使用 [Element API](https://docs.micronaut.io/latest/api/io/micronaut/inject/ast/package-summary.html) 为给定元素（类、方法、字段等） 访问源代码时，会为每个 [ClassElement](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ast/ClassElement.html)、[FieldElement](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ast/FieldElement.html)、[MethodElement](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ast/MethodElement.html)、[ConstructorElement](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ast/ConstructorElement.html) 和 [PropertyElement](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ast/PropertyElement.html) 计算一个 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 实例。
 
 `AnnotationMetadata` API 试图解决以下难题：
 
 - 注解可以从类型和接口继承到实现中。为避免在运行时遍历类/接口层次结构，Micronaut 将在构建时计算继承注解并处理成员覆盖规则。
-- 注解可以与其他注解一起注解。这些注解通常被称为元注解（meta-annotations）或原型（stereotypes）。`AnnotationMetadata` API 提供了一些方法，用于了解特定注释是否被声明为元注释，以及查找哪些注释与其他注释进行了元注释。
+- 注解可以与其他注解一起注解。这些注解通常被称为元注解（meta-annotations）或原型（stereotypes）。`AnnotationMetadata` API 提供了一些方法，用于了解特定注解是否被声明为元注解，以及查找哪些注解与其他注解进行了元注解。
 - 通常需要将不同来源的注解元数据融合在一起。例如，对于 JavaBean 属性，你希望将来自私有字段、公共 getter 和公共 setter 的元数据合并到一个视图中，否则你就必须在运行时运行逻辑，以某种方式将来自 3 个不同来源的元数据合并在一起。
 - 可重复注解会合并并规范化。如果是继承的注解，则会从父接口或类中合并注解，提供一个单一的 API 来评估可重复注解，而不需要运行时逻辑来执行规范化。
 
@@ -58,13 +58,13 @@ Micronaut 是基于注解的编程模型的实现。也就是说，注释构成�
 
 此外，[AbstractAnnotationMetadataBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AbstractAnnotationMetadataBuilder.html) 还将通过标准 Java 服务加载器机制加载以下类型的一个或多个实例，以便操作 `AnnotationMetadata` 中注解的表示方式：
 
-- [AnnotationMapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationMapper.html) —— 该类型可将一个注释的值映射到另一个注释，同时在 `AnnotationMetadata` 中保留原始注解。
+- [AnnotationMapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationMapper.html) —— 该类型可将一个注解的值映射到另一个注解，同时在 `AnnotationMetadata` 中保留原始注解。
 - [AnnotationTransformer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationTransformer.html) —— 一种可以将一个注解的值转换为另一个注解的类型，从而将原始注解从 `AnnotationMetadata` 中删除。
 - [AnnotationRemapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationRemapper.html) —— 一种可以转换给定包中所有注解的值的类型，可以消除 `AnnotationMetadata` 中的原始注解。
 
 请注意，在编译时，[AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 是可变的，[TypeElementVisitor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/visitor/TypeElementVisitor.html) 的实现可以通过调用 [Element API](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ast/Element.html) 的 `annotate(..)` 方法来进一步更改 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html)。但是，在运行时，[AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 是不可变的和固定的。这种设计的目的是允许编译器进行扩展，并使 Micronaut 能够解释不同的基于注解的源代码级编程模型。
 
-在实践中，这可以有效地将源代码级注释模型与运行时使用的注释模型解耦，从而可以使用不同的注释来表示相同的注释。
+在实践中，这可以有效地将源代码级注解模型与运行时使用的注解模型解耦，从而可以使用不同的注解来表示相同的注解。
 
 例如，`jakarata.inject.Inject` 或 Spring 的 `@Autowired` 可作为 `javax.inject.Inject` 的同义词得到支持，方法是将源代码级注解转换为 `javax.inject.Inject`，这是在运行时代表的唯一注解。
 
@@ -204,7 +204,7 @@ Micronaut 是 JSR-330 依赖注入规范的实现。
 值得注意的是，实际的对象布线会推迟到运行时进行。
 :::
 
-对于 Java 代码，Java 编译器会为每个注释了 bean 定义注解的类调用 [BeanDefinitionInjectProcessor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html)（这是一个 Java 注解处理器）。
+对于 Java 代码，Java 编译器会为每个注解了 bean 定义注解的类调用 [BeanDefinitionInjectProcessor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html)（这是一个 Java 注解处理器）。
 
 :::tip 注意
 构成 Bean 定义注解的因素很复杂，因为它要考虑到元注解，但一般来说，它是指任何注解，注解中带有 JSR-330 Bean  `@Scope`
@@ -503,7 +503,7 @@ Micronaut 支持基于注解的面向方面编程（AOP），允许通过使用�
 在实现层面，[Micronaut 编译器](#2011-编译器)将访问使用 [@InterceptorBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBinding.html) 元注解的类型，并构建一个新的 [AopProxyWriter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/writer/AopProxyWriter.html) 实例，该实例使用 ASM 字节码生成库生成注解类型的子类（或接口的实现）。
 
 :::tip 注意
-Micronaut 在任何时候都不会修改现有的用户字节代码，通过使用构建时生成的代理，Micronaut 可以生成额外的代码，与用户代码一起使用，并增强行为。不过，这种方法也有局限性，例如，它要求注释类型为非最终类型，而且 AOP 建议不能应用于最终类型或有效的最终类型，如 Java 17 记录。
+Micronaut 在任何时候都不会修改现有的用户字节代码，通过使用构建时生成的代理，Micronaut 可以生成额外的代码，与用户代码一起使用，并增强行为。不过，这种方法也有局限性，例如，它要求注解类型为非最终类型，而且 AOP 建议不能应用于最终类型或有效的最终类型，如 Java 17 记录。
 :::
 
 例如，给定以下注解：
@@ -564,7 +564,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME
   </TabItem>
 </Tabs>
 
-1. 注释的保留策略必须是 `RUNTIME`
+1. 注解的保留策略必须是 `RUNTIME`
 2. 一般来说，你希望能在类或方法级别应用建议，因此目标类型是 `TYPE` 和 `METHOD`。
 3. 这里使用了 [@Around](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/Around.html) 注解，该注解本身带有 `@InterceptorBinding(kind=AROUND)`，可以看作是为 `AROUND` 建议定义 [@InterceptorBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBinding.html) 的简单快捷方式。
 
@@ -960,11 +960,11 @@ Micronaut 本身具有符合 [JSR-330](https://www.jcp.org/en/jsr/detail?id=330)
 
 **Micronaut 支持 Scala 吗？**
 
-Micronaut 支持任何支持注释处理器 API 的 JVM 语言。Scala 目前不支持此 API。不过，Groovy 也不支持该 API，我们已经构建了处理 Groovy AST 的特殊支持。如果开发了类似于 `inject-groovy` 的模块，将来可能会在技术上支持 Scala，但目前还不支持 Scala。
+Micronaut 支持任何支持注解处理器 API 的 JVM 语言。Scala 目前不支持此 API。不过，Groovy 也不支持该 API，我们已经构建了处理 Groovy AST 的特殊支持。如果开发了类似于 `inject-groovy` 的模块，将来可能会在技术上支持 Scala，但目前还不支持 Scala。
 
 **除了微服务，Micronaut 还能用于其他目的吗？**
 
-可以。Micronaut 非常模块化，您可以在应用程序中加入 `micronaut-inject-java`（或针对 Groovy 的 `micronaut-inject-groovy`）依赖，选择只使用依赖注入和 AOP 实现。
+可以。Micronaut 非常模块化，你可以在应用程序中加入 `micronaut-inject-java`（或针对 Groovy 的 `micronaut-inject-groovy`）依赖，选择只使用依赖注入和 AOP 实现。
 
 事实上，Micronaut 对[无服务器计算](/core/serverlessFunctions)的支持正是采用了这种方法。
 
@@ -1050,11 +1050,11 @@ repositories {
 
 **依赖注入失效**
 
-依赖注入失效的最常见原因是没有配置适当的注解处理器，或 IDE 配置不正确。有关如何在您的语言中进行设置，参阅[语言支持](/core/languageSupport)部分。
+依赖注入失效的最常见原因是没有配置适当的注解处理器，或 IDE 配置不正确。有关如何在你的语言中进行设置，参阅[语言支持](/core/languageSupport)部分。
 
 **加载 Bean 时出现 NoSuchMethodError（Groovy）**
 
-默认情况下，Groovy 会导入 `groovy.lang` 包中的类，其中包括一个名为 `Singleton` 的类。这是一个 AST 转换注解，通过添加私有构造函数和静态检索方法，使您的类成为单例。该注解很容易与用于在 Micronaut 中定义单例 Bean 的 `javax.inject.Singleton` 注解混淆。请确保在你的 Groovy 类中使用正确的注解。
+默认情况下，Groovy 会导入 `groovy.lang` 包中的类，其中包括一个名为 `Singleton` 的类。这是一个 AST 转换注解，通过添加私有构造函数和静态检索方法，使你的类成为单例。该注解很容易与用于在 Micronaut 中定义单例 Bean 的 `javax.inject.Singleton` 注解混淆。请确保在你的 Groovy 类中使用正确的注解。
 
 **启动应用程序所需的时间比正常情况下长很多（*nix 操作系统）**
 
@@ -1067,13 +1067,13 @@ repositories {
 
 要了解有关此问题的更多信息，参阅此 [stackoverflow 答案](https://stackoverflow.com/a/39698914/1264846)。
 
-## 20.5 破坏性更改
+## 20.5 重大更改
 
-本节记录 Micronaut 版本之间的破坏性更改
+本节记录 Micronaut 版本之间的重大更改。
 
 ### 3.9.0
 
-自 Micronaut Framework 3.9.0 起，CORS `allowed-origins` 配置不支持正则表达式，以防止意外暴露您的 API。如果希望支持正则表达式，可以使用 `allowed-origins-regex`。
+自 Micronaut Framework 3.9.0 起，CORS `allowed-origins` 配置不支持正则表达式，以防止意外暴露你的 API。如果希望支持正则表达式，可以使用 `allowed-origins-regex`。
 
 ---
 
@@ -1219,7 +1219,7 @@ Micronaut 的许多核心注解都已注解为 `@Inherited`，因此无需更改
 
 下表总结了 Micronaut 的核心注解，以及哪些是可以继承的，哪些是不可以继承的：
 
-*表 1.Micronaut 3.x 及以上版本中的注释继承*
+*表 1.Micronaut 3.x 及以上版本中的注解继承*
 
 |注解|继承性|
 |--|--|
@@ -1491,7 +1491,7 @@ annotationProcessor("io.micronaut:micronaut-http-validation")
 
 **反射 bean Map**
 
-在 Micronaut 中的很多地方，都需要获取对象的映射表示。在以前的版本中，如果类没有注解 `@Introspected`，就会使用基于反射的策略来获取该信息。该功能已被移除，现在需要用 `@Introspected` 对以这种方式使用的类进行注释。任何类如果作为参数传递或从任何控制器或客户端返回，都可能受到影响。
+在 Micronaut 中的很多地方，都需要获取对象的映射表示。在以前的版本中，如果类没有注解 `@Introspected`，就会使用基于反射的策略来获取该信息。该功能已被移除，现在需要用 `@Introspected` 对以这种方式使用的类进行注解。任何类如果作为参数传递或从任何控制器或客户端返回，都可能受到影响。
 
 **Cookie 安全配置**
 
@@ -1625,7 +1625,7 @@ Micronaut 以前的版本将 [@Executable](https://micronaut-projects.github.io/
 
 在 Micronaut 3.x 及以上版本中，[@Executable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Executable.html) 已被移到 [@HttpMethodMapping](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/HttpMethodMapping.html) 和 [@MessageMapping](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/messaging/annotation/MessageMapping.html) 的元注解中，以减少内存消耗并提高效率。
 
-如果你依赖于这些可执行方法的存在，则必须在您的类中用 [@Executable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Executable.html) 明确注解方法，以恢复这种行为。
+如果你依赖于这些可执行方法的存在，则必须在你的类中用 [@Executable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Executable.html) 明确注解方法，以恢复这种行为。
 
 **GraalVM 变化**
 

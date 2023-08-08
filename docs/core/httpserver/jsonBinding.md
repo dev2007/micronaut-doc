@@ -6,7 +6,7 @@ sidebar_position: 140
 
 目前最常见的数据交换格式是 JSON。
 
-事实上，[Controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) 注解中的默认值指定 Micronaut 中的控制器默认处理和响应 JSON。
+事实上，[Controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) 注解中的默认值指定 Micronaut 中的控制器默认处理和响应 JSON。
 
 为了以非阻塞的方式实现这一点，Micronaut 基于 [Jackson](https://github.com/FasterXML/jackson) 异步 JSON 解析 API 和 Netty 的基础上构建，从而以非阻塞方式读取传入的 JSON。
 
@@ -88,7 +88,7 @@ fun save(@Body person: Publisher<Person>): Publisher<HttpResponse<Person>> { // 
 
 1. 该方法接收一个发布器，该发布器在读取 JSON 后发出 POJO
 2. `map` 方法将实例存储在 `Map` 中
-3. 返回 [HttpResponse](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpResponse.html)
+3. 返回 [HttpResponse](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpResponse.html)
 
 使用命令行中的 cURL，可以将 JSON POST 到 `/people` URI:
 
@@ -245,7 +245,7 @@ Jackson 产生的输出可以通过多种方式进行定制，从定义 Jackson 
 
 ## Jackson 配置
 
-Jackson ObjectMapper 可以通过使用 [JacksonConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/jackson/JacksonConfiguration.html) 类进行配置来进行配置。
+Jackson ObjectMapper 可以通过使用 [JacksonConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/jackson/JacksonConfiguration.html) 类进行配置来进行配置。
 
 所有 Jackson 配置键都以 `jackson` 开头。
 

@@ -54,7 +54,7 @@ implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
   </TabItem>
 </Tabs>
 
-我们可以在类级别使用 `javax.validation` 注解和 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解来验证参数。
+我们可以在类级别使用 `javax.validation` 注解和 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 注解来验证参数。
 
 *示例*
 
@@ -130,7 +130,7 @@ open class EmailController {
   </TabItem>
 </Tabs>
 
-1. 用 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解控制器
+1. 用 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 注解控制器
 2. `subject` 和 `recipient` 不能为空
 
 如果发生验证错误，将引发 `javax.validation.ConstraintViolationException`。默认情况下，集成的 `io.micronauth.validation.exception.ConstraintException` 处理程序会处理异常，导致如下测试所示的行为：
@@ -278,7 +278,7 @@ open class Email {
 
 1. 你可以在 POJO 中使用 `javax.validation` 注解。
 
-用 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解你的控制器，用 `@Valid` 注解绑定 POJO。
+用 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 注解你的控制器，用 `@Valid` 注解绑定 POJO。
 
 *示例*
 
@@ -354,7 +354,7 @@ open class EmailController {
   </TabItem>
 </Tabs>
 
-1. 用 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 对控制器进行注解
+1. 用 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 对控制器进行注解
 2. 注解 POJO 以使用 `@Valid` 进行验证
 
 POJO 的验证如以下测试所示：
@@ -440,7 +440,7 @@ def "invoking /email/send parse parameters in a POJO and validates"() {
 
 ## 6.15.1 验证组
 
-你可以使用 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 上的 `groups` 来使用[验证组](https://beanvalidation.org/2.0/spec/#validationapi-validatorapi-groups)，用于强制执行约束的子集。[Bean 验证](https://beanvalidation.org/2.0/spec/#constraintdeclarationvalidationprocess-groupsequence)规范中提供了更多信息。
+你可以使用 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 上的 `groups` 来使用[验证组](https://beanvalidation.org/2.0/spec/#validationapi-validatorapi-groups)，用于强制执行约束的子集。[Bean 验证](https://beanvalidation.org/2.0/spec/#constraintdeclarationvalidationprocess-groupsequence)规范中提供了更多信息。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -520,7 +520,7 @@ open class Email {
 1. 使用默认验证组指定约束。只有当 `Default` 处于活动状态时，才会强制执行此约束。
 2. 使用自定义 `FinalValidation` 验证组指定约束。只有当 `FinalValidation` 处于活动状态时，才会强制执行此约束。
 
-用 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解控制器，指定将处于活动状态的验证组或使其默认为 `Default`。同时用 `@Valid` 注解绑定 POJO。
+用 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 注解控制器，指定将处于活动状态的验证组或使其默认为 `Default`。同时用 `@Valid` 注解绑定 POJO。
 
 *示例*
 
@@ -614,7 +614,7 @@ open class EmailController {
   </TabItem>
 </Tabs>
 
-1. 使用 [Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 进行注解而不指定组意味着 `Default` 组将处于活动状态。由于这是在类上定义的，因此它将应用于所有方法。
+1. 使用 [Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 进行注解而不指定组意味着 `Default` 组将处于活动状态。由于这是在类上定义的，因此它将应用于所有方法。
 2. `Default` 验证组中的约束将被强制执行，继承自类。其效果是，当调用此方法时，将不会强制执行 `email.recipient` 上的 `@NotBlank`。
 3. 指定 `groups` 意味着在调用此方法时将强制执行这些验证组。请注意，`FinalValidation` 继承 `Default`，因此将强制执行来自两个组的约束。
 4. 由于 `FinalValidation` 继承 `Default`，因此将强制执行 `Default` 和 `FinalValidat` 验证组中的约束。其效果是，当调用此方法时， `email` 中的两个 `@NotBlank` 约束都将被强制执行。

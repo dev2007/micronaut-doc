@@ -4,13 +4,13 @@ sidebar_position: 70
 
 # 6.7 区域解析
 
-Micronaut 支持几种策略来解析给定请求的区域设置。[getLocale--](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html#getLocale--) 方法可用于请求，但它只支持解析 `Accept-Language` 头。对于区域设置可以在 cookie、用户会话中，或者应该设置为固定值的其他用例，可以使用 [HttpLocaleResolver](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/util/locale/HttpLocaleResolver.html) 来确定当前区域设置。
+Micronaut 支持几种策略来解析给定请求的区域设置。[getLocale--](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html#getLocale--) 方法可用于请求，但它只支持解析 `Accept-Language` 头。对于区域设置可以在 cookie、用户会话中，或者应该设置为固定值的其他用例，可以使用 [HttpLocaleResolver](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/util/locale/HttpLocaleResolver.html) 来确定当前区域设置。
 
-[LocaleResolver](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/util/LocaleResolver.html) API 不需要直接使用。只需为 `java.util.Locale` 类型的控制器方法定义一个参数，就会自动解析和注入区域设置。
+[LocaleResolver](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/util/LocaleResolver.html) API 不需要直接使用。只需为 `java.util.Locale` 类型的控制器方法定义一个参数，就会自动解析和注入区域设置。
 
 有几个配置选项可以控制如何解析区域设置：
 
-*表 1. [HttpLocaleResolutionConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties.html) 的配置属性*
+*表 1. [HttpLocaleResolutionConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|
@@ -23,6 +23,6 @@ Micronaut 支持几种策略来解析给定请求的区域设置。[getLocale--]
 
 区域设置可以配置为“en_GB”格式，也可以配置为 BCP 47（语言标记）格式。如果配置了多个方法，则固定区域设置优先，然后是 session/cookie，然后是头。
 
-如果任何内置方法都不符合你的用例，请创建 [HttpLocaleResolver](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/util/locale/HttpLocaleResolver.html) 类型的 bean，并设置其相对于现有解析器的顺序（通过 `getOrder` 方法）。
+如果任何内置方法都不符合你的用例，请创建 [HttpLocaleResolver](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/util/locale/HttpLocaleResolver.html) 类型的 bean，并设置其相对于现有解析器的顺序（通过 `getOrder` 方法）。
 
 > [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#localeResolution)

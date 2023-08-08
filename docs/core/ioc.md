@@ -36,14 +36,14 @@ repositories {
 }
 
 micronaut {
-    version = "3.8.4" (2)
+    version = "3.9.4" (2)
 }
 ```
 
 1. 定义 [Micronaut Library 插件](https://plugins.gradle.org/plugin/io.micronaut.library)
 2. 指定使用的 Micronaut 版本
 
-IoC 的入口点是 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 接口，它包括一个 `run` 方法。以下示例演示如何使用它：
+IoC 的入口点是 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 接口，它包括一个 `run` 方法。以下示例演示如何使用它：
 
 *运行 ApplicationContext*
 
@@ -54,11 +54,11 @@ try (ApplicationContext context = ApplicationContext.run()) { (1)
 }
 ```
 
-1. 运行 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html)
+1. 运行 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html)
 2. 从 ApplicationContext 获取一个 bean
 
 :::tip 注意
-该示例使用 Java [try-with-resources](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html) 语法来确保 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 在应用程序退出时完全关闭
+该示例使用 Java [try-with-resources](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html) 语法来确保 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 在应用程序退出时完全关闭
 :::
 
 ## 3.1 定义 Bean
@@ -181,7 +181,7 @@ class Vehicle(private val engine: Engine) { // (3)
 2. `V8Engine` 实现被定义并标记为 `Singleton` 作用域
 3. 通过构造函数注入来注入 `Engine`
 
-要执行依赖注入，请使用 `run()` 方法运行 [BeanContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanContext.html)，并使用 `getBean(Class)` 查找 bean，如下例所示：
+要执行依赖注入，请使用 `run()` 方法运行 [BeanContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanContext.html)，并使用 `getBean(Class)` 查找 bean，如下例所示：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -226,7 +226,7 @@ Micronaut 支持以下类型的依赖注入：
 
 此时，你可能想知道 Micronaut 如何在不需要反射的情况下执行上述依赖注入。
 
-关键是一组 AST 转换（对于 Groovy）和注解处理器（对于 Java），它们生成实现 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 接口的类。
+关键是一组 AST 转换（对于 Groovy）和注解处理器（对于 Java），它们生成实现 [BeanDefinition](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/BeanDefinition.html) 接口的类。
 
 Micronaut 使用 ASM 字节码库来生成类，因为 Micronaut 提前知道注入点，所以不需要像其他框架，如 Spring 那样在运行时扫描所有方法、字段、构造函数等。
 
@@ -236,9 +236,9 @@ Micronaut 使用 ASM 字节码库来生成类，因为 Micronaut 提前知道注
 
 ## 3.3 BeanContext
 
-[BeanContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanContext.html) 是所有 bean 定义的容器对象（它还实现了 [BeanDefinitionRegistry](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanDefinitionRegistry.html)）。
+[BeanContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanContext.html) 是所有 bean 定义的容器对象（它还实现了 [BeanDefinitionRegistry](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanDefinitionRegistry.html)）。
 
-这也是 Micronaut 的初始化点。然而，一般来说，你不直接与 `BeanContext` API 交互，只需使用 `jakarta.inject` 注解和 [io.micronaut.context.annotation](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/package-summary.html) 包中的注解即可满足依赖注入需求。
+这也是 Micronaut 的初始化点。然而，一般来说，你不直接与 `BeanContext` API 交互，只需使用 `jakarta.inject` 注解和 [io.micronaut.context.annotation](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/package-summary.html) 包中的注解即可满足依赖注入需求。
 
 ## 3.4 可注入容器类型
 
@@ -254,7 +254,7 @@ Micronaut 使用 ASM 字节码库来生成类，因为 Micronaut 提前知道注
 |[Array](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html)|给定类型的 bean 的本地数组|`Engine[]`|
 |[Provider](https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html)|如果循环依赖需要它，是一个 `javax.inject.Provider`，或者为每个 `get` 调用实例化一个原型。|`Provider<Engine>`|
 |[Provider](https://jakarta.ee/specifications/platform/9/apidocs/jakarta/inject/Provider.html)|如果循环依赖需要它，是一个 `jakarta.inject.Provider`，或者为每个 `get` 调用实例化一个原型。|`Provider<Engine>`|
-|[BeanProvider](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanProvider.html)|如果循环依赖需要它，是一个 `io.micronaut.context.BeanProvider`，或者为每个 `get` 调用实例化一个原型。|`BeanProvider<Engine>`|
+|[BeanProvider](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanProvider.html)|如果循环依赖需要它，是一个 `io.micronaut.context.BeanProvider`，或者为每个 `get` 调用实例化一个原型。|`BeanProvider<Engine>`|
 
 :::tip 注意
 支持 3 种不同的提供器类型，但我们建议使用 `BeanProvider`。
@@ -287,9 +287,9 @@ class AggregateEngine implements Engine {
 
 **集合排序**
 
-在注入 bean 集合时，默认情况下不会对它们进行排序。实现 [Ordered](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/order/Ordered.html) 接口以注入有序集合。如果请求的 bean 类型未实现 [Ordered](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/order/Ordered.html)，Micronaut 将在 bean 上搜索 [@Order](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Order.html) 注解。
+在注入 bean 集合时，默认情况下不会对它们进行排序。实现 [Ordered](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/order/Ordered.html) 接口以注入有序集合。如果请求的 bean 类型未实现 [Ordered](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/order/Ordered.html)，Micronaut 将在 bean 上搜索 [@Order](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Order.html) 注解。
 
- [@Order](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Order.html) 注解特别适用于对工厂创建的 bean 进行排序，其中 bean 类型是第三方库中的类。在此示例中，`LowRateLimit` 和 `HighRateLimit` 都实现 `RateLimit` 接口。
+ [@Order](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Order.html) 注解特别适用于对工厂创建的 bean 进行排序，其中 bean 类型是第三方库中的类。在此示例中，`LowRateLimit` 和 `HighRateLimit` 都实现 `RateLimit` 接口。
 
  *带 @Order 的工厂*
 
@@ -380,10 +380,10 @@ class RateLimitsFactory {
 
 **按顺序注入 Bean**
 
-当注入 bean 的单个实例时，[@Order](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Order.html) 注解也可以用于定义哪个 bean 具有最高优先级，因而应该注入。
+当注入 bean 的单个实例时，[@Order](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Order.html) 注解也可以用于定义哪个 bean 具有最高优先级，因而应该注入。
 
 :::tip 注意
-选择单个实例时不考虑 [Ordered](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/order/Ordered.html) 接口，因为这需要实例化 bean 来解析顺序
+选择单个实例时不考虑 [Ordered](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/order/Ordered.html) 接口，因为这需要实例化 bean 来解析顺序
 :::
 
 ## 3.5 Bean 限定符
@@ -692,9 +692,9 @@ annotation class Cylinders(
 </Tabs>
 
 1. `@Cylinders` 注解使用 `@Qualifier` 进行元注解
-2. 注解有两个成员。[@NonBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/NonBinding.html) 注解用于在依赖项解析期间排除描述成员。
+2. 注解有两个成员。[@NonBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/NonBinding.html) 注解用于在依赖项解析期间排除描述成员。
 
-然后，你可以在任何 bean 上使用 `@Cylinders` 注解，并且在依赖关系解析期间会考虑未使用 [@NonBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/NonBinding.html) 注解的成员：
+然后，你可以在任何 bean 上使用 `@Cylinders` 注解，并且在依赖关系解析期间会考虑未使用 [@NonBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/NonBinding.html) 注解的成员：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1016,7 +1016,7 @@ class V8Engine : Engine<V8> { // (1)
 
 ### 首选及备选 Bean
 
-[Primary](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Primary.html) 是一个限定符，表示在多个接口实现的情况下，bean 要选择的首选 bean。
+[Primary](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Primary.html) 是一个限定符，表示在多个接口实现的情况下，bean 要选择的首选 bean。
 
 考虑以下示例：
 
@@ -1223,13 +1223,13 @@ class TestController(val colorPicker: ColorPicker) { // (1)
 
 1. 虽然有两个 `ColorPicker` bean，但由于 `@Primary` 注解，`Green` 被注入
 
-如果存在多个可能的候选项，并且未定义 `@Primary`，则引发 [NonUniqueBeaException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/NonUniqueBeanException.html)。
+如果存在多个可能的候选项，并且未定义 `@Primary`，则引发 [NonUniqueBeaException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/exceptions/NonUniqueBeanException.html)。
 
-除了 `@Primary`，还有一个 [Secondary](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Secondary.html) 注解，它会产生相反的效果，并允许取消 bean 的优先级。
+除了 `@Primary`，还有一个 [Secondary](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Secondary.html) 注解，它会产生相反的效果，并允许取消 bean 的优先级。
 
 ### 注入任意 Bean
 
-如果你不知道注入哪个 bean，那么可以使用 [@Any](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Any.html) 限定符来注入第一个可用的 bean，例如：
+如果你不知道注入哪个 bean，那么可以使用 [@Any](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Any.html) 限定符来注入第一个可用的 bean，例如：
 
 *注入任意 Bean*
 
@@ -1261,7 +1261,7 @@ lateinit var engine: Engine
   </TabItem>
 </Tabs>
 
-[@Any](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Any.html) 限定符通常与 [BeanProvider](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanProvider.html) 接口一起使用，以允许更动态的用例。例如，如果 bean 存在，以下 `Vehicle` 实现将启动 `Engine`：
+[@Any](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Any.html) 限定符通常与 [BeanProvider](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanProvider.html) 接口一起使用，以允许更动态的用例。例如，如果 bean 存在，以下 `Vehicle` 实现将启动 `Engine`：
 
 *带 Any 使用 BeanProvider*
 
@@ -1330,7 +1330,7 @@ class Vehicle(@param:Any val engineProvider: BeanProvider<Engine>) { // (1)
   </TabItem>
 </Tabs>
 
-1. 使用 `@Any` 注入 [BeanProvider](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanProvider.html)
+1. 使用 `@Any` 注入 [BeanProvider](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanProvider.html)
 2. 如果使用 `ifPresent` 方法存在基础 bean，则调用 `start` 方法
 
 如果有多个 bean，你也可以调整行为。以下示例启动 `Vehicle` 中安装的所有发动机（如果有）：
@@ -1436,7 +1436,7 @@ class V8Engine : Engine {
 
 在上述情况下，应用程序中的其他类可以选择注入接口 `Engine` 或具体实现 `V8Engine`。
 
-如果这是不希望的，可以使用 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解的 `typed` 成员来限制公开的类型。例如：
+如果这是不希望的，可以使用 [@Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 注解的 `typed` 成员来限制公开的类型。例如：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1493,7 +1493,7 @@ class V8Engine : Engine { // (2)
 1. `@Bean(typed=..)` 用于仅允许注入接口 `Engine`，而不允许注入具体类型
 2. 该类必须实现由 `typed` 定义的类或接口，否则将发生编译错误
 
-以下测试演示了使用编程查找和 [BeanContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanContext.html) API 进行 `typed` 的行为：
+以下测试演示了使用编程查找和 [BeanContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanContext.html) API 进行 `typed` 的行为：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1560,7 +1560,7 @@ class EngineSpec {
   </TabItem>
 </Tabs>
 
-1. 尝试查找 `V8Engine` 引发 [NoSuchBeaException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/NoSuchBeanException.html)
+1. 尝试查找 `V8Engine` 引发 [NoSuchBeaException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/exceptions/NoSuchBeanException.html)
 2. 查找 `Engine` 接口时成功
 
 ## 3.7 作用域
@@ -1574,24 +1574,24 @@ Micronaut 具有基于 JSR-330 的可扩展 bean 作用域机制。支持以下�
 |类型|描述|
 |--|--|
 |[@Singleton](https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html)|Singleton 作用域表示只存在bean的一个实例|
-|[@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html)|Context 作用域表示 bean 将与 `ApplicationContext` 同时创建（急切初始化）|
-|[@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html)|Prototype 作用域表示每次注入 bean 时都会创建一个新的 bean 实例|
-|[@Infrastructure](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Infrastructure.html)|Infrastructure 作用域表示不能使用 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 重写或替换的 bean，因为它对系统的运行至关重要。|
-|[@ThreadLocal](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/ThreadLocal.html)|`@ThreadLocal` 作用域是一个自定义作用域，通过 ThreadLocal 为每个线程关联一个 bean|
-|[@Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html)|`@Refreshable` 作用域是一个自定义作用域，允许通过 `/refresh` 端点刷新bean的状态。|
-|[@RequestScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/http/scope/RequestScope.html)|`@RequestScope` 作用域是一个自定义作用域，它指示创建了 bean 的新实例并与每个 HTTP 请求相关联|
+|[@Context](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Context.html)|Context 作用域表示 bean 将与 `ApplicationContext` 同时创建（急切初始化）|
+|[@Prototype](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Prototype.html)|Prototype 作用域表示每次注入 bean 时都会创建一个新的 bean 实例|
+|[@Infrastructure](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Infrastructure.html)|Infrastructure 作用域表示不能使用 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 重写或替换的 bean，因为它对系统的运行至关重要。|
+|[@ThreadLocal](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/ThreadLocal.html)|`@ThreadLocal` 作用域是一个自定义作用域，通过 ThreadLocal 为每个线程关联一个 bean|
+|[@Refreshable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/Refreshable.html)|`@Refreshable` 作用域是一个自定义作用域，允许通过 `/refresh` 端点刷新bean的状态。|
+|[@RequestScope](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/http/scope/RequestScope.html)|`@RequestScope` 作用域是一个自定义作用域，它指示创建了 bean 的新实例并与每个 HTTP 请求相关联|
 
 :::tip 注意
-[@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 注解是 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 的同义词，因为默认作用域是 Prototype。
+[@Prototype](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Prototype.html) 注解是 [@Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 的同义词，因为默认作用域是 Prototype。
 :::
 
-通过定义实现 [CustomScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/scope/CustomScope.html) 接口的`@Singleton` bean，可以添加其他作用域。
+通过定义实现 [CustomScope](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/scope/CustomScope.html) 接口的`@Singleton` bean，可以添加其他作用域。
 
-注意，在启动 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 时，默认情况下，`@Singleton` 作用域 bean 是按需创建的。这是为了优化启动时间而设计的。
+注意，在启动 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 时，默认情况下，`@Singleton` 作用域 bean 是按需创建的。这是为了优化启动时间而设计的。
 
-如果这给你的用例带来了问题，你可以选择使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 注解，该注解将对象的生命周期绑定到 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 的生命周期。换句话说，当 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 启动时，将创建 bean。
+如果这给你的用例带来了问题，你可以选择使用 [@Context](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Context.html) 注解，该注解将对象的生命周期绑定到 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 的生命周期。换句话说，当 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 启动时，将创建 bean。
 
-或者，用 [@Parallel](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Parallel.html) 注解任何 `@Singleton` 作用域的 bean，它允许并行初始化 bean 而不影响整个启动时间。
+或者，用 [@Parallel](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Parallel.html) 注解任何 `@Singleton` 作用域的 bean，它允许并行初始化 bean 而不影响整个启动时间。
 
 :::tip 注意
 如果 bean 未能并行初始化，应用程序将自动关闭。
@@ -1601,7 +1601,7 @@ Micronaut 具有基于 JSR-330 的可扩展 bean 作用域机制。支持以下�
 
 在某些情况下，例如在 AWS Lambda 上，分配给 Lambda 构造的 CPU 资源多于执行的 CPU 资源，可能需要对 `@Singleton` bean 进行急切初始化。
 
-你可以使用 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口指定是否急切地初始化 `@Singleton` 作用域的 bean：
+你可以使用 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口指定是否急切地初始化 `@Singleton` 作用域的 bean：
 
 *启用单例的急切初始化*
 
@@ -1619,7 +1619,7 @@ public class Application {
 
 1. 将急切初始化设置为 `true` 将初始化所有单例
 
-在[无服务器函数](https://docs.micronaut.io/3.8.4/guide/index.html#serverlessFunctions)等环境中使用 Micronaut 时，你将没有 Application 类，而是扩展了 Micronaut 提供的类。在这些情况下，Micronaut 提供了可以重写以增强 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 的方法
+在[无服务器函数](/core/serverlessFunctions)等环境中使用 Micronaut 时，你将没有 Application 类，而是扩展了 Micronaut 提供的类。在这些情况下，Micronaut 提供了可以重写以增强 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextBuilder.html) 的方法
 
 *重载 newApplicationContextBuilder()*
 
@@ -1637,7 +1637,7 @@ public class MyFunctionHandler extends MicronautRequestHandler<APIGatewayProxyRe
 }
 ```
 
-[@ConfigurationReader](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationReader.html) bean，如 [@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 或[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)是单例 bean。要急切地初始化配置，但保持其他 `@Singleton` 作用域内的 bean 懒创建，请使用 `eagerInitConfiguration`：
+[@ConfigurationReader](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationReader.html) bean，如 [@EachProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachProperty.html) 或[@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)是单例 bean。要急切地初始化配置，但保持其他 `@Singleton` 作用域内的 bean 懒创建，请使用 `eagerInitConfiguration`：
 
 *启用急切配置初始化*
 
@@ -1657,10 +1657,10 @@ public class Application {
 
 ### 3.7.2 Refreshable 作用域
 
-[Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 作用域是一个自定义作用域，允许通过以下方式刷新 bean 的状态：
+[Refreshable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 作用域是一个自定义作用域，允许通过以下方式刷新 bean 的状态：
 
 - `/refresh` 端点。
-- [RefreshEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html) 的发布。
+- [RefreshEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html) 的发布。
 
 以下示例说明了 `@Refreshable` 作用域的行为。
 
@@ -1730,7 +1730,7 @@ open class WeatherService {
 
 如果你两次调用 `latestForecast()`，你将看到相同的响应，如 `"Scattered Clouds 01/Feb/18 10:29.199"`。
 
-当调用 `/refresh` 端点或发布 [RefreshEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html) 时，该实例将无效，并在下次请求对象时创建新实例。例如：
+当调用 `/refresh` 端点或发布 [RefreshEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html) 时，该实例将无效，并在下次请求对象时创建新实例。例如：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1820,7 +1820,7 @@ annotation class Driver
   </TabItem>
 </Tabs>
 
-1. 作用域使用 [Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 声明 `Car` 类上的需求
+1. 作用域使用 [Requires](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Requires.html) 声明 `Car` 类上的需求
 2. 注解声明为 `@Singleton`
 
 在上面的示例中，`@Singleton` 注解应用于 `@Driver` 注解，这会导致用 `@Driver` 进行注解的每个类都被视为单例。
@@ -1835,7 +1835,7 @@ annotation class Driver
 class Foo {}
 ```
 
-要使作用域可重写，请在 `@Driver` 上使用 [DefaultScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultScope.html) 注解，如果没有其他作用域，则允许指定默认作用域：
+要使作用域可重写，请在 `@Driver` 上使用 [DefaultScope](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/DefaultScope.html) 注解，如果没有其他作用域，则允许指定默认作用域：
 
 *使用 @DefaultScope*
 
@@ -1877,13 +1877,13 @@ annotation class Driver
   </TabItem>
 </Tabs>
 
-1. [DefaultScope](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultScope.html) 声明了未指定时要使用的作用域
+1. [DefaultScope](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/DefaultScope.html) 声明了未指定时要使用的作用域
 
 ## 3.8 Bean 工厂
 
-在许多情况下，你可能希望将不属于代码库的类（如第三方库提供的类）作为bean提供。在这种情况下，不能对编译的类进行注解。相反，实现一个 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)。
+在许多情况下，你可能希望将不属于代码库的类（如第三方库提供的类）作为bean提供。在这种情况下，不能对编译的类进行注解。相反，实现一个 [@Factory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Factory.html)。
 
-工厂是一个用 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 作用域注解）。你使用的注解取决于你希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-作用域)一节。
+工厂是一个用 [Factory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Factory.html) 注解的注解类，它提供了一个或多个注解的方法（用 bean 作用域注解）。你使用的注解取决于你希望 bean 位于哪个作用域中。更多信息，参阅 [bean 作用域](#37-作用域)一节。
 
 :::tip 注意
 工厂具有默认作用域 singleton ，并将随上下文一起销毁。如果你想在工厂生成 bean 后处理它，请使用 `@Prototype` 作用域。
@@ -1992,12 +1992,12 @@ internal class EngineFactory {
 :::
 
 :::note 提示
-要允许生成的 bean 参与应用程序上下文关闭过程，请使用 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解该方法，并将 `preDestroy` 参数设置为要调用以关闭 bean 的方法的名称。
+要允许生成的 bean 参与应用程序上下文关闭过程，请使用 [@Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 注解该方法，并将 `preDestroy` 参数设置为要调用以关闭 bean 的方法的名称。
 :::
 
 **来自字段的 Bean**
 
-使用 Micronaut 3.0 或更高版本，也可以通过在字段上声明 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解来从字段生成 Bean。
+使用 Micronaut 3.0 或更高版本，也可以通过在字段上声明 [@Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 注解来从字段生成 Bean。
 
 虽然一般情况下，这种方法应该不鼓励使用工厂方法，因为工厂方法提供了更多的灵活性，但它确实简化了测试代码。例如，使用 bean 字段，你可以在测试代码中轻松生成模拟：
 
@@ -2243,7 +2243,7 @@ class V8Engine(
 
 **编程禁用 Bean**
 
-工厂方法可以抛出 [DisabledBeanException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/DisabledBeanException.html) 以有条件地禁用 bean。使用 [@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 应该始终是有条件地创建 bean 的首选方法；只有在无法使用 [@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 时，才能在工厂方法中引发异常。
+工厂方法可以抛出 [DisabledBeanException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/exceptions/DisabledBeanException.html) 以有条件地禁用 bean。使用 [@Requires](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Requires.html) 应该始终是有条件地创建 bean 的首选方法；只有在无法使用 [@Requires](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Requires.html) 时，才能在工厂方法中引发异常。
 
 例如：
 
@@ -2466,7 +2466,7 @@ internal class Vehicle(@param:Cylinders(6) private val engine: Engine) {
 
 上述 `Vehicle` 类指定了 `@Cylinders(6)` 的注解值，表示需要六个气缸的 `Engine`。
 
-要实现此用例，请定义一个接受 [InjectionPoint](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/InjectionPoint.html) 实例的工厂，以分析定义的注解值：
+要实现此用例，请定义一个接受 [InjectionPoint](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/InjectionPoint.html) 实例的工厂，以分析定义的注解值：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -2540,19 +2540,19 @@ internal class EngineFactory {
   </TabItem>
 </Tabs>
 
-1. 工厂方法定义了 [InjectionPoint](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/InjectionPoint.html) 类型的参数。
+1. 工厂方法定义了 [InjectionPoint](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/InjectionPoint.html) 类型的参数。
 2. 注解元数据用于获取 `@Cylinder` 注解的值
 3. 该值用于构造引擎，如果无法构造引擎，则引发异常。
 
 :::tip 注意
-需要注意的是，工厂声明为 [@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 作用域，因此每个注入点都会调用该方法。如果 `V8Engine` 和 `V6Engine` 类型需要是单体的，工厂应该使用 Map 来确保对象只构造一次
+需要注意的是，工厂声明为 [@Prototype](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Prototype.html) 作用域，因此每个注入点都会调用该方法。如果 `V8Engine` 和 `V6Engine` 类型需要是单体的，工厂应该使用 Map 来确保对象只构造一次
 :::
 
 ## 3.9 条件 Bean
 
 有时，你可能希望基于各种潜在因素，包括 classpath、配置、其他bean的存在等，有条件地加载bean。
 
-[Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 注解提供了在 bean 上定义一个或多个条件的能力。
+[Requires](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Requires.html) 注解提供了在 bean 上定义一个或多个条件的能力。
 
 考虑以下示例：
 
@@ -2663,7 +2663,7 @@ public class JdbcBookService implements BookService {
 
 ### 配置要求
 
-[@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 注解非常灵活，可以用于各种用例。下表总结了一些可能性：
+[@Requires](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Requires.html) 注解非常灵活，可以用于各种用例。下表总结了一些可能性：
 
 |要求|示例|
 |--|--|
@@ -2745,11 +2745,11 @@ Micronaut 的依赖注入系统和 Spring 的一个显著区别是 bean 的替�
 - Bean 加载顺序更改，导致意外结果
 - 具有相同名称的bean覆盖具有不同类型的另一个bean
 
-为了避免这些问题，Micronaut 的 DI 没有 bean 名称或加载顺序的概念。bean 有一种类型和 [Qualifier](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/Qualifier.html)。不能用另一个完全不同类型的 bean 重写。
+为了避免这些问题，Micronaut 的 DI 没有 bean 名称或加载顺序的概念。bean 有一种类型和 [Qualifier](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/Qualifier.html)。不能用另一个完全不同类型的 bean 重写。
 
-Spring 方法的一个有用的好处是它允许重写现有 bean 来定制行为。为了支持相同的功能，Micronaut 的 DI 提供了一个显式的 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 注解，它与对[条件 Bean](#39-条件-bean)的支持很好地集成在一起，并清晰地记录和表达了开发人员的意图。
+Spring 方法的一个有用的好处是它允许重写现有 bean 来定制行为。为了支持相同的功能，Micronaut 的 DI 提供了一个显式的 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解，它与对[条件 Bean](#39-条件-bean)的支持很好地集成在一起，并清晰地记录和表达了开发人员的意图。
 
-任何现有的 bean 都可以被声明 [@Replaces](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Replaces.html) 的另一个 bean 替换。例如，考虑以下类：
+任何现有的 bean 都可以被声明 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 的另一个 bean 替换。例如，考虑以下类：
 
 *JdbcBookService*
 
@@ -3032,7 +3032,7 @@ class TextBookFactory {
 
 **默认实现**
 
-在公开 API 时，最好不要将接口的默认实现公开为公共 API 的一部分。这样做会阻止用户替换实现，因为他们将无法引用类。解决方案是用 [DefaultImplementation](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解接口，以指示如果用户创建了 `@Replaces(YourInterface.class` 的bean，则要替换哪个实现。
+在公开 API 时，最好不要将接口的默认实现公开为公共 API 的一部分。这样做会阻止用户替换实现，因为他们将无法引用类。解决方案是用 [DefaultImplementation](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解接口，以指示如果用户创建了 `@Replaces(YourInterface.class` 的bean，则要替换哪个实现。
 
 例如，考虑：
 
@@ -3157,11 +3157,11 @@ class CustomResponseStrategy : ResponseStrategy
   </TabItem>
 </Tabs>
 
-在上面的示例中，`CustomResponseStrategy` 替换了 `DefaultResponsePolicy`，因为 [DefaultImplementation](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解指向 `DefaultResponceStrategy`。
+在上面的示例中，`CustomResponseStrategy` 替换了 `DefaultResponsePolicy`，因为 [DefaultImplementation](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/DefaultImplementation.html) 注解指向 `DefaultResponceStrategy`。
 
 ## 3.11 Bean 配置
 
-一个带 [@Configuration](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Configuration.html) 的 bean 是包中多个 bean 定义的分组。
+一个带 [@Configuration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Configuration.html) 的 bean 是包中多个 bean 定义的分组。
 
 `@Configuration` 注解应用于包级别，并通知 Micronaut 与包一起定义的 bean 形成了一个逻辑分组。
 
@@ -3376,7 +3376,7 @@ class PreDestroyBean : AutoCloseable {
 1. 导入 `PreDestroy` 注解
 2. 方法用 `@PreDestroy` 注解，并将在上下文关闭时调用。
 
-对于工厂 Bean，[Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解中的 `preDestroy` 值告诉 Micronaut 要调用哪个方法。
+对于工厂 Bean，[Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 注解中的 `preDestroy` 值告诉 Micronaut 要调用哪个方法。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -3508,13 +3508,13 @@ class Connection {
 
 ## 3.13 上下文事件
 
-Micronaut 通过上下文支持通用事件系统。[ApplicationEventPublisher](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 发布事件，[ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 用于侦听事件。事件系统不限于 Micronaut 发布并支持用户创建的自定义事件。
+Micronaut 通过上下文支持通用事件系统。[ApplicationEventPublisher](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 发布事件，[ApplicationEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 用于侦听事件。事件系统不限于 Micronaut 发布并支持用户创建的自定义事件。
 
 **发布事件**
 
-[ApplicationEventPublisher](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 支持任何类型的事件，尽管 Micronaut 发布的所有事件都继承 ApplicationEvent。
+[ApplicationEventPublisher](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) API 支持任何类型的事件，尽管 Micronaut 发布的所有事件都继承 ApplicationEvent。
 
-要发布事件，请使用依赖注入获取 [ApplicationEventPublisher](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) 的实例，其中泛型类型是事件的类型，并使用事件对象调用 `publishEvent` 方法。
+要发布事件，请使用依赖注入获取 [ApplicationEventPublisher](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventPublisher.html) 的实例，其中泛型类型是事件的类型，并使用事件对象调用 `publishEvent` 方法。
 
 **发布事件**
 
@@ -3608,7 +3608,7 @@ class SampleEventEmitterBean {
 
 **监听事件**
 
-要侦听事件，请注册一个实现 [ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html) 的 bean，其中泛型类型是事件类型。
+要侦听事件，请注册一个实现 [ApplicationEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventListener.html) 的 bean，其中泛型类型是事件类型。
 
 *使用 ApplicationEventListener 侦听事件*
 
@@ -3742,10 +3742,10 @@ class SampleEventListenerSpec : AnnotationSpec() {
 </Tabs>
 
 :::tip 注意
-可以重写 [supports](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html#supports-E-) 方法以进一步澄清要处理的事件。
+可以重写 [supports](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventListener.html#supports-E-) 方法以进一步澄清要处理的事件。
 :::
 
-或者，如果你不希望实现接口或使用内置事件之一，如 [StartupEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/StartupEvent.html) 和 [ShutdownEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ShutdownEvent.html)，请使用 [@EventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解：
+或者，如果你不希望实现接口或使用内置事件之一，如 [StartupEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/StartupEvent.html) 和 [ShutdownEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ShutdownEvent.html)，请使用 [@EventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解：
 
 *使用 `@EventListener` 监听事件*
 
@@ -3846,7 +3846,7 @@ class SampleEventListener {
   </TabItem>
 </Tabs>
 
-如果侦听器执行的工作可能需要一段时间，请使用 [@Async](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/Async.html) 注解在单独的线程上运行该操作：
+如果侦听器执行的工作可能需要一段时间，请使用 [@Async](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/Async.html) 注解在单独的线程上运行该操作：
 
 *使用 @EventListener 异步监听事件*
 
@@ -3978,10 +3978,10 @@ micronaut:
 
 你可以使用以下接口之一钩住 bean 的创建：
 
-- [BeanInitializedEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/BeanInitializedEventListener.html) ——允许在设置属性之后、但在 `@PostConstruct` 事件钩子之前修改或替换 bean。
-- [BeanCreatedEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) ——允许在 bean 完全初始化并调用所有 `@PostConstruct` 钩子后修改或替换 bean。
+- [BeanInitializedEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/BeanInitializedEventListener.html) ——允许在设置属性之后、但在 `@PostConstruct` 事件钩子之前修改或替换 bean。
+- [BeanCreatedEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) ——允许在 bean 完全初始化并调用所有 `@PostConstruct` 钩子后修改或替换 bean。
 
-`BeanInitializedEventListener` 接口通常与 [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) bean 结合使用。考虑以下示例：
+`BeanInitializedEventListener` 接口通常与 [Factory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Factory.html) bean 结合使用。考虑以下示例：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4136,11 +4136,11 @@ class EngineInitializer : BeanInitializedEventListener<EngineFactory> { // (4)
 
 1. `V8Engine` 类定义了 `rodLength` 属性
 2. `EngineFactory` 初始化 `rodLength` 的值并创建实例
-3. 创建的实例作为 [Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 返回
+3. 创建的实例作为 [Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 返回
 4. 实现 `BeanInitializedEventListener` 接口以监听工厂的初始化
 5. 在 `onInitialized` 方法中，`rodLength` 在工厂 bean 创建引擎之前被重写。
 
-[BeanCreatedEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) 接口通常用于修饰或增强完全初始化的 bean，例如通过创建代理。
+[BeanCreatedEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) 接口通常用于修饰或增强完全初始化的 bean，例如通过创建代理。
 
 :::danger 注意
 Bean 事件监听器在类型转换器**前**初始化。如果事件监听器通过依赖配置属性 bean 或任何其他机制依赖类型转换，则可能会看到与类型转换相关的错误。
@@ -4150,7 +4150,7 @@ Bean 事件监听器在类型转换器**前**初始化。如果事件监听器�
 
 从 Micronaut 1.1 开始，JDK 的 [Introspector](https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html) 类就包含了编译时替换。
 
-[BeanIntrospector](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospector.html) 和 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) 接口允许查找 bean 自省来实例化和读/写 bean 属性，而无需使用反射或缓存反射元数据，因为反射元数据会为大型 bean 消耗过多内存。
+[BeanIntrospector](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospector.html) 和 [BeanIntrospection](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospection.html) 接口允许查找 bean 自省来实例化和读/写 bean 属性，而无需使用反射或缓存反射元数据，因为反射元数据会为大型 bean 消耗过多内存。
 
 **让 Bean 可供自省**
 
@@ -4160,7 +4160,7 @@ Bean 事件监听器在类型转换器**前**初始化。如果事件监听器�
   <TabItem value="Gradle" label="Gradle">
 
 ```groovy
-annotationProcessor("io.micronaut:micronaut-inject-java:3.8.4")
+annotationProcessor("io.micronaut:micronaut-inject-java:3.9.4")
 ```
 
   </TabItem>
@@ -4171,7 +4171,7 @@ annotationProcessor("io.micronaut:micronaut-inject-java:3.8.4")
     <path>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-inject-java</artifactId>
-        <version>3.8.4</version>
+        <version>3.9.4</version>
     </path>
 </annotationProcessorPaths>
 ```
@@ -4187,7 +4187,7 @@ annotationProcessor("io.micronaut:micronaut-inject-java:3.8.4")
   <TabItem value="Gradle" label="Gradle">
 
 ```groovy
-runtimeOnly("io.micronaut:micronaut-core:3.8.4")
+runtimeOnly("io.micronaut:micronaut-core:3.9.4")
 ```
 
   </TabItem>
@@ -4197,7 +4197,7 @@ runtimeOnly("io.micronaut:micronaut-core:3.8.4")
 <dependency>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-core</artifactId>
-    <version>3.8.4</version>
+    <version>3.9.4</version>
     <scope>runtime</scope>
 </dependency>
 ```
@@ -4207,7 +4207,7 @@ runtimeOnly("io.micronaut:micronaut-core:3.8.4")
 
 **使用 `@Introspected` 注解**
 
-[@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解可用于任何类，以使其可用于自省。简单使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解类:
+[@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 注解可用于任何类，以使其可用于自省。简单使用 [@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 注解类:
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4278,7 +4278,7 @@ data class Person(var name : String) {
   </TabItem>
 </Tabs>
 
-一旦在编译时生成了自省数据，就可以通过 [BeanTranspection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 检索它：
+一旦在编译时生成了自省数据，就可以通过 [BeanTranspection](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 检索它：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4325,15 +4325,15 @@ print("Hello ${person.name}")
   </TabItem>
 </Tabs>
 
-1. 你可以使用静态 `getIntrospection` 方法检索 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html)
-2. 一旦有了 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html)，就可以使用 `instantiate` 方法实例化一个 bean。
-3. 可以从自省中检索 [BeanProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanProperty.html)
+1. 你可以使用静态 `getIntrospection` 方法检索 [BeanIntrospection](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospection.html)
+2. 一旦有了 [BeanIntrospection](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospection.html)，就可以使用 `instantiate` 方法实例化一个 bean。
+3. 可以从自省中检索 [BeanProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanProperty.html)
 4. 使用 `set` 方法设置属性值
 5. 使用 `get` 方法检索属性值
 
 **@Introspected 和 @AccessorsStyle 共同使用**
 
-可以将 [@AccessorsStyle](https://docs.micronaut.io/3.8.4/guide/index.html#configurationPropertiesAccessorsStyle) 注解与 @Introspected 一起使用：
+可以将 [@AccessorsStyle](/core/config#变更访问器风格) 注解与 @Introspected 一起使用：
 
 ```java
 import io.micronaut.core.annotation.AccessorsStyle;
@@ -4372,7 +4372,7 @@ public class Person {
 1. 用 `@AccessorsStyle` 注解类，为 getter 和 setter 定义空的读写前缀。
 2. 定义不带前缀的 getter 和 setter。
 
-现在，可以使用 [BeanTurpection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 检索编译时生成的自省：
+现在，可以使用 [BeanTurpection](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 检索编译时生成的自省：
 
 ```java
 BeanIntrospection<Person> introspection = BeanIntrospection.getIntrospection(Person.class);
@@ -4384,7 +4384,7 @@ Assertions.assertEquals(42, person.age());
 
 **Bean 字段**
 
-默认情况下，Java 自省仅将 JavaBean getter/setter 或 Java 16 记录组件视为 bean 属性。但是，你可以使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解的 `accessKind` 成员在 Java 中定义带有公共或包保护字段的类：
+默认情况下，Java 自省仅将 JavaBean getter/setter 或 Java 16 记录组件视为 bean 属性。但是，你可以使用 [@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 注解的 `accessKind` 成员在 Java 中定义带有公共或包保护字段的类：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4436,7 +4436,7 @@ class User {
 
 **构造方法**
 
-对于具有多个构造函数的类，将 [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于要使用的构造函数。
+对于具有多个构造函数的类，将 [@Creator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于要使用的构造函数。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4530,15 +4530,15 @@ class Vehicle @Creator constructor(val make: String, val model: String, val axle
   </TabItem>
 </Tabs>
 
-1. [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解表示要使用的构造函数
+1. [@Creator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Creator.html) 注解表示要使用的构造函数
 
 :::tip 注意
-该类没有默认构造函数，因此在没有参数的情况下调用实例化会引发 [InstantiationException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/reflect/exception/InstantiationException.html)。
+该类没有默认构造函数，因此在没有参数的情况下调用实例化会引发 [InstantiationException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/reflect/exception/InstantiationException.html)。
 :::
 
 **静态 Creator 方法**
 
-[@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解可以应用于创建类实例的静态方法。
+[@Creator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Creator.html) 注解可以应用于创建类实例的静态方法。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4622,7 +4622,7 @@ class Business private constructor(val name: String) {
   </TabItem>
 </Tabs>
 
-1. [@Creator](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于实例化类的静态方法
+1. [@Creator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Creator.html) 注解应用于实例化类的静态方法
 
 :::note 提示
 可以注解多个“creator”方法。如果有一个没有参数，它将是默认的构造方法。第一个带参数的方法将用作主要构造方法。
@@ -4634,7 +4634,7 @@ class Business private constructor(val name: String) {
 
 **在配置类中使用 `@Introspected`**
 
-如果要自省的类已经编译并且不在你的控制之下，另一种选择是使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解集的 `classes` 成员定义一个配置类。
+如果要自省的类已经编译并且不在你的控制之下，另一种选择是使用 [@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 注解集的 `classes` 成员定义一个配置类。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4674,12 +4674,12 @@ class PersonConfiguration
 在上面的示例中，`PersonConfiguration` 类为 `Person` 类生成自省。
 
 :::tip 注意
-你还可以使用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 的 `packages` 成员，该包在编译时扫描并为包中的所有类生成自省。注意，此功能目前被视为实验性。
+你还可以使用 [@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 的 `packages` 成员，该包在编译时扫描并为包中的所有类生成自省。注意，此功能目前被视为实验性。
 :::
 
 **编写 AnnotationMapper 以自省现有注解**
 
-如果默认情况下你希望自省现有注解，则可以编写 [AnnotationMap](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。
+如果默认情况下你希望自省现有注解，则可以编写 [AnnotationMap](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。
 
 这方面的一个例子是 [EntityIntrospectedAnnotationMap](https://github.com/micronaut-projects/micronaut-core/blob/master/inject/src/main/java/io/micronaut/inject/beans/visitor/EntityIntrospectedAnnotationMapper.java)，它确保所有用 `javax.persistence.Entity` 注解的 bean 在默认情况下都是可自省的。
 
@@ -4689,11 +4689,11 @@ class PersonConfiguration
 
 **BeanWrapper API**
 
-[BeanProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanProperty.html) 提供了读取和写入给定类的属性值的原始访问，不提供任何自动类型转换。
+[BeanProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanProperty.html) 提供了读取和写入给定类的属性值的原始访问，不提供任何自动类型转换。
 
 传递给 `set` 和 `get` 方法的值应与基础属性类型匹配，否则将发生异常。
 
-为了提供额外的类型转换智能，[BeanWrapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanWrapper.html) 接口允许包装现有 bean 实例，设置并获取 bean 的属性，并根据需要执行类型转换。
+为了提供额外的类型转换智能，[BeanWrapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanWrapper.html) 接口允许包装现有 bean 实例，设置并获取 bean 的属性，并根据需要执行类型转换。
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -4734,13 +4734,13 @@ println("Person's age now $newAge")
   </TabItem>
 </Tabs>
 
-1. 使用静态 `getWrapper` 方法获取 bean 实例的 [BeanWrapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanWrapper.html)。
-2. 你可以设置财产，[BeanWrapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanWrapper.html) 将执行类型转换，如果转换不可能，则抛出 [ConversionErrorException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)。
-3. 你可以使用 `getRequiredProperty` 检索属性并请求适当的类型。如果属性不存在，则引发 [IntrospectionException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/exceptions/IntrospectionException.html)，如果无法转换，则引发  [ConversionErrorException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)。
+1. 使用静态 `getWrapper` 方法获取 bean 实例的 [BeanWrapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanWrapper.html)。
+2. 你可以设置财产，[BeanWrapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanWrapper.html) 将执行类型转换，如果转换不可能，则抛出 [ConversionErrorException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)。
+3. 你可以使用 `getRequiredProperty` 检索属性并请求适当的类型。如果属性不存在，则引发 [IntrospectionException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/exceptions/IntrospectionException.html)，如果无法转换，则引发  [ConversionErrorException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)。
 
 **Jackson 与 Bean 自省**
 
-Jackson 被配置为使用 [BeanIntrospection](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 来读写属性值和构造对象，从而实现无反射的序列化/反序列化。从性能角度来看，这是有益的，并且需要较少的配置才能在运行时（如 GraalVM 本地）中正确运行。
+Jackson 被配置为使用 [BeanIntrospection](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/beans/BeanIntrospection.html) API 来读写属性值和构造对象，从而实现无反射的序列化/反序列化。从性能角度来看，这是有益的，并且需要较少的配置才能在运行时（如 GraalVM 本地）中正确运行。
 
 默认情况下启用此功能；通过将 `jackson.bean-introspection-module` 配置设置为 `false` 来禁用它。
 
@@ -4783,7 +4783,7 @@ implementation("io.micronaut:micronaut-validation")
 - 与[约束元数据 API](https://beanvalidation.org/2.0/spec/#constraintmetadata) 的任何交互，因为 Micronaut 使用编译时生成的元数据。
 - 基于 XML 的配置
 
-不要使用 `javax.validation.ConstraintValidator`，而是使用 [ConstraintValidator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)(io.minout.validation.validator.constraints.ConstraintPValidator)定义自定义约束，该约束支持在编译时验证注解。
+不要使用 `javax.validation.ConstraintValidator`，而是使用 [ConstraintValidator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)(io.minout.validation.validator.constraints.ConstraintPValidator)定义自定义约束，该约束支持在编译时验证注解。
 
 Micronaut 的实现包括以下好处：
 - 反射和运行时无代理验证，减少了内存消耗
@@ -4874,7 +4874,7 @@ open class PersonService {
 上面的示例声明调用 `sayHello` 方法时将验证 `@NotBlank` 注解。
 
 :::caution 警告
-如果使用 Kotlin，则必须将类和方法声明为 `open` 的，这样 Micronaut 才能创建编译时子类。或者，你可以使用 [@Validated](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/Validated.html) 注解类，并将 Kotlin `all-open` 插件配置为使用此类型注解的类。参阅[编译器插件](https://kotlinlang.org/docs/reference/compiler-plugins.html)部分。
+如果使用 Kotlin，则必须将类和方法声明为 `open` 的，这样 Micronaut 才能创建编译时子类。或者，你可以使用 [@Validated](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/Validated.html) 注解类，并将 Kotlin `all-open` 插件配置为使用此类型注解的类。参阅[编译器插件](https://kotlinlang.org/docs/reference/compiler-plugins.html)部分。
 :::
 
 如果发生验证错误，将引发 `javax.validation.ConstraintViolationException` 。例如：
@@ -4973,7 +4973,7 @@ class PersonServiceSpec {
 
 **校验数据类**
 
-要验证数据类，例如 POJO（通常用于 JSON 交换），必须用 [@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解该类（参阅前面关于 [Bean 自省](#315-bean-自省) 的章节），或者，如果该类是外部的，则通过 `@Introsspected` 注解导入。
+要验证数据类，例如 POJO（通常用于 JSON 交换），必须用 [@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 注解该类（参阅前面关于 [Bean 自省](#315-bean-自省) 的章节），或者，如果该类是外部的，则通过 `@Introsspected` 注解导入。
 
 *POJO 校验示例*
 
@@ -5052,12 +5052,12 @@ data class Person(
 </Tabs>
 
 :::note 提示
-[@Introspected](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Introspected.html) 注解可以用作元注解；像 `@javax.persistence.Entity` 这样的常见注解被视为 `@Introspected`
+[@Introspected](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Introspected.html) 注解可以用作元注解；像 `@javax.persistence.Entity` 这样的常见注解被视为 `@Introspected`
 :::
 
 上面的示例定义了一个 `Person` 类，该类有两个应用了约束的属性（`name` 和 `age`）。注意，在 Java 中，注解可以位于字段或 getter 上，对于 Kotlin 数据类，注解应该以字段为目标。
 
-要手动验证类，请注入 [Validator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/Validator.html) 的实例：
+要手动验证类，请注入 [Validator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/validator/Validator.html) 的实例：
 
 *手动校验示例*
 
@@ -5175,10 +5175,10 @@ fun testThatPersonIsValid() {
 
 **校验配置属性**
 
-你还可以验证用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类的属性，以确保配置正确。
+你还可以验证用 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类的属性，以确保配置正确。
 
 :::tip 注意
-建议你使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 注解具有验证功能的 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)，以确保在启动时进行验证
+建议你使用 [@Context](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Context.html) 注解具有验证功能的 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)，以确保在启动时进行验证
 :::
 
 **定义额外约束**
@@ -5256,14 +5256,14 @@ annotation class DurationPattern(
 </Tabs>
 
 1. 注解应使用 `javax.validationConstraint` 进行注解
-2. 可以按如上所述的硬编码方式提供 `message` 模板。如果未指定，Micronaut 将尝试使用 [MessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/MessageSource.html) 接口（可选）使用 `ClassName.message` 查找 message
+2. 可以按如上所述的硬编码方式提供 `message` 模板。如果未指定，Micronaut 将尝试使用 [MessageSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/MessageSource.html) 接口（可选）使用 `ClassName.message` 查找 message
 3. 为了支持重复注解，可以定义内部注解（可选）
 
 :::note 提示
-可以使用 [MessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/MessageSource.html) 和  [ResourceBundleMessageSource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/i18n/ResourceBundleMessageSource.html) 类添加消息和消息束。参阅[资源捆绑包](../core/bundle.html)文档。
+可以使用 [MessageSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/MessageSource.html) 和  [ResourceBundleMessageSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/i18n/ResourceBundleMessageSource.html) 类添加消息和消息束。参阅[资源捆绑包](../core/bundle.html)文档。
 :::
 
-定义注解后，请实现一个用于验证注解的 [ConstraintValidator](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)。你可以创建一个直接实现接口的 bean 类，也可以定义一个返回一个或多个验证器的工厂。
+定义注解后，请实现一个用于验证注解的 [ConstraintValidator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/validator/constraints/ConstraintValidator.html)。你可以创建一个直接实现接口的 bean 类，也可以定义一个返回一个或多个验证器的工厂。
 
 如果你计划定义多个验证器，建议使用后一种方法：
 
@@ -5644,7 +5644,7 @@ Java 的 [AnnotatedElement](https://docs.oracle.com/javase/8/docs/api/java/lang/
 
 相反，Micronaut 在编译时生成这个注解元数据，避免了昂贵的反射并节省了内存。
 
-[BeanContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/BeanContext.html) API 可用于获取对实现 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 接口的 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 的引用。
+[BeanContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/BeanContext.html) API 可用于获取对实现 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 接口的 [BeanDefinition](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/BeanDefinition.html) 的引用。
 
 例如，下面的代码获得了用特定原型注解的所有 bean 定义：
 
@@ -5661,9 +5661,9 @@ for (BeanDefinition definition : definitions) {
 }
 ```
 
-上面的示例找到了所有用 `@Controller` 注解的 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 实例，无论 `@Controller` 是直接使用还是通过注解原型继承。
+上面的示例找到了所有用 `@Controller` 注解的 [BeanDefinition](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/BeanDefinition.html) 实例，无论 `@Controller` 是直接使用还是通过注解原型继承。
 
-注意，`getAnnotation` 方法及其变体返回 [AnnotationValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationValue.html) 类型，而不是 Java 注解。这是设计的，在读取注解值时通常应该尝试使用此 API，因为从性能和内存消耗的角度来看，合成代理实现更差。
+注意，`getAnnotation` 方法及其变体返回 [AnnotationValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationValue.html) 类型，而不是 Java 注解。这是设计的，在读取注解值时通常应该尝试使用此 API，因为从性能和内存消耗的角度来看，合成代理实现更差。
 
 如果需要对注解实例的引用，则可以使用 `synthesize` 方法，该方法创建实现注解接口的运行时代理：
 
@@ -5679,15 +5679,15 @@ Controller controllerAnn = definition.synthesize(Controller.class);
 
 Micronaut 将遵守 Java 的 [AnnotatedElement](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html) API 中定义的关于注解继承的规则：
 
-- 通过 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) API 的 `getAnnotation*` 方法可以使用带有 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 的注解，而直接声明的注解可以通过 `getDeclaredAnnotation*` 方法使用。
+- 通过 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) API 的 `getAnnotation*` 方法可以使用带有 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 的注解，而直接声明的注解可以通过 `getDeclaredAnnotation*` 方法使用。
 - 未使用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 进行元注解的注解将不会包含在元数据中
 
 Micronaut 与 AnnotatedElement API 的不同之处在于，它将这些规则扩展到方法和方法参数，从而：
 
-- 任何用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 注解并出现在被子接口或类 `B` 覆盖的接口或超类 `A` 的方法上的注解，都将被继承到 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 中，该 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 可通过 [ExecutableMethod](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/ExecutableMethod.html) API 从 [BeanDefinition](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/BeanDefinition.html) 或 [AOP 拦截器](https://docs.micronaut.io/3.8.4/guide/index.html#aop)中检索。
-- 任何用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 注解并出现在被子接口或类 `B` 重写的接口或超类 `A` 的方法参数上的注解，都将被继承到 [AnnotationMetadata](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 中，该 AnnotationMetadata 可通过 [Argument](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/type/Argument.html) 接口从 [ExecutableMethod](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/ExecutableMethod.html) API 的 `getArguments` 方法检索。
+- 任何用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 注解并出现在被子接口或类 `B` 覆盖的接口或超类 `A` 的方法上的注解，都将被继承到 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 中，该 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 可通过 [ExecutableMethod](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ExecutableMethod.html) API 从 [BeanDefinition](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/BeanDefinition.html) 或 [AOP 拦截器](/core/serverlessFunctions)中检索。
+- 任何用 [Inherited](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 注解并出现在被子接口或类 `B` 重写的接口或超类 `A` 的方法参数上的注解，都将被继承到 [AnnotationMetadata](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationMetadata.html) 中，该 AnnotationMetadata 可通过 [Argument](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/type/Argument.html) 接口从 [ExecutableMethod](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/ExecutableMethod.html) API 的 `getArguments` 方法检索。
 
-通常情况下，你可能希望覆盖的行为不会默认继承，包括 [Bean 作用域](https://docs.micronaut.io/3.8.4/guide/index.html#scopes)、[Bean 限定符](https://docs.micronaut.io/3.8.4/guide/index.html#qualifiers)、[Bean 条件](https://docs.micronaut.io/3.8.4/guide/index.html#conditionalBeans)、[验证规则](https://docs.micronaut.io/3.8.4/guide/index.html#validation)等。
+通常情况下，你可能希望覆盖的行为不会默认继承，包括 [Bean 作用域](/core/ioc#37-作用域)、[Bean 限定符](/core/ioc#35-bean-限定符)、[Bean 条件](/core/ioc#39-条件-bean)、[验证规则](/core/ioc#316-bean-校验)等。
 
 如果你希望在子类化时继承特定范围、限定符或一组要求，那么可以定义一个用 `@inherited` 注解的元注解。例如：
 
@@ -5766,9 +5766,9 @@ annotation class SqlRepository(
 </Tabs>
 
 1. 注解声明为 `@Inherited`
-2. [Bean 条件](https://docs.micronaut.io/3.8.4/guide/index.html#conditionalBeans) 将由子类继承
-3. [Bean 限定符](https://docs.micronaut.io/3.8.4/guide/index.html#qualifiers) 将由子类继承
-4. [Bean 作用域](https://docs.micronaut.io/3.8.4/guide/index.html#scopes) 将由子类继承
+2. [Bean 条件](/core/ioc#39-条件-bean) 将由子类继承
+3. [Bean 限定符](/core/ioc#35-bean-限定符) 将由子类继承
+4. [Bean 作用域](/core/ioc#37-作用域) 将由子类继承
 5. 你还可以别名注解，它们将被继承
 
 有了这个元注解，你可以将注解添加到超类中：
@@ -5862,9 +5862,9 @@ class BookRepository(private val dataSource: DataSource) : BaseSqlRepository()
 
 **别名/映射注解**
 
-有时，你可能希望将注解成员的值别名为另一个注解成员的数值。为此，请使用 [@AliasFor](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/AliasFor.html) 注解。
+有时，你可能希望将注解成员的值别名为另一个注解成员的数值。为此，请使用 [@AliasFor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/AliasFor.html) 注解。
 
-例如，一个常见的用例是注解定义了 [value()](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 成员，但也支持其他成员。例如 `@Client` 注解：
+例如，一个常见的用例是注解定义了 [value()](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 成员，但也支持其他成员。例如 `@Client` 注解：
 
 *@Client 注解*
 
@@ -5890,8 +5890,8 @@ public @interface Client {
 
 有了这些别名，无论你是定义 `@Client("foo")` 或 `@Client(id="foo")`，都将设置 `value` 和 `id` 成员，从而更容易解析和处理注解。
 
-如果无法控制注解，另一种方法是使用 [AnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。要创建 `AnnotationMapper`，请执行以下操作：
-- 实现 [AnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/AnnotationMapper.html) 接口
+如果无法控制注解，另一种方法是使用 [AnnotationMapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationMapper.html)。要创建 `AnnotationMapper`，请执行以下操作：
+- 实现 [AnnotationMapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/AnnotationMapper.html) 接口
 - 定义引用实现类的 `META-INF/service/io.micronaut.inject.annotation.AnnotationMapper` 文件
 - 将包含实现的 JAR 文件添加到 `annotationProcessor` classpath（用于 Kotlin 的 `kapt`）
 
@@ -5924,16 +5924,16 @@ public class EntityIntrospectedAnnotationMapper implements NamedAnnotationMapper
 }
 ```
 
-1. `map` 方法接收带有注解值的 [AnnotationValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AnnotationValue.html)。
+1. `map` 方法接收带有注解值的 [AnnotationValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AnnotationValue.html)。
 2. 可以返回一个或多个注解，在本例中为 `@Transient`。
 
 :::tip 注意
-上面的示例实现了 [NamedAnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/NamedAnnotationMapper.html) 接口，该接口允许注解与运行时代码混合。要针对具体的注解类型进行操作，请改用 [TypedAnnotationMapper](https://docs.micronaut.io/3.8.4/api/io/micronaut/inject/annotation/TypedAnnotationMapper.html)，尽管注意它需要注解类本身位于注解处理器 classpath。
+上面的示例实现了 [NamedAnnotationMapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/NamedAnnotationMapper.html) 接口，该接口允许注解与运行时代码混合。要针对具体的注解类型进行操作，请改用 [TypedAnnotationMapper](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/inject/annotation/TypedAnnotationMapper.html)，尽管注意它需要注解类本身位于注解处理器 classpath。
 :::
 
 ## 3.18 从库导入 Bean
 
-你可以使用  [@Import](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Import.html) 注解从使用 JSR-330 注解的外部已编译库中导入 bean。
+你可以使用  [@Import](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Import.html) 注解从使用 JSR-330 注解的外部已编译库中导入 bean。
 
 :::tip 注意
 Bean 导入目前仅在 Java 语言中受支持，因为其他语言在源代码处理期间对 classpath 扫描有限制。
@@ -5977,19 +5977,19 @@ public class Application {
 }
 ```
 
-1. 定义 [@Import](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Import.html)
+1. 定义 [@Import](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Import.html)
 2. 定义了要导入的包。请注意，Micronaut 不会通过子包递归，因此需要显式列出子包
 3. 默认情况下，Micronaut 将仅导入具有作用域或限定符的类。通过使用 `*`，你可以使每种类型都成为 bean。
 
 :::tip 注意
-通常，`@Import` 应该在应用程序中使用，而不是在库中使用，因为如果两个库导入相同的 bean，结果很可能是 [NonUniqueBeaException](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/exceptions/NonUniqueBeanException.html)
+通常，`@Import` 应该在应用程序中使用，而不是在库中使用，因为如果两个库导入相同的 bean，结果很可能是 [NonUniqueBeaException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/exceptions/NonUniqueBeanException.html)
 :::
 
 ## 3.19 可为 null 注解
 
 在 Java 中，可以使用注解来显示变量是否可以为 null。这些注解不是标准库的一部分，但你可以单独添加它们。
 
-Micronaut 框架自带一组注解来声明可为空 [@Nullable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Nullable.html) 和 [@NonNull](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/NonNull.html)。
+Micronaut 框架自带一组注解来声明可为空 [@Nullable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Nullable.html) 和 [@NonNull](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/NonNull.html)。
 
 **为什么 Micronaut 框架会添加自己的一组可空性注解，而不是使用现有的一个可为 null 注解库？**
 
@@ -6003,10 +6003,10 @@ Micronaut 框架自带一组注解来声明可为空 [@Nullable](https://docs.mi
 
 它使你的代码更容易从 Kotlin 使用。[当你从 Kotlin 代码调用 Java 代码时，Kotlin 识别可为 null 注解，并将根据它们的注解处理类型](https://kotlinlang.org/docs/java-interop.html#nullability-annotations)。
 
-此外，你可以使用 [@Nullable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Nullable.html) 注解来标记：
+此外，你可以使用 [@Nullable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Nullable.html) 注解来标记：
 
 - 可选的[控制器](../core/routing.html)方法参数。
-可选的注射点。例如，当使用构造函数注入时，可以通过添加 [@Nullable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Nullable.html) 注解将构造函数参数注解为可选参数。
+可选的注射点。例如，当使用构造函数注入时，可以通过添加 [@Nullable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Nullable.html) 注解将构造函数参数注解为可选参数。
 
 ## 3.20 Micronaut Bean 和 Spring
 
@@ -6029,8 +6029,8 @@ Micronaut 以多种形式与 Spring 集成。更多信息，参阅 [Micronaut Sp
 ```groovy
 dependencies {
     ...
-    annotationProcessor "io.micronaut:micronaut-inject-java:3.8.4"
-    compileOnly "io.micronaut:micronaut-inject-java:3.8.4"
+    annotationProcessor "io.micronaut:micronaut-inject-java:3.9.4"
+    compileOnly "io.micronaut:micronaut-inject-java:3.9.4"
     ...
 }
 ```
@@ -6056,7 +6056,7 @@ Micronaut `inject-java` 依赖使用 [Android java 8](https://developer.android.
 
 ### 启用依赖注入
 
-一旦正确配置了 classpath，下一步就是启动 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html)。
+一旦正确配置了 classpath，下一步就是启动 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html)。
 
 以下示例演示了为此创建 [android.app.Application](https://developer.android.com/reference/android/app/Application.html) 的子类：
 

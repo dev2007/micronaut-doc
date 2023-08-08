@@ -16,14 +16,14 @@ sidebar_position: 40
 
 |注解|描述|示例|
 |--|--|--|
-|[@Body](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Body.html)|从请求体绑定|@Body String body|
-|[@CookieValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/CookieValue.html)|从 cookie 绑定一个参数|@CookieValue String myCookie|
-|[@Header](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Header.html)|从 HTTP 头绑定一个参数|@Header String requestId|
-|[@QueryValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/QueryValue.html)|从请求查询参数绑定|@QueryValue String myParam|
-|[@Part](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Part.html)|从 multipart 请求绑定|@Part CompletedFileUpload file|
-|[@RequestAttribute](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/RequestAttribute.html)|从请求属性绑定。属性通常在过滤器中创建|@RequestAttribute String myAttribute|
-|[@PathVariable](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/PathVariable.html)|从请求路径中绑定|@PathVariable String id|
-|[@RequestBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/RequestBean.html)|将任何可绑定的值绑定到单个Bean对象|@RequestBean MyBean bean|
+|[@Body](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Body.html)|从请求体绑定|@Body String body|
+|[@CookieValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/CookieValue.html)|从 cookie 绑定一个参数|@CookieValue String myCookie|
+|[@Header](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Header.html)|从 HTTP 头绑定一个参数|@Header String requestId|
+|[@QueryValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/QueryValue.html)|从请求查询参数绑定|@QueryValue String myParam|
+|[@Part](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Part.html)|从 multipart 请求绑定|@Part CompletedFileUpload file|
+|[@RequestAttribute](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/RequestAttribute.html)|从请求属性绑定。属性通常在过滤器中创建|@RequestAttribute String myAttribute|
+|[@PathVariable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/PathVariable.html)|从请求路径中绑定|@PathVariable String id|
+|[@RequestBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/RequestBean.html)|将任何可绑定的值绑定到单个Bean对象|@RequestBean MyBean bean|
 
 当绑定注解中未指定值时，将使用方法参数名称。换句话说，以下两种方法是等效的，并且都是从名为 `myCookie` 的 cookie 绑定的：
 
@@ -419,7 +419,7 @@ bean类必须使用 `@Introspected` 进行自省。它可以是以下其中一�
 
 ## 可绑定类型
 
-通常，任何可以通过 [ConversionService](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/ConversionService.html) API 从 String 表示转换为 Java 类型的类型都可以绑定到。
+通常，任何可以通过 [ConversionService](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/ConversionService.html) API 从 String 表示转换为 Java 类型的类型都可以绑定到。
 
 这包括最常见的 Java 类型，但是可以通过创建 TypeConverter 类型的 @Singleton bean 来注册其他 TypeConverter 实例。
 
@@ -501,7 +501,7 @@ fun headerNullable(@Header contentType: String?): String? {
 也可以使用 `java.util.Optional`，但对于方法参数而言，并不鼓励。
 :::
 
-此外，任何符合 [RFC-1123](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#RFC_1123_DATE_TIME) 的 `DateTime` 都可以绑定到一个参数。或者，可以使用 [Format](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/Format.html) 注解自定义格式：
+此外，任何符合 [RFC-1123](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#RFC_1123_DATE_TIME) 的 `DateTime` 都可以绑定到一个参数。或者，可以使用 [Format](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/format/Format.html) 注解自定义格式：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -559,7 +559,7 @@ fun dateFormat(@Format("dd/MM/yyyy hh:mm:ss a z") @Header date: ZonedDateTime): 
 
 |类型|描述|示例|
 |--|--|--|
-|[BasicAuth](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/BasicAuth.html)|允许绑定基本授权凭据|BasicAuth basicAuth|
+|[BasicAuth](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/BasicAuth.html)|允许绑定基本授权凭据|BasicAuth basicAuth|
 
 ## 变量消除
 

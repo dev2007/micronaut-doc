@@ -35,7 +35,7 @@ Micronaut 包括与 Kubernetes 的一级集成。更多详情，参阅 [Micronau
 如果在服务中添加自定义健康检查，你甚至可以支持健康检查。要测试你的账户是否可以创建和使用服务发现，参阅集成测试部分。更多信息请访问 https://docs.aws.amazon.com/Route53/latest/APIReference/overview-service-discovery.html。
 
 步骤如下：
-1. 使用 AWS-CLI 创建命名空间。您可以根据使用的 IP 或子网创建公共或私有命名空间。
+1. 使用 AWS-CLI 创建命名空间。你可以根据使用的 IP 或子网创建公共或私有命名空间。
 2. 使用 AWS-CLI 命令创建带有 DNS 记录的服务
 3. 添加健康检查或自定义健康检查（可选）
 4. 在应用程序配置文件中添加服务 ID，如下所示：
@@ -276,7 +276,7 @@ List<ServiceInstance> instances = Flux.from(discoveryClient.getInstances(service
 
 **创建命名空间**
 
-命名空间类似于常规的 Route53 托管区域，它们会出现在 Route53 控制台中，但控制台不支持修改它们。此时，您必须使用 AWS-CLI 来实现任何服务发现功能。
+命名空间类似于常规的 Route53 托管区域，它们会出现在 Route53 控制台中，但控制台不支持修改它们。此时，你必须使用 AWS-CLI 来实现任何服务发现功能。
 
 首先要确定创建的是面向公众的命名空间还是私有命名空间，因为两者的命令不同：
 
@@ -640,7 +640,7 @@ micronaut {
 在生产中，你可以通过指定环境变量（如 `MICRONAUT_HTTP_SERVICES_FOO_URLS=http://prod1,http://prod2`）来覆盖此配置。
 :::
 
-请注意，默认情况下不会进行健康检查，以确保所引用的服务处于运行状态。您可以通过启用健康检查和指定健康检查路径（默认为 `/health`）来改变这种情况：
+请注意，默认情况下不会进行健康检查，以确保所引用的服务处于运行状态。你可以通过启用健康检查和指定健康检查路径（默认为 `/health`）来改变这种情况：
 
 *启用健康检查*
 

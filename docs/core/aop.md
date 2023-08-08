@@ -24,7 +24,7 @@ Micronaut 试图通过提供一个不使用反射的简单编译时 AOP API 来�
 
 ### 编写环绕通知
 
-第一步是定义一个注解，该注解将触发 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html)。
+第一步是定义一个注解，该注解将触发 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html)。
 
 *环绕通知注解示例*
 
@@ -89,9 +89,9 @@ annotation class NotNull
 
 1. 注解的保留策略应为 `RUNTIME`
 2. 通常，你希望能够在类或方法级别应用建议，因此目标类型是 `TYPE` 和 `METHOD`
-3. 添加 [@Around](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/Around.html)注解是为了告诉 Micronaut 该注解是环绕通知
+3. 添加 [@Around](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/Around.html)注解是为了告诉 Micronaut 该注解是环绕通知
 
-定义环绕通知的下一步是实现 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html)。例如，以下拦截器不允许具有 `null` 值的参数：
+定义环绕通知的下一步是实现 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html)。例如，以下拦截器不允许具有 `null` 值的参数：
 
 *MethodInterceptor 示例*
 
@@ -200,11 +200,11 @@ class NotNullInterceptor : MethodInterceptor<Any, Any> { // (2)
   </TabItem>
 </Tabs>
 
-1. [@InterceptorBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBean.html) 注解用于指示与拦截器关联的注解。请注意，[@InterceptorBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBean.html) 是用默认作用域 `@Singleton` 进行元注解的，因此，如果你希望创建一个新的拦截器并与每个被拦截的 bean 相关联，则应该用 [@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html) 对拦截器进行注解。
-2. 拦截器实现 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 接口。
-3. 传递的 [MethodInvocationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInvocationContext.html) 用于查找第一个为 `null` 的参数
+1. [@InterceptorBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBean.html) 注解用于指示与拦截器关联的注解。请注意，[@InterceptorBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBean.html) 是用默认作用域 `@Singleton` 进行元注解的，因此，如果你希望创建一个新的拦截器并与每个被拦截的 bean 相关联，则应该用 [@Prototype](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Prototype.html) 对拦截器进行注解。
+2. 拦截器实现 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html) 接口。
+3. 传递的 [MethodInvocationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInvocationContext.html) 用于查找第一个为 `null` 的参数
 4. 如果发现 `null` 参数，则引发异常
-5. 否则将调用 [processed()](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InvocationContext.html#proceed--) 以继续进行方法调用。
+5. 否则将调用 [processed()](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InvocationContext.html#proceed--) 以继续进行方法调用。
 
 :::tip 注意
 Micronaut AOP拦截器不使用反射，这提高了性能并减少了堆栈跟踪大小，从而改进了调试。
@@ -340,14 +340,14 @@ fun testNotNull() {
 这种行为更有效，因为只需要一个bean实例，但根据用例的不同，你可能希望更改这种行为。@Around注解支持各种属性，这些属性允许你更改此行为，包括：
 
 - `proxyTarget`（默认为 `false`）——如果设置为 `true`，则代理将委托给原始bean实例，而不是调用super的子类
-- `hotswap`（默认为 `false`）——与 `proxyTarget=true` 相同，但除此之外，代理实现了 [HotSwappableInterceptedProxy](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/HotSwappableInterceptedProxy.html)，它将每个方法调用封装在 `ReentrantReadWriteLock` 中，并允许在运行时交换目标实例。
+- `hotswap`（默认为 `false`）——与 `proxyTarget=true` 相同，但除此之外，代理实现了 [HotSwappableInterceptedProxy](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/HotSwappableInterceptedProxy.html)，它将每个方法调用封装在 `ReentrantReadWriteLock` 中，并允许在运行时交换目标实例。
 - `lazy`（默认为 `false`）——默认情况下，Micronaut 在创建代理时急切地初始化代理目标。如果设置为 `true`，则会为每个方法调用延迟解析代理目标。
 
 ### @Factory Bean 上的 AOP 通知
 
 当应用于 [Bean 工厂](../core/ioc.html#38-bean-工厂)时，AOP 通知的语义与普通 Bean 不同，应用了以下规则：
 
-1. 在 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) bean 的类级别应用的 AOP 通知将该建议应用于工厂本身，而不是应用于使用 [@Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解定义的任何 bean。
+1. 在 [@Factory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Factory.html) bean 的类级别应用的 AOP 通知将该建议应用于工厂本身，而不是应用于使用 [@Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 注解定义的任何 bean。
 2. 应用于 bean 作用域注解的方法上的 AOP 通知，将会把 AOP 通知应用于工厂生产的 bean。
 
 考虑以下两个示例：
@@ -460,7 +460,7 @@ open class MyFactory {
 
 这种行为的基本原理是，你有时可能希望向工厂应用通知，有时则希望向工厂生产的 bean 应用通知。
 
-请注意，目前没有办法在方法级别将通知应用于 [@Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html) bean，所有针对工厂的通知都必须在类型级别应用。通过将未应用通知的方法定义为非公共方法，可以控制哪些方法应用了通知。
+请注意，目前没有办法在方法级别将通知应用于 [@Factory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Factory.html) bean，所有针对工厂的通知都必须在类型级别应用。通过将未应用通知的方法定义为非公共方法，可以控制哪些方法应用了通知。
 
 
 ## 5.2 引入通知
@@ -469,7 +469,7 @@ open class MyFactory {
 
 引入通知的示例包括为你实现持久性逻辑的 [GORM](https://gorm.grails.org/) 和 [Spring Data](https://projects.spring.io/spring-data)。
 
-Micronaut 的 [Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 注解是引入通知的另一个示例，其中 Micronaut 在编译时为你实现 HTTP 客户端接口。
+Micronaut 的 [Client](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 注解是引入通知的另一个示例，其中 Micronaut 在编译时为你实现 HTTP 客户端接口。
 
 实施引入通知的方式与实施环绕通知的方式非常相似。
 
@@ -554,10 +554,10 @@ annotation class Stub(val value: String = "")
   </TabItem>
 </Tabs>
 
-1. 引入通知带有 [Introduction](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/Introduction.html)
-2. 添加 [Bean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Bean.html) 注解，以便所有使用 `@Stub` 注解的类型都成为 Bean
+1. 引入通知带有 [Introduction](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/Introduction.html)
+2. 添加 [Bean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Bean.html) 注解，以便所有使用 `@Stub` 注解的类型都成为 Bean
 
-上一个例子中提到的 `StubIntroduction` 类必须实现 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 接口，就像环绕通知一样。
+上一个例子中提到的 `StubIntroduction` 类必须实现 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html) 接口，就像环绕通知一样。
 
 以下是一个示例实现：
 
@@ -634,8 +634,8 @@ class StubIntroduction : MethodInterceptor<Any, Any> { // (2)
   </TabItem>
 </Tabs>
 
-1. [InterceptorBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBean.html) 注解用于将拦截器与 @Stub 注解相关联
-2. 该类使用 `@Singleton` 进行注解，并实现 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 接口
+1. [InterceptorBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBean.html) 注解用于将拦截器与 @Stub 注解相关联
+2. 该类使用 `@Singleton` 进行注解，并实现 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html) 接口
 3. 从上下文中读取 `@Stub` 注解的值，并尝试将该值转换为返回类型
 4. 否则返回 `null`
 
@@ -678,17 +678,17 @@ stubExample.date.shouldBe(null)
   </TabItem>
 </Tabs>
 
-请注意，如果引入通知无法实现该方法，请调用 [MethodInvocationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInvocationContext.html) 的 `proceed` 方法。这允许其他引入通知拦截器实现该方法，并且如果没有建议可以实现该方法则将抛出UnsupportedOperationException。
+请注意，如果引入通知无法实现该方法，请调用 [MethodInvocationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInvocationContext.html) 的 `proceed` 方法。这允许其他引入通知拦截器实现该方法，并且如果没有建议可以实现该方法则将抛出UnsupportedOperationException。
 
-此外，如果存在多个引入通知，你可能希望覆盖 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 的 `getOrder()` 方法来控制通知的优先级。
+此外，如果存在多个引入通知，你可能希望覆盖 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html) 的 `getOrder()` 方法来控制通知的优先级。
 
 以下部分介绍了 Micronaut 提供的核心建议类型。
 
 ## 5.3 方法适配器通知
 
-在某些情况下，你希望基于方法上注解的存在来引入新的 bean。一个例子是 [@EventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解，它为调用注解方法的每个注解方法生成 [ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html) 的实现。
+在某些情况下，你希望基于方法上注解的存在来引入新的 bean。一个例子是 [@EventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解，它为调用注解方法的每个注解方法生成 [ApplicationEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventListener.html) 的实现。
 
-例如，以下代码段在 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 启动时运行方法中包含的逻辑：
+例如，以下代码段在 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 启动时运行方法中包含的逻辑：
 
 ```java
 import io.micronaut.context.event.StartupEvent;
@@ -701,9 +701,9 @@ void onStartup(StartupEvent event) {
 }
 ```
 
-[@EventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解的存在导致 Micronaut 创建一个新的类，该类实现 [ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html) 并调用上面 bean 中定义的 `onStartup` 方法。
+[@EventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 注解的存在导致 Micronaut 创建一个新的类，该类实现 [ApplicationEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventListener.html) 并调用上面 bean 中定义的 `onStartup` 方法。
 
-[@EventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 的实际实现是微不足道的；它只需使用 [@Adapter](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/Adapter.html) 注解来指定它所适应的 SAM（单个抽象方法）类型：
+[@EventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/event/annotation/EventListener.html) 的实际实现是微不足道的；它只需使用 [@Adapter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/Adapter.html) 注解来指定它所适应的 SAM（单个抽象方法）类型：
 
 ```java
 import io.micronaut.aop.Adapter;
@@ -724,13 +724,13 @@ public @interface EventListener {
 }
 ```
 
-1. [@Adapter](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/Adapter.html) 注解指示要适配的 SAM 类型，在本例中为  [ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html)。
+1. [@Adapter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/Adapter.html) 注解指示要适配的 SAM 类型，在本例中为  [ApplicationEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventListener.html)。
 
 :::tip 注意
 如果指定了通用类型，Micronaut 还会自动对齐 SAM 接口的通用类型。
 :::
 
-使用此机制，你可以定义自定义注解，这些注解使用 [@Adapter](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/Adapter.html) 注解和 SAM 接口在编译时为你自动实现 bean。
+使用此机制，你可以定义自定义注解，这些注解使用 [@Adapter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/Adapter.html) 注解和 SAM 接口在编译时为你自动实现 bean。
 
 ## 5.4 Bean 生命周期通知
 
@@ -740,7 +740,7 @@ public @interface EventListener {
 - 拦截 bean 的 `@PostConstruct` 调用
 - 拦截 bean 的 `@PreDestroy` 调用
 
-Micronaut 通过允许定义额外的 [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 元注解来支持这3个用例。
+Micronaut 通过允许定义额外的 [@InterceptorBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBinding.html) 元注解来支持这3个用例。
 
 考虑以下注解定义：
 
@@ -803,10 +803,10 @@ annotation class ProductBean
   </TabItem>
 </Tabs>
 
-1. 添加 [@AroundConstruct](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/AroundConstruct.html) 注解以指示应该发生对构造函数的拦截
-2. [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 定义用于指示应进行 @PostConstruct 拦截
-3. [@InterceptorBinding](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBinding.html) 定义用于指示应进行 @PreDestroy 拦截
-4. bean 被定义为 [@Prototype](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Prototype.html)，因此每个注入点都需要一个新的实例
+1. 添加 [@AroundConstruct](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/AroundConstruct.html) 注解以指示应该发生对构造函数的拦截
+2. [@InterceptorBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBinding.html) 定义用于指示应进行 @PostConstruct 拦截
+3. [@InterceptorBinding](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBinding.html) 定义用于指示应进行 @PreDestroy 拦截
+4. bean 被定义为 [@Prototype](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Prototype.html)，因此每个注入点都需要一个新的实例
 
 请注意，如果你不需要 `@PostConstruct` 和 `@PreDestroy` 拦截，你可以简单地删除这些绑定。
 
@@ -895,12 +895,12 @@ class Product(@param:Parameter val productName: String ) { // (2)
 </Tabs>
 
 1. `@ProductBean` 注解是在 `Product` 类型的类上定义的
-2. [@Parameter](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Parameter.html) 注解指示此 bean 需要一个参数来完成构造
+2. [@Parameter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Parameter.html) 注解指示此 bean 需要一个参数来完成构造
 3. 任何 `@PreDestroy` 或 `@PostConstruct` 方法都是在拦截器链中最后执行的
 
-现在，你可以为构造函数拦截定义 [ConstructorInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/ConstructorInterceptor.html) bean，为 `@PostConstruct` 或 `@PreDestroy` 拦截定义 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html)  bean。
+现在，你可以为构造函数拦截定义 [ConstructorInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/ConstructorInterceptor.html) bean，为 `@PostConstruct` 或 `@PreDestroy` 拦截定义 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html)  bean。
 
-以下工厂定义了一个 [ConstructorInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/ConstructorInterceptor.html)，它拦截 `Product` 实例的构造，并将它们注册到一个假设的 `ProductService` 中，首先验证产品名称：
+以下工厂定义了一个 [ConstructorInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/ConstructorInterceptor.html)，它拦截 `Product` 实例的构造，并将它们注册到一个假设的 `ProductService` 中，首先验证产品名称：
 
 *定义构造函数拦截器*
 
@@ -1000,11 +1000,11 @@ fun aroundConstruct(): ConstructorInterceptor<Product> { // (1)
   </TabItem>
 </Tabs>
 
-1. 一个新的 [@InterceptorBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBean.html) 被定义为[ConstructorInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/ConstructorInterceptor.html)
+1. 一个新的 [@InterceptorBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBean.html) 被定义为[ConstructorInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/ConstructorInterceptor.html)
 2. 构造函数参数值可以根据需要进行检索和修改
 3. 构造函数可以使用 `processed()` 方法调用
 
-定义拦截 `@PostConstruct` 和 `@PreDestroy` 方法的 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html) 实例与为常规方法定义拦截器没有什么不同。然而，请注意，你可以使用传递的 [MethodInvocationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInvocationContext.html) 来识别正在发生的拦截类型，并相应地调整代码，如以下示例所示：
+定义拦截 `@PostConstruct` 和 `@PreDestroy` 方法的 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html) 实例与为常规方法定义拦截器没有什么不同。然而，请注意，你可以使用传递的 [MethodInvocationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInvocationContext.html) 来识别正在发生的拦截类型，并相应地调整代码，如以下示例所示：
 
 *定义一个构造函数拦截器*
 
@@ -1078,7 +1078,7 @@ fun  aroundInvoke(): MethodInterceptor<Product, Any> { // (1)
   </TabItem>
 </Tabs>
 
-1. 一个新的 [@InterceptorBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/InterceptorBean.html) 被定义为 [MethodInterceptor](https://docs.micronaut.io/3.8.4/api/io/micronaut/aop/MethodInterceptor.html)
+1. 一个新的 [@InterceptorBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/InterceptorBean.html) 被定义为 [MethodInterceptor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/aop/MethodInterceptor.html)
 2. 处理 `@PostConstruct` 拦截
 3. 处理 `@PreDestroy` 拦截
 
@@ -1193,7 +1193,7 @@ micronaut:
 
 在分布式系统和微服务环境中，失败是你必须计划的事情，如果操作失败，尝试重试是很常见的。如果第一次没有成功，请再试一次！
 
-考虑到这一点，Micronaut 包含了一个 [Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 注解。
+考虑到这一点，Micronaut 包含了一个 [Retryable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/annotation/Retryable.html) 注解。
 
 ### 简单重试
 
@@ -1361,7 +1361,7 @@ open fun streamBooks(): Flux<Book> {
 
 [断路器](https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern)模式旨在解决此问题，方法是允许一定数量的失败请求，然后打开一个在允许额外重试之前保持打开状态一段时间的电路。
 
-[CircuitBreaker](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/CircuitBreaker.html) 注解是 `@Retryable` 注解的变体，它支持一个 `reset` 成员，该成员指示环路在重置之前应保持断开的时间（默认值为 20 秒）。
+[CircuitBreaker](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/annotation/CircuitBreaker.html) 注解是 `@Retryable` 注解的变体，它支持一个 `reset` 成员，该成员指示环路在重置之前应保持断开的时间（默认值为 20 秒）。
 
 *应用 CircuitBreaker 通知*
 
@@ -1401,7 +1401,7 @@ open fun findBooks(): List<Book> {
 
 ### 工厂 Bean 重试
 
-当 [@Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 被应用于 bean 工厂方法时，它的行为就像注解被放置在要返回的类型上一样。当调用返回对象上的方法时，将应用重试行为。请注意，**不会**重试 bean 工厂方法本身。如果你希望重试创建 bean 的功能，则应该将其委托给另一个应用了 [@Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 注解的单例。
+当 [@Retryable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/annotation/Retryable.html) 被应用于 bean 工厂方法时，它的行为就像注解被放置在要返回的类型上一样。当调用返回对象上的方法时，将应用重试行为。请注意，**不会**重试 bean 工厂方法本身。如果你希望重试创建 bean 的功能，则应该将其委托给另一个应用了 [@Retryable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/annotation/Retryable.html) 注解的单例。
 
 例如：
 
@@ -1418,21 +1418,21 @@ public class Neo4jDriverFactory {
 ```
 
 1. 创建了一个工厂 bean，它定义了创建 bean 的方法
-2. [@Retryable](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/annotation/Retryable.html) 注解用于捕获 `Driver` 上执行的方法引发的异常
+2. [@Retryable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/annotation/Retryable.html) 注解用于捕获 `Driver` 上执行的方法引发的异常
 
 ### 重试事件
 
-你可以将 [RetryEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/RetryEventListener.html) 实例注册为 bean，以侦听每次重试操作时发布的 [RetryEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/RetryEvent.html) 事件。
+你可以将 [RetryEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/event/RetryEventListener.html) 实例注册为 bean，以侦听每次重试操作时发布的 [RetryEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/event/RetryEvent.html) 事件。
 
-此外，你可以为 [CircuitOpenEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/CircuitOpenEvent.html) 注册事件侦听器，以在断路器环路打开时得到通知，或为 [CircuitClosedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/retry/event/CircuitClosedEvent.html) 注册，以便当环路关闭时得到通知。
+此外，你可以为 [CircuitOpenEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/event/CircuitOpenEvent.html) 注册事件侦听器，以在断路器环路打开时得到通知，或为 [CircuitClosedEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/retry/event/CircuitClosedEvent.html) 注册，以便当环路关闭时得到通知。
 
 ## 5.8 调度任务
 
-与 Spring 和 Grails 类似，Micronaut 具有用于调度后台任务的 [Scheduled](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/Scheduled.html) 注解。
+与 Spring 和 Grails 类似，Micronaut 具有用于调度后台任务的 [Scheduled](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/Scheduled.html) 注解。
 
 ### 使用 @Scheduled 注解
 
-[Scheduled](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/Scheduled.html) 注解可以添加到 bean 的任何方法中，并且你应该设置 `fixedRate`、`fixedDelay` 或 `cron` 其中一个成员。
+[Scheduled](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/Scheduled.html) 注解可以添加到 bean 的任何方法中，并且你应该设置 `fixedRate`、`fixedDelay` 或 `cron` 其中一个成员。
 
 :::tip 注意
 请记住，bean 的范围会影响行为。每次执行调度的方法时，`@Singleton` bean 都会共享状态（实例的字段），而对于 `@Prototype` bean，每次执行都会创建一个新实例。
@@ -1561,7 +1561,7 @@ internal fun onceOneMinuteAfterStartup() {
 
 ### 编程调用任务
 
-要以编程方式调度任务，请使用 [TaskScheduler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskScheduler.html) bean，该 bean 可以按如下方式注入：
+要以编程方式调度任务，请使用 [TaskScheduler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/TaskScheduler.html) bean，该 bean 可以按如下方式注入：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1653,24 +1653,24 @@ micronaut:
       core-pool-size: 30
 ```
 
-*表 1. [UserExecutorConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html) 的配置属性*
+*表 1. [UserExecutorConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/executor/UserExecutorConfiguration.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|
 |micronaut.executors.*.n-threads|java.lang.Integer||
-|micronaut.executors.*.type|[ExecutorType](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/ExecutorType.html)||
+|micronaut.executors.*.type|[ExecutorType](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/executor/ExecutorType.html)||
 |micronaut.executors.*.parallelism|java.lang.Integer||
 |micronaut.executors.*.core-pool-size|java.lang.Integer||
 |micronaut.executors.*.thread-factory-class|java.lang.Class||
 |micronaut.executors.*.name|java.lang.String|设置执行器名字。|
-|micronaut.executors.*.number-of-threads|java.lang.Integer|设置 [FIXED](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED) 的线程数。默认值（ 2 * Java 虚拟机可用的处理器数量）|
+|micronaut.executors.*.number-of-threads|java.lang.Integer|设置 [FIXED](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/executor/ExecutorType.html#FIXED) 的线程数。默认值（ 2 * Java 虚拟机可用的处理器数量）|
 
 ---
 
 ### 异常处理
 
-默认情况下，Micronaut 包括一个 [DefaultTaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/DefaultTaskExceptionHandler.html) bean，它实现 [TaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskExceptionHandler.html) 接口，并在调用计划任务时发生错误时简单地记录异常。
+默认情况下，Micronaut 包括一个 [DefaultTaskExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/DefaultTaskExceptionHandler.html) bean，它实现 [TaskExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/TaskExceptionHandler.html) 接口，并在调用计划任务时发生错误时简单地记录异常。
 
-如果你有自定义需求，你可以用自己的实现来替换这个 bean（例如发送电子邮件或关闭上下文以快速失败）。要做到这一点，请编写自己的 [TaskExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskExceptionHandler.html)，并用 @Replaces(DefaultTaskExceptionHandler.class) 对其进行注解。
+如果你有自定义需求，你可以用自己的实现来替换这个 bean（例如发送电子邮件或关闭上下文以快速失败）。要做到这一点，请编写自己的 [TaskExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/TaskExceptionHandler.html)，并用 @Replaces(DefaultTaskExceptionHandler.class) 对其进行注解。
 
 > [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#aop)

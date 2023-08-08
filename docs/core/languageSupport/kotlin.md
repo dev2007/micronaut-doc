@@ -14,13 +14,13 @@ Micronaut 的[命令行界面](/core/cli.html)包含对 Kotlin 的特殊支持�
 $ mn create-app hello-world --lang kotlin
 ```
 
-Micronaut 对 Kotlin 的支持建立在 [Kapt](https://kotlinlang.org/docs/reference/kapt.html) 编译器插件的基础上，其中包括对 Java 注释处理器的支持。要在 Micronaut 应用程序中使用 Kotlin，需要添加适当的依赖项，以便在 kt 源文件上配置和运行 Kapt。Kapt 会为你的 Kotlin 类创建 Java "存根 "类，然后由 Micronaut 的 Java 注释处理器进行处理。存根不包含在最终编译的应用程序中。
+Micronaut 对 Kotlin 的支持建立在 [Kapt](https://kotlinlang.org/docs/reference/kapt.html) 编译器插件的基础上，其中包括对 Java 注解处理器的支持。要在 Micronaut 应用程序中使用 Kotlin，需要添加适当的依赖项，以便在 kt 源文件上配置和运行 Kapt。Kapt 会为你的 Kotlin 类创建 Java "存根 "类，然后由 Micronaut 的 Java 注解处理器进行处理。存根不包含在最终编译的应用程序中。
 
 :::note 提示
 从[官方文档](https://kotlinlang.org/docs/reference/kapt.html)中了解有关 kapt 及其功能的更多信息。
 :::
 
-使用 Gradle 时，Micronaut 注释处理器在 `kapt` 作用域中声明。例如
+使用 Gradle 时，Micronaut 注解处理器在 `kapt` 作用域中声明。例如
 
 *示例 build.gradle*
 
@@ -86,7 +86,7 @@ class HelloController {
 
 要使用 Kapt 启用 Gradle 增量注解处理，必须向 Kapt 发送[使用 Gradle 进行增量注解处理](/core/languageSupport/java#1412-使用-gradle-进行增量注解处理)中指定的参数。
 
-下面的示例演示了如何为 `com.example` 和 `io.example` 包下定义的注释启用和配置增量注解处理：
+下面的示例演示了如何为 `com.example` 和 `io.example` 包下定义的注解启用和配置增量注解处理：
 
 *在 Kapt 中启用增量注解处理*
 
@@ -105,7 +105,7 @@ kapt {
 
 ## 14.3.3 Kotlin 和 AOP 通知
 
-Micronaut 提供不使用反射的编译时 AOP API。当你使用任何 Micronaut [AOP 通知](/core/aop)时，它会在编译时创建一个子类来提供 AOP 行为。这可能会造成问题，因为 Kotlin 类默认为最终类。如果应用程序是使用 Micronaut CLI 创建的，那么 Kotlin [all-open](https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin) 插件会为你配置，当使用 AOP 注释时，它会自动将你的类更改为开放类。要自行配置，可将 [Around](https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin) 类添加到支持的注解列表中。
+Micronaut 提供不使用反射的编译时 AOP API。当你使用任何 Micronaut [AOP 通知](/core/aop)时，它会在编译时创建一个子类来提供 AOP 行为。这可能会造成问题，因为 Kotlin 类默认为最终类。如果应用程序是使用 Micronaut CLI 创建的，那么 Kotlin [all-open](https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin) 插件会为你配置，当使用 AOP 注解时，它会自动将你的类更改为开放类。要自行配置，可将 [Around](https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin) 类添加到支持的注解列表中。
 
 如果你不想或无法使用全开放插件，则必须将使用 AOP 注解的类声明为开放类：
 
@@ -183,7 +183,7 @@ compileTestKotlin {
 
 ## 14.3.5 协程支持
 
-Kotlin 例程允许您使用命令式代码创建异步应用程序。Micronaut 控制器动作可以是 `suspend` 函数：
+Kotlin 例程允许你使用命令式代码创建异步应用程序。Micronaut 控制器动作可以是 `suspend` 函数：
 
 1. 该函数被标记为 `suspend`，但实际上它不会被挂起。
 2. 函数被标记为 `suspend`。

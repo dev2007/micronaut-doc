@@ -4,11 +4,11 @@ sidebar_position: 40
 
 # 7.4 HTTP 客户端过滤器
 
-针对第三方 API 或调用其他微服务时，您经常需要在一组请求中包含相同的 HTTP 头信息或 URL 参数。
+针对第三方 API 或调用其他微服务时，你经常需要在一组请求中包含相同的 HTTP 头信息或 URL 参数。
 
 为了简化这一过程，你可以定义 [HttpClientFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/HttpClientFilter.html) 类，将其应用于所有匹配的 HTTP 客户端请求。
 
-举个例子，比如您想创建一个客户端与 [Bintray REST API](https://bintray.com/docs/api/) 通信。为每个 HTTP 调用都指定身份验证会很繁琐。
+举个例子，比如你想创建一个客户端与 [Bintray REST API](https://bintray.com/docs/api/) 通信。为每个 HTTP 调用都指定身份验证会很繁琐。
 
 要解决这个问题，你可以定义一个过滤器。下面是一个 `BintrayService`：
 

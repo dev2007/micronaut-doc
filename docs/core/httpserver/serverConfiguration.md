@@ -4,7 +4,7 @@ sidebar_position: 290
 
 # 6.29 配置 HTTP 服务器
 
-HTTP 服务器有许多配置选项。它们被定义在 [NettyHttpServerConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html) 配置类中，它扩展了 [HttpServerConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/HttpServerConfiguration.html)。
+HTTP 服务器有许多配置选项。它们被定义在 [NettyHttpServerConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html) 配置类中，它扩展了 [HttpServerConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/HttpServerConfiguration.html)。
 
 下面的例子显示了如何通过 `application.yml` 来调整服务器的配置选项：
 
@@ -28,7 +28,7 @@ micronaut:
 3. Netty 工作线程的数量
 4. 自动读取请求正文
 
-*表 1.为 [NettyHttpServerConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html) 配置属性*
+*表 1.为 [NettyHttpServerConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html) 配置属性*
 
 |属性|类型|描述|
 |--|--|--|
@@ -181,11 +181,11 @@ Netty worker 的事件循环使用 "default" 命名的事件循环组。这可�
 `micronaut.server.netty.worker` 下的事件循环配置只在事件循环组被设置为不对应于任何 `micronaut.netty.event-loops` 配置的名称时使用。这一行为已被废弃，并将在未来的版本中被移除。使用 `micronaut.netty.event-loops.*` 进行任何事件循环组配置，而不是通过  `event-loop-group` 设置名称。这不适用于父事件循环配置（`micronaut.server.netty.parent`）。
 :::
 
-*表 1.为 [Worker](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.Worker.html) 配置属性*
+*表 1.为 [Worker](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.Worker.html) 配置属性*
 
 |属性|类型|描述|
 |--|--|--|
-|micronaut.server.netty.worker|[NettyHttpServerConfiguration$Worker](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.Worker.html)|设置 worker 事件循环配置。|
+|micronaut.server.netty.worker|[NettyHttpServerConfiguration$Worker](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.Worker.html)|设置 worker 事件循环配置。|
 |micronaut.server.netty.worker.event-loop-group|java.lang.String|设置使用的名字。|
 |micronaut.server.netty.worker.threads|int|设置事件循环组的线程数量。|
 |micronaut.server.netty.worker.io-ratio|java.lang.Integer|设置 I/O 率。|
@@ -220,7 +220,7 @@ micronaut:
 
 关于配置事件循环，见下表：
 
-*表 2. [DefaultEventLoopGroupConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html) 的配置属性*
+*表 2. [DefaultEventLoopGroupConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|
@@ -233,7 +233,7 @@ micronaut:
 
 ### 6.29.1.1 阻塞操作
 
-当处理阻塞操作时，Micronaut 默认将阻塞操作转移到一个非绑定的、缓存的 I/O 线程池。你可以使用名为 `io` 的 [ExecutorConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/executor/ExecutorConfiguration.html) 来配置 I/O 线程池。比如说：
+当处理阻塞操作时，Micronaut 默认将阻塞操作转移到一个非绑定的、缓存的 I/O 线程池。你可以使用名为 `io` 的 [ExecutorConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/executor/ExecutorConfiguration.html) 来配置 I/O 线程池。比如说：
 
 *配置服务器 I/O 线程池*
 
@@ -249,21 +249,21 @@ micronaut:
 
 ### 6.29.1.2 @Blocking
 
-你可以使用 [@Blocking](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Blocking.html) 注解来标记方法为阻塞。
+你可以使用 [@Blocking](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Blocking.html) 注解来标记方法为阻塞。
 
-如果你将 `micronaut.server.thread-selection` 设置为 `AUTO`，Micronaut 框架就会将带有 `@Blocking` 注解的方法的执行卸载到 IO 线程池中（参阅：[TaskExecutors](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/TaskExecutors.html)）。
+如果你将 `micronaut.server.thread-selection` 设置为 `AUTO`，Micronaut 框架就会将带有 `@Blocking` 注解的方法的执行卸载到 IO 线程池中（参阅：[TaskExecutors](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/TaskExecutors.html)）。
 
 :::tip 注意
-`@Blocking` 只有在你使用 `AUTO` 线程选择时才有效。从 Micronaut 2.0 开始，Micronaut 框架默认为手动选择线程。我们推荐使用 [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解来在不同的线程池中执行阻塞操作。`@ExecutesOn` 对 `MANUAL` 和 `AUTO` 线程选择都有效。
+`@Blocking` 只有在你使用 `AUTO` 线程选择时才有效。从 Micronaut 2.0 开始，Micronaut 框架默认为手动选择线程。我们推荐使用 [@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解来在不同的线程池中执行阻塞操作。`@ExecutesOn` 对 `MANUAL` 和 `AUTO` 线程选择都有效。
 :::
 
-有一些地方，Micronaut 框架内部使用了 [@Blocking](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/Blocking.html)：
+有一些地方，Micronaut 框架内部使用了 [@Blocking](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/Blocking.html)：
 
 |阻塞类型|描述|
 |--|--|
-|[BlockingHttpClient](https://docs.micronaut.io/latest/api/io/micronaut/http/client/BlockingHttpClient.html)|用于测试，为 [HttpClient](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClient.html) 操作的一个子集提供阻塞版本。|
+|[BlockingHttpClient](https://docs.micronaut.io/latest/api/io/micronaut/http/client/BlockingHttpClient.html)|用于测试，为 [HttpClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClient.html) 操作的一个子集提供阻塞版本。|
 |[IOUtils](https://docs.micronaut.io/latest/api/io/micronaut/http/client/BlockingHttpClient.html)|以阻塞方式读取一个 `BufferedReader` 的内容，并将其作为一个 `String` 返回。|
-|[BootstrapPropertySourceLocator](https://docs.micronaut.io/latest/api/io/micronaut/context/env/BootstrapPropertySourceLocator.html)|解决当前 `Environment` 的远程或本地 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例。|
+|[BootstrapPropertySourceLocator](https://docs.micronaut.io/latest/api/io/micronaut/context/env/BootstrapPropertySourceLocator.html)|解决当前 `Environment` 的远程或本地 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 实例。|
 
 :::note 提示
 [Micronaut Data](/data/introduction.html) 也在内部利用 `@Blocking` 来进行一些交易操作、CRUD 拦截器和仓库。
@@ -271,9 +271,9 @@ micronaut:
 
 ## 6.29.2 配置 Netty 客户端管道
 
-你可以通过编写一个监听 [Registry](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/netty/NettyClientCustomizer.Registry.html) 创建的 [Bean 事件监听器](/core/ioc#314-bean-事件)来定制 Netty 客户端管道。
+你可以通过编写一个监听 [Registry](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/netty/NettyClientCustomizer.Registry.html) 创建的 [Bean 事件监听器](/core/ioc#314-bean-事件)来定制 Netty 客户端管道。
 
-[ChannelPipelineCustomizer](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/netty/channel/ChannelPipelineCustomizer.html) 接口为 Micronaut 注册的各种处理程序的名称定义了常量。
+[ChannelPipelineCustomizer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/netty/channel/ChannelPipelineCustomizer.html) 接口为 Micronaut 注册的各种处理程序的名称定义了常量。
 
 作为一个例子，下面的代码样本演示了注册 [Logbook](https://github.com/zalando/logbook) 库，其中包括额外的 Netty 处理程序来执行请求和响应的记录：
 
@@ -434,9 +434,9 @@ class LogbookNettyClientCustomizer(private val logbook: Logbook) :
   </TabItem>
 </Tabs>
 
-1. `LogbookNettyClientCustomizer` 监听一个 [Registry](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/netty/NettyClientCustomizer.Registry.html)，并要求定义一个 `Logbook` Bean。
+1. `LogbookNettyClientCustomizer` 监听一个 [Registry](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/netty/NettyClientCustomizer.Registry.html)，并要求定义一个 `Logbook` Bean。
 2. 根定制器在没有通道的情况下被初始化并注册
-3. 实际的自定义器实现了 [NettyClientCustomizer](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/netty/NettyClientCustomizer.html)。
+3. 实际的自定义器实现了 [NettyClientCustomizer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/netty/NettyClientCustomizer.html)。
 4. 当一个新的通道被创建时，一个新的、专门的自定义器将为该通道创建。
 5. 当客户端发出信号说流管道已经完全构建完成时，日志处理程序被注册。
 
@@ -446,9 +446,9 @@ LogBook 有一个[重大的错误](https://github.com/zalando/logbook/issues/121
 
 ## 6.29.3 配置 Netty 服务器管道
 
-你可以通过编写一个监听 [Registry](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/NettyServerCustomizer.Registry.html) 创建的 [Bean 事件监听器](/core/ioc#314-bean-事件) 来定制 Netty 服务器管道。
+你可以通过编写一个监听 [Registry](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/NettyServerCustomizer.Registry.html) 创建的 [Bean 事件监听器](/core/ioc#314-bean-事件) 来定制 Netty 服务器管道。
 
-[ChannelPipelineCustomizer](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/netty/channel/ChannelPipelineCustomizer.html) 接口为 Micronaut 注册的各种处理程序的名称定义了常量。
+[ChannelPipelineCustomizer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/netty/channel/ChannelPipelineCustomizer.html) 接口为 Micronaut 注册的各种处理程序的名称定义了常量。
 
 作为一个例子，下面的代码示例演示了注册 [Logbook](https://github.com/zalando/logbook) 库，其中包括额外的 Netty 处理程序，以执行请求和响应日志：
 
@@ -615,9 +615,9 @@ class LogbookNettyServerCustomizer(private val logbook: Logbook) :
   </TabItem>
 </Tabs>
 
-1. `LogbookNettyServerCustomizer` 监听 [Registry](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/NettyServerCustomizer.Registry.html)，并要求定义一个 `Logbook` bean
+1. `LogbookNettyServerCustomizer` 监听 [Registry](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/NettyServerCustomizer.Registry.html)，并要求定义一个 `Logbook` bean
 2. 根定制器在没有通道的情况下被初始化并注册
-3. 实际的自定义器实现了 [NettyServerCustomizer](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/NettyServerCustomizer.html)。
+3. 实际的自定义器实现了 [NettyServerCustomizer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/NettyServerCustomizer.html)。
 4. 当一个新的通道被创建时，一个新的、专门的自定义器将为该通道创建。
 5. 当服务器发出信号说流管道已经完全构建完成时，日志处理程序被注册。
 
@@ -725,7 +725,7 @@ micronaut:
 
 在上面的例子中，提供了三个配置。他们的名字（`all`、`web`、`mobile`）并不重要，在 Micronaut 中没有任何意义。它们的存在纯粹是为了能够轻松识别配置的目标用户。
 
-相同的配置属性可以应用于每个配置。参见 [CorsOriginConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/cors/CorsOriginConfiguration.html)，了解可以定义的属性。每个配置提供的值将默认为相应字段的默认值。
+相同的配置属性可以应用于每个配置。参见 [CorsOriginConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/cors/CorsOriginConfiguration.html)，了解可以定义的属性。每个配置提供的值将默认为相应字段的默认值。
 
 当一个 CORS 请求被提出时，配置被搜索允许的源，这些源完全匹配或通过正则表达式匹配请求的源。
 
@@ -1005,7 +1005,7 @@ micronaut:
 
 过期后保持 HTTPS 证书的更新可能是一个挑战。一个很好的解决方案是[自动化证书管理环境](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment)（ACME）和 [Micronaut ACME](/acme/introduction.html) 模块，它提供了对自动刷新证书机构的支持。
 
-如果不可能使用一个证书颁发机构，你需要从磁盘中手动更新证书，那么你应该使用 Micronaut 对[应用事件](/core/ioc#314-bean-事件)的支持，发射一个 [RefreshEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html)，其中包含定义 HTTPS 配置的密钥，Micronaut 将从磁盘中重新加载证书并将新的配置应用到服务器上。
+如果不可能使用一个证书颁发机构，你需要从磁盘中手动更新证书，那么你应该使用 Micronaut 对[应用事件](/core/ioc#314-bean-事件)的支持，发射一个 [RefreshEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html)，其中包含定义 HTTPS 配置的密钥，Micronaut 将从磁盘中重新加载证书并将新的配置应用到服务器上。
 
 :::tip 注意
 你也可以使用[刷新管理端点](/core/management/providedEndpoints.html#1525-刷新端点)，但这只适用于磁盘上证书的物理位置发生变化的情况。
@@ -1172,7 +1172,7 @@ micronaut:
 
 ## 6.29.9 启动次要服务器
 
-Micronaut 支持通过 [NettyEmbeddedServerFactory](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/NettyEmbeddedServerFactory.html) 接口以编程方式创建额外的 Netty 服务器。
+Micronaut 支持通过 [NettyEmbeddedServerFactory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/NettyEmbeddedServerFactory.html) 接口以编程方式创建额外的 Netty 服务器。
 
 这在某些情况下是很有用的，例如，你需要通过不同的端口暴露不同的服务器，并可能有不同的配置（HTTPS，线程资源等）。
 
@@ -1340,18 +1340,18 @@ class SecondaryNettyServer {
 </Tabs>
 
 1. 为服务器定义一个独特的名字
-2. 使用服务器名称定义一个 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 范围内的 Bean，并包括 `preDestroy="close"`，以确保服务器在上下文关闭时被关闭。
-3. 将 [NettyEmbeddedServerFactory](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/NettyEmbeddedServerFactory.html) 注入到一个[工厂 bean](/core/ioc#38-bean-工厂) 中。
-4. 以编程方式创建 [NettyHttpServerConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html)
-5. 可以选择创建 [ServerSslConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/ssl/ServerSslConfiguration.html)
+2. 使用服务器名称定义一个 [@Context](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Context.html) 范围内的 Bean，并包括 `preDestroy="close"`，以确保服务器在上下文关闭时被关闭。
+3. 将 [NettyEmbeddedServerFactory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/NettyEmbeddedServerFactory.html) 注入到一个[工厂 bean](/core/ioc#38-bean-工厂) 中。
+4. 以编程方式创建 [NettyHttpServerConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/netty/configuration/NettyHttpServerConfiguration.html)
+5. 可以选择创建 [ServerSslConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/ssl/ServerSslConfiguration.html)
 6. 使用构建方法来构建服务器实例
 7. 用 `start` 方法启动服务器
 8. 将服务器实例作为一个托管豆返回
-9. 如果你想通过服务器名称来注入 [HTTP 客户端](/core/httpClient.html)，可以选择定义 [ServiceInstanceList](https://docs.micronaut.io/3.8.4/api/io/micronaut/discovery/ServiceInstanceList.html) 的一个实例
+9. 如果你想通过服务器名称来注入 [HTTP 客户端](/core/httpClient.html)，可以选择定义 [ServiceInstanceList](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/discovery/ServiceInstanceList.html) 的一个实例
 
-有了这个类，当 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 启动时，服务器也将以适当的配置启动。
+有了这个类，当 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 启动时，服务器也将以适当的配置启动。
 
-由于在第8步中定义了 [ServiceInstanceList](https://docs.micronaut.io/3.8.4/api/io/micronaut/discovery/ServiceInstanceList.html)，你就可以在测试中注入一个客户端来测试次要服务器：
+由于在第8步中定义了 [ServiceInstanceList](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/discovery/ServiceInstanceList.html)，你就可以在测试中注入一个客户端来测试次要服务器：
 
 *注入服务器或客户端*
 

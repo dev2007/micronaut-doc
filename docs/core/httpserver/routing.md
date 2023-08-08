@@ -4,7 +4,7 @@ sidebar_position: 30
 
 # 6.3 HTTP 路由
 
-上一节中使用的 [@Controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) 注解是允许你控制 HTTP 路由构造的[几个注解](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/package-summary.html)之一。
+上一节中使用的 [@Controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) 注解是允许你控制 HTTP 路由构造的[几个注解](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/package-summary.html)之一。
 
 ## URI 路径
 
@@ -14,7 +14,7 @@ sidebar_position: 30
 包括 Spring 在内的许多其他框架都实现了 URI 模板规范
 :::
 
-实际实现由 [UriMatchTemplate](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/uri/UriMatchTemplate.html) 类处理，该类扩展了 [UriTemplate](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/uri/UriMatchTemplate.html)。
+实际实现由 [UriMatchTemplate](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/uri/UriMatchTemplate.html) 类处理，该类扩展了 [UriTemplate](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/uri/UriMatchTemplate.html)。
 
 你可以在应用程序中使用此类来构建 URI，例如：
 
@@ -129,8 +129,8 @@ class IssuesController {
 </Tabs>
 
 1. `@Controller` 注解指定的基本 URI 为 `/issues`
-2. [Get](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Get.html) 注解将该方法映射到 HTTP [Get](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Get.html)，其中 URI 变量嵌入到名为 `number` 的 URI 中
-3. 方法参数可以选择性地使用 [PathVariable](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/PathVariable.html) 进行注解
+2. [Get](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Get.html) 注解将该方法映射到 HTTP [Get](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Get.html)，其中 URI 变量嵌入到名为 `number` 的 URI 中
+3. 方法参数可以选择性地使用 [PathVariable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/PathVariable.html) 进行注解
 4. URI 变量的值在实现中被引用
 
 Micronaut 为上述控制器映射 URI `/issues/{number}`。我们可以通过编写单元测试来断言这种情况：
@@ -342,20 +342,20 @@ class IssuesControllerTest: StringSpec() {
 
 ## 路由注解
 
-上一个示例使用 [@Get](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Get.html) 注解来添加一个接受 HTTP [GET](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#GET) 请求的方法。下表总结了可用的注解以及它们如何映射到 HTTP 方法：
+上一个示例使用 [@Get](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Get.html) 注解来添加一个接受 HTTP [GET](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#GET) 请求的方法。下表总结了可用的注解以及它们如何映射到 HTTP 方法：
 
 *表 2. HTTP 路由注解*
 
 |注解|HTTP 方法|
 |--|--|
-|[@Delete](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Delete.html)|[DELETE](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#DELETE)|
-|[@Get](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Get.html)|[GET](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#GET)|
-|[@Head](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Head.html)|[HEAD](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#HEAD)|
-|[@Options](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Options.html)|[OPTIONS](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#OPTIONS)|
-|[@Patch](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Patch.html)|[PATCH](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#PATCH)|
-|[@Put](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Put.html)|[PUT](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#PUT)|
-|[@Post](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Post.html)|[POST](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#POST)|
-|[@Trace](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Trace.html)|[TRACE](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpMethod.html#TRACE)|
+|[@Delete](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Delete.html)|[DELETE](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#DELETE)|
+|[@Get](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Get.html)|[GET](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#GET)|
+|[@Head](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Head.html)|[HEAD](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#HEAD)|
+|[@Options](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Options.html)|[OPTIONS](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#OPTIONS)|
+|[@Patch](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Patch.html)|[PATCH](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#PATCH)|
+|[@Put](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Put.html)|[PUT](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#PUT)|
+|[@Post](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Post.html)|[POST](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#POST)|
+|[@Trace](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Trace.html)|[TRACE](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpMethod.html#TRACE)|
 
 :::tip 注意
 所有方法注解默认为 `/` 。
@@ -434,9 +434,9 @@ class BackwardCompatibleController {
 
 ## 以编程方式构建路由
 
-如果你不喜欢使用注释，而是在代码中声明所有路由，那么永远不要担心，Micronaut 有一个灵活的 [RouteBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/RouteBuilder.html) API，可以轻松地以编程方式定义路由。
+如果你不喜欢使用注解，而是在代码中声明所有路由，那么永远不要担心，Micronaut 有一个灵活的 [RouteBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/RouteBuilder.html) API，可以轻松地以编程方式定义路由。
 
-首先，基于 [DefaultRouteBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/DefaultRouteBuilder.html) 实现子类，并将要路由到的控制器注入到方法中，然后定义路由：
+首先，基于 [DefaultRouteBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/DefaultRouteBuilder.html) 实现子类，并将要路由到的控制器注入到方法中，然后定义路由：
 
 *URI 变量示例*
 
@@ -517,9 +517,9 @@ class MyRoutes(executionHandleLocator: ExecutionHandleLocator,
   </TabItem>
 </Tabs>
 
-1. 路由定义应为 [DefaultRouteBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/DefaultRouteBuilder.html) 的子类
+1. 路由定义应为 [DefaultRouteBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/DefaultRouteBuilder.html) 的子类
 2. 使用 @Inject 注入一个带有要路由到的控制器的方法
-3. 使用诸如 [RouteBuilder::GET(String,Class,String,Class…​)](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/RouteBuilder.html) 以路由到控制器方法。请注意，即使使用了 issues 控制器，路由也不知道其 `@controller` 注解，因此必须指定完整路径。
+3. 使用诸如 [RouteBuilder::GET(String,Class,String,Class…​)](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/RouteBuilder.html) 以路由到控制器方法。请注意，即使使用了 issues 控制器，路由也不知道其 `@controller` 注解，因此必须指定完整路径。
 
 :::note 提示
 不幸的是，由于类型擦除，Java 方法 lambda 引用不能与 API 一起使用。对于 Groovy，有一个 `GroovyRouteBuilder` 类，它可以被子类化，允许传递 Groovy 方法引用。

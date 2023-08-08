@@ -8,7 +8,7 @@ sidebar_position: 170
 
 ## 6.17.1 状态处理器
 
-[@Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 注解支持定义异常类或 HTTP 状态。用[@Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 注解的方法必须在用 [@Controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) 注解的类中用定义。注解还支持全局和局部的概念，局部是默认的。
+[@Error](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Error.html) 注解支持定义异常类或 HTTP 状态。用[@Error](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Error.html) 注解的方法必须在用 [@Controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) 注解的类中用定义。注解还支持全局和局部的概念，局部是默认的。
 
 本地错误处理程序只响应由于路由与同一控制器中的另一个方法匹配而引发的异常。全局错误处理程序可以作为任何抛出的异常的结果调用。在解析要执行的处理程序时，总是首先搜索本地错误处理程序。
 
@@ -71,7 +71,7 @@ fun jsonError(request: HttpRequest<*>, e: JsonParseException): HttpResponse<Json
 </Tabs>
 
 1. 声明了一个显式处理 `JsonParseException` 的方法
-2. 返回 [JsonError](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/hateoas/JsonError.html) 的一个实例。
+2. 返回 [JsonError](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/hateoas/JsonError.html) 的一个实例。
 3. 返回自定义响应以处理错误
 
 *本地状态处理器*
@@ -121,9 +121,9 @@ fun notFound(request: HttpRequest<*>): HttpResponse<JsonError> { // (1)
   </TabItem>
 </Tabs>
 
-1. [Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 声明要处理的 [HttpStatus](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html) 错误代码（在本例中为 404）
-2. 为所有 404 响应返回 [JsonError](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
-3. 返回 [NOT_FOUND](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html#NOT_FOUND) 响应
+1. [Error](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Error.html) 声明要处理的 [HttpStatus](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpStatus.html) 错误代码（在本例中为 404）
+2. 为所有 404 响应返回 [JsonError](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
+3. 返回 [NOT_FOUND](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpStatus.html#NOT_FOUND) 响应
 
 ## 6.17.3 全局错误处理
 
@@ -174,9 +174,9 @@ fun error(request: HttpRequest<*>, e: Throwable): HttpResponse<JsonError> {
   </TabItem>
 </Tabs>
 
-1. [@Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 将该方法声明为全局错误处理程序
-2. 为所有错误返回 [JsonError](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
-3. 返回 [INTERNAL_SERVER_ERROR](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html#INTERNAL_SERVER_ERROR) 响应
+1. [@Error](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Error.html) 将该方法声明为全局错误处理程序
+2. 为所有错误返回 [JsonError](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
+3. 返回 [INTERNAL_SERVER_ERROR](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpStatus.html#INTERNAL_SERVER_ERROR) 响应
 
 *全局状态处理器*
 
@@ -225,17 +225,17 @@ fun notFound(request: HttpRequest<*>): HttpResponse<JsonError> { // (1)
   </TabItem>
 </Tabs>
 
-1. [@Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 声明要处理的 [HttpStatus](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html) 错误代码（在本例中为 404）
-2. 为所有 404 响应返回 [JsonError](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
-3. 返回 [NOT_FOUND](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html#NOT_FOUND) 响应
+1. [@Error](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Error.html) 声明要处理的 [HttpStatus](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpStatus.html) 错误代码（在本例中为 404）
+2. 为所有 404 响应返回 [JsonError](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/hateoas/JsonError.html) 实例
+3. 返回 [NOT_FOUND](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpStatus.html#NOT_FOUND) 响应
 
 :::caution 警告
-关于 [@Error](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Error.html) 注解需要注意的几点。不能声明相同的全局 `@Error` 注解。不能在同一控制器中声明相同的非全局 `@Error` 注解。如果具有相同参数的 `@Error` 注解以全局形式存在，而另一个以本地形式存在，则本地注解优先。
+关于 [@Error](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Error.html) 注解需要注意的几点。不能声明相同的全局 `@Error` 注解。不能在同一控制器中声明相同的非全局 `@Error` 注解。如果具有相同参数的 `@Error` 注解以全局形式存在，而另一个以本地形式存在，则本地注解优先。
 :::
 
 ## 6.17.4 ExceptionHandler
 
-或者，你可以实现 [ExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/ExceptionHandler.html)，这是一个用于处理 HTTP 请求执行过程中发生的异常的通用钩子。
+或者，你可以实现 [ExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/ExceptionHandler.html)，这是一个用于处理 HTTP 请求执行过程中发生的异常的通用钩子。
 
 :::caution 警告
 捕获异常的 `@Error` 注解优先于捕获同一异常的 `ExceptionHandler` 的实现。
@@ -247,16 +247,16 @@ Micronaut 提供了几个内置的处理器。
 
 |异常|处理器|
 |--|--|
-|`javax.validation.ConstraintViolationException`|[ConstraintExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/validation/exceptions/ConstraintExceptionHandler.html)|
-|[ContentLengthExceededException](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/exceptions/ContentLengthExceededException.html)|[ContentLengthExceededHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/ContentLengthExceededHandler.html)|
-|[ConversionErrorException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)|[ConversionErrorHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/ConversionErrorHandler.html)|
-|[DuplicateRouteException](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/exceptions/DuplicateRouteException.html)|[DuplicateRouteHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/DuplicateRouteHandler.html)|
-|[HttpStatusException](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/exceptions/HttpStatusException.html)|[HttpStatusHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/HttpStatusHandler.html)|
-|`com.fasterxml.jackson.core.JsonProcessingException`|[JsonExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/JsonExceptionHandler.html)|
-|`java.net.URISyntaxException`|[URISyntaxHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/URISyntaxHandler.html)|
-|[UnsatisfiedArgumentException](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/exceptions/UnsatisfiedArgumentException.html)|[UnsatisfiedArgumentHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/UnsatisfiedArgumentHandler.html)|
-|[UnsatisfiedRouteException](https://docs.micronaut.io/3.8.4/api/io/micronaut/web/router/exceptions/UnsatisfiedRouteException.html)|[UnsatisfiedRouteHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/UnsatisfiedRouteHandler.html)|
-|`org.grails.datastore.mapping.validation.ValidationException`|[ValidationExceptionHandler](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/UnsatisfiedRouteHandler.html)|
+|`javax.validation.ConstraintViolationException`|[ConstraintExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/validation/exceptions/ConstraintExceptionHandler.html)|
+|[ContentLengthExceededException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/exceptions/ContentLengthExceededException.html)|[ContentLengthExceededHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/ContentLengthExceededHandler.html)|
+|[ConversionErrorException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/exceptions/ConversionErrorException.html)|[ConversionErrorHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/ConversionErrorHandler.html)|
+|[DuplicateRouteException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/exceptions/DuplicateRouteException.html)|[DuplicateRouteHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/DuplicateRouteHandler.html)|
+|[HttpStatusException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/exceptions/HttpStatusException.html)|[HttpStatusHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/HttpStatusHandler.html)|
+|`com.fasterxml.jackson.core.JsonProcessingException`|[JsonExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/JsonExceptionHandler.html)|
+|`java.net.URISyntaxException`|[URISyntaxHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/URISyntaxHandler.html)|
+|[UnsatisfiedArgumentException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/exceptions/UnsatisfiedArgumentException.html)|[UnsatisfiedArgumentHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/UnsatisfiedArgumentHandler.html)|
+|[UnsatisfiedRouteException](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/web/router/exceptions/UnsatisfiedRouteException.html)|[UnsatisfiedRouteHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/UnsatisfiedRouteHandler.html)|
+|`org.grails.datastore.mapping.validation.ValidationException`|[ValidationExceptionHandler](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/UnsatisfiedRouteHandler.html)|
 
 ### 6.17.4.2 自定义异常处理器
 
@@ -417,13 +417,13 @@ class OutOfStockExceptionHandler(private val errorResponseProcessor: ErrorRespon
   </TabItem>
 </Tabs>
 
-1. 默认的 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 用于创建响应的主体
+1. 默认的 [ErrorResponseProcessor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 用于创建响应的主体
 
 ## 6.17.5 错误格式化
 
-Micronaut 通过 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 类型的 bean 生成错误响应体。
+Micronaut 通过 [ErrorResponseProcessor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 类型的 bean 生成错误响应体。
 
-默认的响应主体是 [vnd.error](https://github.com/blongden/vnd.error)，但是您可以创建自己的 [ErrorResponseProcessor](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 类型的实现来控制响应。
+默认的响应主体是 [vnd.error](https://github.com/blongden/vnd.error)，但是你可以创建自己的 [ErrorResponseProcessor](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/exceptions/response/ErrorResponseProcessor.html) 类型的实现来控制响应。
 
 如果需要自定义响应而不是与错误相关的项，则需要重写正在处理异常的异常处理程序。
 

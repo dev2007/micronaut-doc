@@ -38,13 +38,13 @@ Micronaut 的 HTTP 服务器通过返回一个 [Publisher](http://www.reactive-s
 
 **执行阻塞 I/O**
 
-在某些情况下，您可能希望集成不支持非阻塞I/O的库。
+在某些情况下，你可能希望集成不支持非阻塞I/O的库。
 
 **Writable**
 
-在这种情况下，你可以从任何控制器方法返回一个 [Writable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/io/Writable.html) 对象。[Writable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/io/Writable.html) 接口有各种签名，允许写入传统的阻塞流，如 [Writer](https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html) 或 [OutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html)。
+在这种情况下，你可以从任何控制器方法返回一个 [Writable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/io/Writable.html) 对象。[Writable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/io/Writable.html) 接口有各种签名，允许写入传统的阻塞流，如 [Writer](https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html) 或 [OutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html)。
 
-当返回 [Writable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/io/Writable.html) 时，阻塞 I/O 操作会转移到 I/O 线程池，因此不会阻塞 Netty 事件循环。
+当返回 [Writable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/io/Writable.html) 时，阻塞 I/O 操作会转移到 I/O 线程池，因此不会阻塞 Netty 事件循环。
 
 :::tip 注意
 有关如何配置 I/O 线程池以满足应用程序要求的详细信息，参阅配置[服务器线程池](/core/httpserver/serverConfiguration.html#配置服务器线程池)部分。
@@ -185,7 +185,7 @@ class TemplateController {
 </Tabs>
 
 1. 控制器创建一个简单的模板
-2. 控制器方法返回一个 [Writable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/io/Writable.html)
+2. 控制器方法返回一个 [Writable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/io/Writable.html)
 3. 返回的函数接收一个 [Writer](https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html) 并调用模板上的 `writeTo`
 
 **InputStream**

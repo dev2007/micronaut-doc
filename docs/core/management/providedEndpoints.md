@@ -290,7 +290,7 @@ endpoints {
 
 ### 定制
 
-信息端点由一个信息聚合器和任意数量的信息源组成。要添加信息源，请创建一个实现 [InfoSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/info/InfoSource.html) 的 Bean 类。如果您的信息源需要从 Java 属性文件中检索数据，请扩展 [PropertiesInfoSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/info/source/PropertiesInfoSource.html) 接口，该接口为此提供了一个辅助方法。
+信息端点由一个信息聚合器和任意数量的信息源组成。要添加信息源，请创建一个实现 [InfoSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/info/InfoSource.html) 的 Bean 类。如果你的信息源需要从 Java 属性文件中检索数据，请扩展 [PropertiesInfoSource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/info/source/PropertiesInfoSource.html) 接口，该接口为此提供了一个辅助方法。
 
 所有信息源 Bean 都与信息聚合器收集在一起。要提供自己的信息聚合器实现，请创建一个实现 [InfoAggregator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/info/InfoAggregator.html) 的类，并将其注册为一个 Bean。为确保使用自己的实现而不是默认实现，请在类中添加 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解，其值为[默认实现](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/info/impl/ReactiveInfoAggregator.html)。
 
@@ -627,7 +627,7 @@ endpoints {
 
 健康状况端点由一个健康状况聚合器和任意数量的健康状况指示器组成。要添加健康指标，请创建一个实现 [HealthIndicator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/indicator/HealthIndicator.html) 的 Bean 类。建议同时使用 [@Liveness](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/indicator/annotation/Liveness.html) 或 [@Readiness](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/indicator/annotation/Readiness.html) 限定符。如果不使用限定符，健康指示器将成为 `/health` 和 `/health/readiness` 端点的一部分。基类 [AbstractHealthIndicator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/indicator/AbstractHealthIndicator.html) 可用于子类化，使过程更简单。
 
-所有健康指标豆都与健康聚合器收集在一起。要提供自己的健康状况聚合器实现，请创建一个实现 [HealthAggregator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/aggregator/HealthAggregator.html) 的类，并将其注册为一个 Bean。为确保使用您的实现而不是默认实现，请在你的类中添加 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解，其值为默认实现 [DefaultHealthAggregator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/aggregator/DefaultHealthAggregator.html)。
+所有健康指标豆都与健康聚合器收集在一起。要提供自己的健康状况聚合器实现，请创建一个实现 [HealthAggregator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/aggregator/HealthAggregator.html) 的类，并将其注册为一个 Bean。为确保使用你的实现而不是默认实现，请在你的类中添加 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解，其值为默认实现 [DefaultHealthAggregator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/health/aggregator/DefaultHealthAggregator.html)。
 
 默认健康状况聚合器根据指标的健康状况计算后返回整体状态。[健康状况](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/health/HealthStatus.html)由以下几个信息组成：
 
@@ -952,7 +952,7 @@ endpoints {
 
 路由端点由路由数据收集器和路由数据实现器组成。路由数据收集器 ([RouteDataCollector](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/routes/RouteDataCollector.html)) 负责返回一个发布者，该发布者会返回响应中使用的数据。路由数据 ([RouteData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/routes/RouteData.html)) 负责返回有关单个路由的数据。
 
-要覆盖任何一个辅助类的默认行为，要么扩展默认实现（[DefaultRouteDataCollector](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/routes/impl/DefaultRouteDataCollector.html)、[DefaultRouteData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/routes/impl/DefaultRouteData.html)），要么直接实现相关接口。为确保使用您的实现而不是默认实现，请在你的类中添加 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解，其值为默认实现。
+要覆盖任何一个辅助类的默认行为，要么扩展默认实现（[DefaultRouteDataCollector](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/routes/impl/DefaultRouteDataCollector.html)、[DefaultRouteData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/routes/impl/DefaultRouteData.html)），要么直接实现相关接口。为确保使用你的实现而不是默认实现，请在你的类中添加 [@Replaces](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Replaces.html) 注解，其值为默认实现。
 
 ## 15.2.7 记录器端点
 
@@ -1281,7 +1281,7 @@ endpoints {
 
 - 默认情况下，`enabled` 为 `false`，`sensitive` 为 `true`
 
-默认情况下，端点将屏蔽所有值。要自定义屏蔽，您需要提供一个实现 [EnvironmentEndpointFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/env/EnvironmentEndpointFilter.html) 的 Bean。
+默认情况下，端点将屏蔽所有值。要自定义屏蔽，你需要提供一个实现 [EnvironmentEndpointFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/management/endpoint/env/EnvironmentEndpointFilter.html) 的 Bean。
 
 第一个示例将屏蔽所有值，但前缀为 `safe` 的值除外
 

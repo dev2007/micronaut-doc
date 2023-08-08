@@ -391,7 +391,7 @@ mn-create-messaging-app —— 创建一个消息应用
 **参数**
 
 - *[NAME]*
-
+z
     创建的应用名字。
 
 > [英文链接](https://micronaut-projects.github.io/micronaut-starter/3.8.4/guide/#commands)

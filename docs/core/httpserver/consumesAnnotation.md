@@ -114,7 +114,7 @@ class ConsumesController {
 
 **自定义已处理的内容类型**
 
-通常，只有当内容类型为 `application/json` 时，才会进行 JSON 解析。其他 [MediaTypeCodec](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/codec/MediaTypeCodec.html) 类的行为类似，因为它们具有可以处理的预定义内容类型。要扩展给定编解码器处理的媒体类型列表，请提供将存储在 [CodecConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/codec/CodecConfiguration.html) 中的配置：
+通常，只有当内容类型为 `application/json` 时，才会进行 JSON 解析。其他 [MediaTypeCodec](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/codec/MediaTypeCodec.html) 类的行为类似，因为它们具有可以处理的预定义内容类型。要扩展给定编解码器处理的媒体类型列表，请提供将存储在 [CodecConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/codec/CodecConfiguration.html) 中的配置：
 
 ```yaml
 micronaut:

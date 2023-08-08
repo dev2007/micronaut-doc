@@ -6,7 +6,7 @@ sidebar_position: 210
 
 文件上传的处理在 Micronaut 中有特殊处理。支持通过 streaming 上传或 completed 上传以非阻塞方式进行上传流式传输。
 
-要从多部分请求接收数据，请将方法注解的 `consumes` 参数设置为 [MULTIPART_FORM_DATA](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)。例如：
+要从多部分请求接收数据，请将方法注解的 `consumes` 参数设置为 [MULTIPART_FORM_DATA](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)。例如：
 
 ```java
 @Post(consumes = MediaType.MULTIPART_FORM_DATA)
@@ -18,20 +18,20 @@ HttpResponse upload( ... )
 方法参数类型决定如何接收文件。数据可以在一次或上传完成时以块的形式接收。
 
 :::note 提示
-如果路由参数名称不能或不应与请求中 part 的名称匹配，请将 [Part](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Part.html) 注解添加到参数中，并在请求中指定所需的名称。
+如果路由参数名称不能或不应与请求中 part 的名称匹配，请将 [Part](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Part.html) 注解添加到参数中，并在请求中指定所需的名称。
 :::
 
 **块数据类型**
 
-[PartData](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/PartData.html) 表示在多部分请求中接收的数据块。[PartData](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/PartData.html) 接口方法将数据转换为 `byte[]`、[InputStream](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html) 或 [ByteBuffer](https://docs.oracle.com/javase/8/docs/api/java/nio/ByteBuffer.html)。
+[PartData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/PartData.html) 表示在多部分请求中接收的数据块。[PartData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/PartData.html) 接口方法将数据转换为 `byte[]`、[InputStream](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html) 或 [ByteBuffer](https://docs.oracle.com/javase/8/docs/api/java/nio/ByteBuffer.html)。
 
 :::tip 注意
-数据只能从 [PartData](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/PartData.html)  中检索一次。底层缓冲区被释放，导致重试失败。
+数据只能从 [PartData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/PartData.html)  中检索一次。底层缓冲区被释放，导致重试失败。
 :::
 
-[Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 类型的路由参数被视为用于接收单个文件，并且接收到的文件的每个块都将被发送到下游。如果泛型类型不是 [PartData](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/PartData.html)，则将尝试使用 Micronaut 的转换服务进行转换。默认情况下，支持转换为 `String` 和 `byte[]`。
+[Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 类型的路由参数被视为用于接收单个文件，并且接收到的文件的每个块都将被发送到下游。如果泛型类型不是 [PartData](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/PartData.html)，则将尝试使用 Micronaut 的转换服务进行转换。默认情况下，支持转换为 `String` 和 `byte[]`。
 
-如果你需要有关上载文件的元数据的知识，[StreamingFileUpload](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/StreamingFileUpload.html) 类是一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，它还包含文件信息，如内容类型和文件名。
+如果你需要有关上载文件的元数据的知识，[StreamingFileUpload](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/StreamingFileUpload.html) 类是一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，它还包含文件信息，如内容类型和文件名。
 
 *Streaming 文件上传*
 
@@ -216,9 +216,9 @@ fun upload(file: StreamingFileUpload): Mono<HttpResponse<String>> { // (2)
   </TabItem>
 </Tabs>
 
-1. 该方法使用 [MULTIPART_FORM_DATA](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)
+1. 该方法使用 [MULTIPART_FORM_DATA](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)
 2. 方法参数与表单属性名称匹配。在这种情况下，`file` 将匹配，例如 `<input type=“file”name=“file”>`
-3. [StreamingFileUpload.transferTo(File)](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-File-) 方法将文件传输到服务器。该方法返回一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
+3. [StreamingFileUpload.transferTo(File)](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-File-) 方法将文件传输到服务器。该方法返回一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
 4. 返回的 `Mono` 订阅 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，并在上传完成后输出响应，而不会阻塞。
 
 也可以使用 `transferTo` 方法传递输出流。
@@ -405,10 +405,10 @@ fun uploadOutputStream(file: StreamingFileUpload): Mono<HttpResponse<String>> { 
   </TabItem>
 </Tabs>
 
-1. 该方法使用 [MULTIPART_FORM_DATA](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)
+1. 该方法使用 [MULTIPART_FORM_DATA](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)
 2. 方法参数与表单属性名称匹配。在这种情况下，`file` 将匹配，例如 `<input type=“file”name=“file”>`
 3. 创建一个流来输出数据。在现实世界中，这可能来自其他来源。
-4. [StreamingFileUpload.transferTo(OutputStream)](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-OutputStream-) 方法将文件传输到服务器。该方法返回一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
+4. [StreamingFileUpload.transferTo(OutputStream)](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/StreamingFileUpload.html#transferTo-OutputStream-) 方法将文件传输到服务器。该方法返回一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
 5. 返回的 `Mono` 订阅 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，并在上传完成后输出响应，而不会阻塞
 
 **整体数据类型**
@@ -518,7 +518,7 @@ class BytesUploadController {
   </TabItem>
 </Tabs>
 
-如果你需要有关已上载文件的元数据的知识，[CompletedFileUpload](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/CompletedFileUpload.html) 类具有检索文件数据以及内容类型和文件名等文件信息的方法。
+如果你需要有关已上载文件的元数据的知识，[CompletedFileUpload](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/CompletedFileUpload.html) 类具有检索文件数据以及内容类型和文件名等文件信息的方法。
 
 *使用元数据的文件上传*
 
@@ -625,7 +625,7 @@ class CompletedUploadController {
   </TabItem>
 </Tabs>
 
-1. 该方法使用 [MULTIPART_FORM_DATA](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)
+1. 该方法使用 [MULTIPART_FORM_DATA](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MediaType.html#MULTIPART_FORM_DATA)
 2. 方法参数与表单属性名称匹配。在这种情况下，`file` 将匹配，例如 `<input type=“file”name=“file”>`
 3. `CompletedFileUpload` 实例提供对有关上载的元数据的访问以及对文件内容的访问。
 
@@ -651,9 +651,9 @@ HttpResponse upload(String title, String name)
 
 若要接收具有相同部件名称的多个部件，参数必须是发布服务器。当以以下方式之一使用时，发布者会为使用指定名称找到的每个部分发出一个项目。发布者必须接受以下类型之一：
 
-- [StreamingFileUpload](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/StreamingFileUpload.html)
-- [CompletedFileUpload](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/CompletedFileUpload.html)
-- 用于属性的 [CompletedPart](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/CompletedPart.html)
+- [StreamingFileUpload](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/StreamingFileUpload.html)
+- [CompletedFileUpload](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/CompletedFileUpload.html)
+- 用于属性的 [CompletedPart](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/CompletedPart.html)
 - 任何 POJO，假设存在支持该内容类型的媒体编解码器
 - 另一个接受上述分块数据类型之一的 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
 
@@ -673,7 +673,7 @@ HttpResponse upload(Publisher<CompletedPart> attributes)
 
 当事先不知道请求 part 的名称时，或者为了读取整个请求体，可以使用特殊类型来表示需要整个请求体。
 
-如果路由有一个用 [@Body](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Body.html) 注解的 [MultipartBody](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/multipart/MultipartBody.html) 类型的参数（不要与客户端的类混淆），那么请求的每个部分都将通过该参数发出。[MultipartBody](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/multipart/MultipartBody.html) 是 [CompletedPart](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/multipart/CompletedPart.html) 实例的发布者。
+如果路由有一个用 [@Body](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Body.html) 注解的 [MultipartBody](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/multipart/MultipartBody.html) 类型的参数（不要与客户端的类混淆），那么请求的每个部分都将通过该参数发出。[MultipartBody](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/multipart/MultipartBody.html) 是 [CompletedPart](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/multipart/CompletedPart.html) 实例的发布者。
 
 例如：
 

@@ -10,11 +10,11 @@ Micronaut 中的配置灵感来自 Spring Boot 和 Grails，将来自多个源�
 
 此外，与 Spring 和 Grails 一样，Micronaut 允许通过系统属性或环境变量覆盖任何属性。
 
-每个配置源都使用 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 接口进行建模，并且该机制是可扩展的，允许实现其他 [PropertySourceLoader](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySourceLoader.html) 实现。
+每个配置源都使用 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 接口进行建模，并且该机制是可扩展的，允许实现其他 [PropertySourceLoader](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySourceLoader.html) 实现。
 
 ## 4.1 环境
 
-应用程序环境由 [Environment](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/Environment.html) 接口建模，该接口允许在创建 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 时指定一个或多个唯一的环境名称。
+应用程序环境由 [Environment](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/Environment.html) 接口建模，该接口允许在创建 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 时指定一个或多个唯一的环境名称。
 
 *初始化环境*
 
@@ -59,9 +59,9 @@ assertTrue(environment.activeNames.contains("android"))
   </TabItem>
 </Tabs>
 
-活动环境名称允许根据环境加载不同的配置文件，还可以使用 [@Requires](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Requires.html) 注解有条件地加载 bean 或 bean [@Configuration](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Configuration.html) 包。
+活动环境名称允许根据环境加载不同的配置文件，还可以使用 [@Requires](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Requires.html) 注解有条件地加载 bean 或 bean [@Configuration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Configuration.html) 包。
 
-此外，Micronaut 还试图检测当前的环境。例如，在 Spock 或 JUnit 测试中，[TEST](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/Environment.html#TEST) 环境会自动激活。
+此外，Micronaut 还试图检测当前的环境。例如，在 Spock 或 JUnit 测试中，[TEST](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/Environment.html#TEST) 环境会自动激活。
 
 可以使用 `micronaut.environments` 系统属性或 `MICRONAUT_ENVIRONMENTS` 环境变量指定其他活动环境。这些被指定为逗号分隔的列表。例如：
 
@@ -99,7 +99,7 @@ Micronaut 使用以下层次结构进行环境处理（从最低到最高优先�
 $  java -Dmicronaut.env.deduction=false -jar myapp.jar
 ```
 
-或者，你也可以在设置应用程序时使用 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 的 `deduceEnvironment` 方法禁用环境推断。
+或者，你也可以在设置应用程序时使用 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextBuilder.html) 的 `deduceEnvironment` 方法禁用环境推断。
 
 *通过 ApplicationContextBuilder 禁用环境推断*
 
@@ -152,7 +152,7 @@ void "test disable environment deduction via builder"() {
 
 Micronaut 支持一个或多个默认环境的概念。默认环境是指只有在没有明确指定或推导其他环境的情况下才应用的环境。环境可以通过应用程序上下文生成器 `Micronaut.build().environments(…​)` ，由 `micronaut.environments` 系统属性或 `MICRONAUT_ENVIRONMENTS` 环境变量显式指定。环境可以推断为自动应用适合于云部署的环境。如果通过上述任何方式找到环境，则不会应用默认环境。
 
-要设置默认环境，请包含一个实现 [ApplicationContextConfigurer](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextConfigurer.html) 并用 [ContextConfigurer](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ContextConfigurer.html) 进行注解的公共静态类：
+要设置默认环境，请包含一个实现 [ApplicationContextConfigurer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextConfigurer.html) 并用 [ContextConfigurer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ContextConfigurer.html) 进行注解的公共静态类：
 
 ```java
 public class Application {
@@ -186,7 +186,7 @@ $ ./gradlew run
 | |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
 | |  | | | (__| | | (_) | | | | (_| | |_| | |_
 |_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
-  Micronaut (3.8.4)
+  Micronaut (3.9.4)
 
 17:07:22.997 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 611ms. Server Running: http://localhost:8080
 ```
@@ -210,7 +210,7 @@ public class Application {
 
 ## 4.2 具有 PropertySources 的外部化配置
 
-在初始化 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 之前，可以将其他 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例添加到环境中。
+在初始化 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 之前，可以将其他 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 实例添加到环境中。
 
 *初始化 Environment*
 
@@ -280,9 +280,9 @@ assertEquals(
   </TabItem>
 </Tabs>
 
-[PropertySource.of](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 方法可用于从值映射创建 `PropertySource`。
+[PropertySource.of](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 方法可用于从值映射创建 `PropertySource`。
 
-或者，可以通过创建 `META-INF/services/io.micronaut.text.env.PropertySourceLoader` 文件来注册 [PropertySourceLoader](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySourceLoader.html)，该文件包含对 `PropertySourceLoader` 类名的引用。
+或者，可以通过创建 `META-INF/services/io.micronaut.text.env.PropertySourceLoader` 文件来注册 [PropertySourceLoader](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySourceLoader.html)，该文件包含对 `PropertySourceLoader` 类名的引用。
 
 **包含的 PropertySource 加载程序**
 
@@ -301,9 +301,9 @@ assertEquals(
 `.properties`、`.json`、`.yml` 开箱即用。对于 Groovy 用户，`.groovy` 也是受支持的。
 :::
 
-请注意，如果你希望完全控制应用程序从何处加载配置，则可以在启动应用程序时通过调用 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口的 `enableDefaultPropertySources(false)` 方法来禁用上面列出的默认 `PropertySourceLoader` 实现。
+请注意，如果你希望完全控制应用程序从何处加载配置，则可以在启动应用程序时通过调用 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口的 `enableDefaultPropertySources(false)` 方法来禁用上面列出的默认 `PropertySourceLoader` 实现。
 
-在这种情况下，将只使用通过 [ApplicationContextBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口的 `propertySources(..)` 方法添加的显式 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例。
+在这种情况下，将只使用通过 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextBuilder.html) 接口的 `propertySources(..)` 方法添加的显式 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 实例。
 
 **通过命令行提供配置**
 
@@ -362,10 +362,10 @@ datasources:
 
 **属性值占位符**
 
-如前一节所述，Micronaut 包含一个属性占位符语法，用于在配置值内和使用任何 Micronaot 注解引用配置属性。参阅 [@Value](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Value.html) 和[配置注入](#43-配置注入)部分。
+如前一节所述，Micronaut 包含一个属性占位符语法，用于在配置值内和使用任何 Micronaot 注解引用配置属性。参阅 [@Value](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Value.html) 和[配置注入](#43-配置注入)部分。
 
 :::note 提示
-也可以通过 [PropertyPlaceholderResolver](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertyPlaceholderResolver.html) 接口进行编程使用。
+也可以通过 [PropertyPlaceholderResolver](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertyPlaceholderResolver.html) 接口进行编程使用。
 :::
 
 基本语法是将对属性的引用包装在 `${…​}`， 例如在 `application.yml` 中：
@@ -539,11 +539,11 @@ instance:
 
 **快速失败属性注入**
 
-对于注入所需属性的 bean，在请求 bean之前，不会发生注入和潜在故障。为了在启动时验证属性是否存在并可以注入，可以使用 [@Context](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Context.html) 对 bean 进行注解。上下文范围的 bean 在启动时被注入，如果缺少任何必需的属性或无法转换为必需的类型，则启动将失败。
+对于注入所需属性的 bean，在请求 bean之前，不会发生注入和潜在故障。为了在启动时验证属性是否存在并可以注入，可以使用 [@Context](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Context.html) 对 bean 进行注解。上下文范围的 bean 在启动时被注入，如果缺少任何必需的属性或无法转换为必需的类型，则启动将失败。
 
 ## 4.3 配置注入
 
-你可以使用 [@Value](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Value.html) 注解将配置值注入到 bean 中。
+你可以使用 [@Value](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Value.html) 注解将配置值注入到 bean 中。
 
 **使用 `@Value` 注解**
 
@@ -673,7 +673,7 @@ class HelloController {
 
 在上述例子中，如果在配置中指定了 `hello.controller.path`，则控制器将映射到指定的路径，否则将映射到 `/hello`。
 
-你还可以使 [@Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 的目标服务器可配置（尽管服务发现方法通常更好），例如：
+你还可以使 [@Client](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 的目标服务器可配置（尽管服务发现方法通常更好），例如：
 
 ```java
 @Client("${my.server.url:`http://localhost:8080`}")
@@ -686,7 +686,7 @@ interface HelloClient {
 
 **使用 @Property 注解**
 
-回想一下，[@Value](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Value.html) 注解接收一个 String 值，该值可以是静态内容和占位符表达式的混合。如果你试图执行以下操作，这可能会导致混乱：
+回想一下，[@Value](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Value.html) 注解接收一个 String 值，该值可以是静态内容和占位符表达式的混合。如果你试图执行以下操作，这可能会导致混乱：
 
 *不正确使用 @Value*
 
@@ -697,7 +697,7 @@ String url;
 
 在上面的例子中，文本字符串值 `my.url` 被注入并设置为 `url` 字段，而不是应用程序配置中 `my.url` 属性的值。这是因为 `@Value` 只解析指定给它的值中的占位符。
 
-若要注入特定的属性名称，你最好使用 [@Property](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Property.html)：
+若要注入特定的属性名称，你最好使用 [@Property](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Property.html)：
 
 *使用 @Property*
 
@@ -825,12 +825,12 @@ Map<String, String> jpaProperties;
 注入的映射将包含键 `hibernate.hbm2ddl.auto` 和 `hibernate.show_sql` 及其值。
 
 :::note 提示
-[@MapFormat](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可用于自定义注入的映射，具体取决于你想要嵌套键还是展开键，并且它允许通过 [StringConvention](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/naming/conventions/StringConvention.html) 枚举自定义键样式。
+[@MapFormat](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可用于自定义注入的映射，具体取决于你想要嵌套键还是展开键，并且它允许通过 [StringConvention](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/naming/conventions/StringConvention.html) 枚举自定义键样式。
 :::
 
 ## 4.4 配置属性
 
-你可以通过创建用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类来创建类型安全配置。
+你可以通过创建用 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类来创建类型安全配置。
 
 Micronaut 将生成一个无反射的 `@ConfigurationProperties` bean，并在编译时计算要评估的属性路径，从而大大提高加载 `@ConfigurationProperties` 的速度和效率。
 
@@ -1041,7 +1041,7 @@ class EngineImpl(val config: EngineConfig) : Engine {// (1)
 1. 注入 `EngineConfig` bean
 2. 使用配置属性
 
-然后可以从 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例之一提供配置值。例如：
+然后可以从 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 实例之一提供配置值。例如：
 
 *应用配置*
 
@@ -1088,13 +1088,13 @@ println(vehicle.start())
 
 你可以直接引用 `@Requires` 注解中的配置属性，以使用以下语法有条件地加载 bean：`@Requires(bean=Config.class, beanProperty="property", value="true")`
 
-注意，对于更复杂的配置，你可以通过继承来构造 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) bean。
+注意，对于更复杂的配置，你可以通过继承来构造 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) bean。
 
 例如，使用 `@ConfigurationProperties('bar')` 创建 `EngineConfig` 的子类将解析路径 `my.engine.bar` 下的所有属性。
 
 ### 包含/排除
 
-对于配置属性类从父类继承属性的情况，可能需要从父类中排除属性。[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的 `includes` 和 `excludes` 成员允许该功能。该列表适用于本地属性和继承的属性。
+对于配置属性类从父类继承属性的情况，可能需要从父类中排除属性。[@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的 `includes` 和 `excludes` 成员允许该功能。该列表适用于本地属性和继承的属性。
 
 提供给包含/排除列表的名称必须是“属性”名称。例如，如果注入了一个 setter 方法，那么属性名称就是去大写的 setter 名称（`setConnectionTimeout` → `connectionTimeout`）。
 
@@ -1102,7 +1102,7 @@ println(vehicle.start())
 
 ### 变更访问器风格
 
-从 3.3 开始，Micronaut 支持为 getter 和 setter 定义不同的访问器前缀，而不是为 JavaBeans 定义的默认 `get` 和 `set`。使用 [@AccessorsStyle](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解对 POJO 或 `@ConfigurationProperties` 类进行注解。
+从 3.3 开始，Micronaut 支持为 getter 和 setter 定义不同的访问器前缀，而不是为 JavaBeans 定义的默认 `get` 和 `set`。使用 [@AccessorsStyle](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解对 POJO 或 `@ConfigurationProperties` 类进行注解。
 
 当你以流畅的方式编写 getter 和 setter 时，这很有用。例如：
 
@@ -1152,7 +1152,7 @@ public class EngineConfig {
 
 ### 属性类型转换
 
-Micronaut 在解析属性时使用 [ConversionService](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/ConversionService.html) bean 转换值。通过定义实现 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html) 接口的 bean，可以为Micronaut不支持的类型注册其他转换器。
+Micronaut 在解析属性时使用 [ConversionService](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/ConversionService.html) bean 转换值。通过定义实现 [TypeConverter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/TypeConverter.html) 接口的 bean，可以为Micronaut不支持的类型注册其他转换器。
 
 Micronaut 具有一些有用的内置转换功能，具体如下。
 
@@ -1227,7 +1227,7 @@ List<URL> urls;
 
 **可读字节**
 
-你可以用 [@ReadableBytes](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/ReadableBytes.html) 注解任何 setter 参数，以允许使用指定字节、千字节等的简写语法来设置值。例如，以下内容取自 [HttpClientConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClientConfiguration.html)：
+你可以用 [@ReadableBytes](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/format/ReadableBytes.html) 注解任何 setter 参数，以允许使用指定字节、千字节等的简写语法来设置值。例如，以下内容取自 [HttpClientConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClientConfiguration.html)：
 
 *使用 `@ReadableBytes`*
 
@@ -1250,7 +1250,7 @@ public void setMaxContentLength(@ReadableBytes int maxContentLength) {
 
 **格式化日期**
 
-在 setter 上可以使用 [@Format](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/Format.html) 注解来指定绑定 `java.time` 日期对象时要使用的日期格式。
+在 setter 上可以使用 [@Format](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/format/Format.html) 注解来指定绑定 `java.time` 日期对象时要使用的日期格式。
 
 *对日期使用 `@Format`*
 
@@ -1266,11 +1266,11 @@ public void setMyDate(@Format("yyyy-MM-dd") LocalDate date) {
 
 许多框架和工具已经使用构造器风格的类来构建配置。
 
-你可以使用 [@ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 注解来用配置值填充生成器样式类。[ConfigurationBuilder](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 可以应用于用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类中的字段或方法。
+你可以使用 [@ConfigurationBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 注解来用配置值填充生成器样式类。[ConfigurationBuilder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationBuilder.html) 可以应用于用 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的类中的字段或方法。
 
 由于在 Java 世界中没有一致的方法来定义构造器，因此可以在注解中指定一个或多个方法前缀，以支持像 `withXxx` 或 `setXxx` 这样的构造器方法。如果构造器方法没有前缀，请为参数指定一个空字符串。
 
-还可以指定配置前缀来告诉 Micronaut 在哪里查找配置值。默认情况下，构建器方法使用类级别 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解中指定的配置前缀。
+还可以指定配置前缀来告诉 Micronaut 在哪里查找配置值。默认情况下，构建器方法使用类级别 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解中指定的配置前缀。
 
 例如：
 
@@ -1425,7 +1425,7 @@ internal class EngineFactory {
 
 然后，可以在需要发动机的任何地方将返回的发动机进行注入。
 
-可以从 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html) 实例之一提供配置值。例如：
+可以从 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html) 实例之一提供配置值。例如：
 
 *应用配置*
 
@@ -1496,7 +1496,7 @@ internal class EngineFactory {
 
 对于某些用例，可能需要接受可提供给 bean 的任意配置属性的 map，特别是如果 bean 代表第三方 API，其中并非所有可能的配置属性都已知。例如，数据源可以接受特定于特定数据库驱动程序的配置属性 map，允许用户在 map 中指定任何所需的选项，而无需显式编码每个属性。
 
-为此，使用 [MapFormat](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可以将映射绑定到单个配置属性，并指定是接受键到值的平面 map，还是接受嵌套 map（其中值可以是其他 map）。
+为此，使用 [MapFormat](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/format/MapFormat.html) 注解可以将映射绑定到单个配置属性，并指定是接受键到值的平面 map，还是接受嵌套 map（其中值可以是其他 map）。
 
 *@MapFormat 格式*
 
@@ -1721,11 +1721,11 @@ println(vehicle.start())
 
 ## 4.5 自定义类型转换器
 
-Micronaut 包括一个可扩展的类型转换机制。要添加额外的类型转换器，你需要注册类型为 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html) 的 bean。
+Micronaut 包括一个可扩展的类型转换机制。要添加额外的类型转换器，你需要注册类型为 [TypeConverter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/TypeConverter.html) 的 bean。
 
 以下示例显示了如何使用内置转换器之一（映射到对象）或创建自己的转换器。
 
-请考虑以下 [ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)：
+请考虑以下 [ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html)：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1797,7 +1797,7 @@ fun teardown() {
 
 1. 注意我们如何在上面的 `MyConfigurationProperties` 类中匹配 `myapp` 前缀和 `updatedAt` 属性名称
 
-默认情况下，这将不起作用，因为没有从 `Map` 到 `LocalDate` 的内置转换。要解决此问题，请定义一个自定义 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html)：
+默认情况下，这将不起作用，因为没有从 `Map` 到 `LocalDate` 的内置转换。要解决此问题，请定义一个自定义 [TypeConverter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/TypeConverter.html)：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -1901,15 +1901,15 @@ class MapToLocalDateConverter : TypeConverter<Map<*, *>, LocalDate> { // (1)
   </TabItem>
 </Tabs>
 
-1. 该类实现了 [TypeConverter](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/TypeConverter.html)，它有两个泛型参数，一个是从中转换的类型，另一个是转换为的类型
+1. 该类实现了 [TypeConverter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/TypeConverter.html)，它有两个泛型参数，一个是从中转换的类型，另一个是转换为的类型
 2. 实现委托给默认的共享转换服务，以转换用于创建 `LocalDate` 的 Map 中的值
 3. 如果绑定过程中发生异常，请调用 `reject(..)`，它会将附加信息传播到容器
 
 ## 4.6 使用 @EachProperty 驱动配置
 
-[@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解非常适合单个配置类，但有时你需要多个实例，每个实例都有自己独特的配置。这时就是 [EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 出场了。
+[@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解非常适合单个配置类，但有时你需要多个实例，每个实例都有自己独特的配置。这时就是 [EachProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachProperty.html) 出场了。
 
-[@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 注解为给定属性中的每个子属性创建一个 `ConfigurationProperties` bean。例如，考虑以下类别：
+[@EachProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachProperty.html) 注解为给定属性中的每个子属性创建一个 `ConfigurationProperties` bean。例如，考虑以下类别：
 
 *使用 @EachProperty*
 
@@ -1982,7 +1982,7 @@ class DataSourceConfiguration {
 2. `@Parameter` 注解可用于注入子属性的名称，该子属性定义 bean 的名称（也是 bean 限定符）
 3. bean 的每个属性都绑定到配置。
 
-上面的 `DataSourceConfiguration` 定义了一个 `url` 属性来配置一个或多个数据源。URL 本身可以使用对 Micronaut 求值的任何 [PropertySource](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/PropertySource.html0) 实例进行配置
+上面的 `DataSourceConfiguration` 定义了一个 `url` 属性来配置一个或多个数据源。URL 本身可以使用对 Micronaut 求值的任何 [PropertySource](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/PropertySource.html0) 实例进行配置
 
 *为 @EachProperty 提供配置*
 
@@ -2092,7 +2092,7 @@ assertEquals(
 
 **基于 List 的绑定**
 
-[@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 的默认行为是从映射样式的配置绑定，其中键是 bean 的命名限定符，值是要绑定的数据。对于映射样式配置没有意义的情况，可以通知 Micronaut 该类是从列表绑定的。只需将注解上的 `list` 成员设置为 true 即可。
+[@EachProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachProperty.html) 的默认行为是从映射样式的配置绑定，其中键是 bean 的命名限定符，值是要绑定的数据。对于映射样式配置没有意义的情况，可以通知 Micronaut 该类是从列表绑定的。只需将注解上的 `list` 成员设置为 true 即可。
 
 *@EachProperty List 示例*
 
@@ -2200,7 +2200,7 @@ class RateLimitsConfiguration
 
 ## 4.7 使用 @EachBean 驱动配置
 
-[@EachProperty](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachProperty.html) 注解是驱动动态配置的好方法，但通常你希望将该配置注入另一个依赖于它的 bean。注入带有硬编码限定符的单个实例不是一个好的解决方案，因此 `@EachProperties` 通常与 [@EachBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachBean.html) 组合使用：
+[@EachProperty](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachProperty.html) 注解是驱动动态配置的好方法，但通常你希望将该配置注入另一个依赖于它的 bean。注入带有硬编码限定符的单个实例不是一个好的解决方案，因此 `@EachProperties` 通常与 [@EachBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachBean.html) 组合使用：
 
 *使用 @EachBean*
 
@@ -2249,8 +2249,8 @@ class DataSourceFactory {
   </TabItem>
 </Tabs>
 
-1. 上面的例子定义了一个 bean [Factory](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/Factory.html)，该工厂创建 `javax.sql.DataSource` 的实例。
-2. [@EachBean](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/EachBean.html) 注解表示将为上一节中定义的每个 `DataSourceConfiguration` 创建一个新的 `DataSource` bean。
+1. 上面的例子定义了一个 bean [Factory](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/Factory.html)，该工厂创建 `javax.sql.DataSource` 的实例。
+2. [@EachBean](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/EachBean.html) 注解表示将为上一节中定义的每个 `DataSourceConfiguration` 创建一个新的 `DataSource` bean。
 3. `DataSourceConfiguration` 实例作为方法参数注入，用于驱动每个 `javax.sql.DataSource` 的配置
 
 请注意，`@EachBean` 要求父 bean 具有 `@Named` 限定符，因为该限定符由 `@EachBean` 创建的每个 bean 继承。
@@ -2309,7 +2309,7 @@ val firstConfig = applicationContext.getBean(
 
 自 1.3 以来，Micronaut 支持不可变配置的定义。
 
-有两种方法可以定义不可变的配置。首选的方法是定义一个用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的接口。例如：
+有两种方法可以定义不可变的配置。首选的方法是定义一个用 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解的接口。例如：
 
 *@ConfigurationProperties 示例*
 
@@ -2453,17 +2453,17 @@ data class EngineConfig @ConfigurationInject // (2)
   </TabItem>
 </Tabs>
 
-1. [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解采用配置前缀
-2. [@ConfigurationInject](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationInject.html) 注解是在构造函数上定义的
-3. 你可以使用 [@Bindable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/annotation/Bindable.html) 设置默认值
+1. [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解采用配置前缀
+2. [@ConfigurationInject](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationInject.html) 注解是在构造函数上定义的
+3. 你可以使用 [@Bindable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/annotation/Bindable.html) 设置默认值
 4. 验证注解也可以使用
 5. 你可以嵌套不可变的配置
 6. 可选配置可以用 `@Nullable` 表示
 
-[@ConfigurationInject](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationInject.html) 注解为 Micronaut 提供了一个提示，提示其优先考虑配置中的绑定值，而不是注入 bean。
+[@ConfigurationInject](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationInject.html) 注解为 Micronaut 提供了一个提示，提示其优先考虑配置中的绑定值，而不是注入 bean。
 
 :::tip 注意
-使用这种方法，为了使配置可刷新，还可以向类中添加 [@Refreshable](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 注解。这允许在[运行时配置刷新事件](../core/ioc.html#372-refreshable-作用域)的情况下重新创建 bean。
+使用这种方法，为了使配置可刷新，还可以向类中添加 [@Refreshable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/context/scope/Refreshable.html) 注解。这允许在[运行时配置刷新事件](../core/ioc.html#372-refreshable-作用域)的情况下重新创建 bean。
 :::
 
 这个规则有几个例外。如果满足以下任何条件，Micronaut 将不会对参数执行配置绑定：
@@ -2637,10 +2637,10 @@ public interface EngineConfigAccessors {
 }
 ```
 
-1. [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解采用配置前缀，并在接口上声明
-2. [@AccessorsStyle](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解将 `readPrefix` 定义为 `read`。
+1. [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 注解采用配置前缀，并在接口上声明
+2. [@AccessorsStyle](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/annotation/AccessorsStyle.html) 注解将 `readPrefix` 定义为 `read`。
 3. getter 都以 `read` 为前缀。
-4. 嵌套的不可变配置也可以用 [@ConfigurationProperties](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 进行注解。
+4. 嵌套的不可变配置也可以用 [@ConfigurationProperties](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/ConfigurationProperties.html) 进行注解。
 5. getter 的前缀是 `read`。
 
 ## 4.9 引导配置
@@ -2649,13 +2649,13 @@ public interface EngineConfigAccessors {
 
 根据以下条件启用引导上下文。按以下顺序检查条件：
 
-- 如果设置了 [BOOTSTRAP_CONTEXT_PROPERTY](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/Environment.html#BOOTSTRAP_CONTEXT_PROPERTY) 系统属性，则该值将确定是否启用引导程序上下文。
-- 如果设置了应用程序上下文生成器选项 [bootstrapEnvironment](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContextBuilder.html#bootstrapEnvironment)，则该值确定是否启用了引导上下文。
-- 如果存在 [BootstrapPropertySourceLocator](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/BootstrapPropertySourceLocator.html) bean，则会启用引导上下文。通常情况下，这来自于 `micronaut-discovery-client` 依赖。
+- 如果设置了 [BOOTSTRAP_CONTEXT_PROPERTY](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/Environment.html#BOOTSTRAP_CONTEXT_PROPERTY) 系统属性，则该值将确定是否启用引导程序上下文。
+- 如果设置了应用程序上下文生成器选项 [bootstrapEnvironment](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContextBuilder.html#bootstrapEnvironment)，则该值确定是否启用了引导上下文。
+- 如果存在 [BootstrapPropertySourceLocator](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/BootstrapPropertySourceLocator.html) bean，则会启用引导上下文。通常情况下，这来自于 `micronaut-discovery-client` 依赖。
 
-解析应用程序上下文配置属性之前必须存在的配置属性（例如，在使用分布式配置时）存储在引导配置文件中。一旦确定启用了引导上下文（如上所述），就使用与常规应用程序配置相同的规则来读取引导配置文件。有关详细信息，请参阅[属性源](https://docs.micronaut.io/3.8.4/guide/index.html#propertySource)文档。唯一的区别是前缀（`bootstrap` 替代 `application`）。
+解析应用程序上下文配置属性之前必须存在的配置属性（例如，在使用分布式配置时）存储在引导配置文件中。一旦确定启用了引导上下文（如上所述），就使用与常规应用程序配置相同的规则来读取引导配置文件。有关详细信息，请参阅[属性源](/core/config#42-具有-propertysources-的外部化配置)文档。唯一的区别是前缀（`bootstrap` 替代 `application`）。
 
-文件名前缀 `bootstrap` 可使用系统属性 [micronaut.bootstrap.name](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/env/Environment.html#BOOTSTRAP_NAME_PROPERTY) 进行配置。
+文件名前缀 `bootstrap` 可使用系统属性 [micronaut.bootstrap.name](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/env/Environment.html#BOOTSTRAP_NAME_PROPERTY) 进行配置。
 
 :::tip 注意
 引导上下文配置会自动传递到主上下文，因此不需要在主上下文中复制配置属性。此外，引导上下文配置的优先级高于主上下文，这意味着如果配置属性出现在两个上下文中，则该值将首先从引导上下文中获取。
@@ -2667,7 +2667,7 @@ public interface EngineConfigAccessors {
 
 **引导上下文 Bean**
 
-为了在引导上下文中解析 bean，必须使用 [@BootstrapContextCompatible](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/annotation/BootstrapContextCompatible.html) 对其进行注解。如果任何给定的 bean 都没有注解，那么它将无法在引导上下文中解析。通常，任何参与检索分布式配置过程的 bean 都需要进行注解。
+为了在引导上下文中解析 bean，必须使用 [@BootstrapContextCompatible](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/annotation/BootstrapContextCompatible.html) 对其进行注解。如果任何给定的 bean 都没有注解，那么它将无法在引导上下文中解析。通常，任何参与检索分布式配置过程的 bean 都需要进行注解。
 
 
 ## 4.10 JMX 支持

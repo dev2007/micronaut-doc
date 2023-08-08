@@ -4,9 +4,9 @@ sidebar_position: 250
 
 # 6.25 服务器发送事件
 
-Micronaut 的 HTTP 服务器支持使用 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) API 发送[服务器发送事件（SSE）](https://en.wikipedia.org/wiki/Server-sent_events)。
+Micronaut 的 HTTP 服务器支持使用 [Event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html) API 发送[服务器发送事件（SSE）](https://en.wikipedia.org/wiki/Server-sent_events)。
 
-为了从服务器上发送事件，返回一个响应式流 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，它发送的是 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 类型的对象。
+为了从服务器上发送事件，返回一个响应式流 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，它发送的是 [Event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html) 类型的对象。
 
 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 本身可以从后台任务、通过事件系统等发布事件。
 
@@ -90,7 +90,7 @@ class Headline {
   </TabItem>
 </Tabs>
 
-要发送新闻标题事件，编写一个控制器，使用你喜欢的任何响应式库返回一个 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 实例的 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)。下面的例子通过 `generate` 方法使用 [Project Reactor](https://projectreactor.io/) 的 [Flux](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html)：
+要发送新闻标题事件，编写一个控制器，使用你喜欢的任何响应式库返回一个 [Event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html) 实例的 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)。下面的例子通过 `generate` 方法使用 [Project Reactor](https://projectreactor.io/) 的 [Flux](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html)：
 
 *从控制器发布服务器发送事件*
 
@@ -209,14 +209,14 @@ class HeadlineController {
   </TabItem>
 </Tabs>
 
-1. 控制器方法返回一个 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 的 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
+1. 控制器方法返回一个 [Event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html) 的 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)
 2. 每个版本的 Micronaut 都会发出一个 jeadline
 3. [Flux](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html) 类型的 `generate` 方法生成一个 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)。`generate` 方法接受一个初始值和一个接受该值和一个 [Emitter](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html) 的lambda。请注意，这个例子是在与控制器动作相同的线程上执行的，但你可以使用 `subscribeOn` 或映射一个现有的 “热” [Flux](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html)。
-4. [Emitter](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html) 接口的 `onNext` 方法发射的是 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 类型的对象。[Event.of(ET)](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html#of-ET-) 工厂方法构建了事件。
+4. [Emitter](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html) 接口的 `onNext` 方法发射的是 [Event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html) 类型的对象。[Event.of(ET)](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html#of-ET-) 工厂方法构建了事件。
 5. [Emitter](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Emitter.html) 接口的 `onComplete` 方法指示何时完成发送服务器发送的事件。
 
 :::note 提示
-你通常想在一个单独的执行器上安排 SSE 事件流。前面的例子使用 [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 在 I/O 执行器上执行该流。
+你通常想在一个单独的执行器上安排 SSE 事件流。前面的例子使用 [@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 在 I/O 执行器上执行该流。
 :::
 
 上面的例子发回了 `text/event-stream` 类型的响应，对于每一个发出的事件，之前的 `Headline` 类型将被转换为 JSON，导致响应，例如：
@@ -228,6 +228,6 @@ class HeadlineController {
  data: {"title":"Micronaut 2.0 Released","description":"Come and get it"}
  ```
 
- 你可以使用 [Event](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/sse/Event.html) 接口的方法来定制发回的服务器发送事件数据，包括关联事件 id、评论、重试超时等。
+ 你可以使用 [Event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/sse/Event.html) 接口的方法来定制发回的服务器发送事件数据，包括关联事件 id、评论、重试超时等。
 
 > [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#sse)

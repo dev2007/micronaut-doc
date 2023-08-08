@@ -8,7 +8,7 @@ sidebar_position: 40
 
 由于 Micronaut 优先考虑的是启动时间，而且大多数 Micronaut 应用程序都能在几秒钟内启动，因此在进行更改时重启应用程序，例如在集成开发环境中运行测试类，往往能实现高效的工作流程。
 
-不过，要自动重新加载您的更改，Micronaut 支持自动重启和使用第三方重新加载代理。
+不过，要自动重新加载你的更改，Micronaut 支持自动重启和使用第三方重新加载代理。
 
 ### 18.4.1 自动重启
 
@@ -53,7 +53,7 @@ JRebel 是一种专有的重载解决方案，涉及一个代理库和复杂的�
 :::note 提示
 *使用 CLI*
 
-如果使用 Micronaut CLI 创建项目，请使用 `jrebel` 功能在项目中预先配置 JRebel 重载。请注意，您需要安装 JRebel，并在 `gradle.properties` 文件（适用于 Gradle）或 `pom.xml` 文件（适用于 Maven）中提供代理的正确路径。必要步骤如下。
+如果使用 Micronaut CLI 创建项目，请使用 `jrebel` 功能在项目中预先配置 JRebel 重载。请注意，你需要安装 JRebel，并在 `gradle.properties` 文件（适用于 Gradle）或 `pom.xml` 文件（适用于 Maven）中提供代理的正确路径。必要步骤如下。
 
 ```bash
 $ mn create-app my-app --features jrebel

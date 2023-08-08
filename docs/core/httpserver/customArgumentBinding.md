@@ -4,14 +4,14 @@ sidebar_position: 50
 
 # 6.5 自定义参数绑定
 
-Micronaut 使用 [ArgumentBinderRegistry](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinderRegistry.html) 查找能够绑定到控制器方法中参数的 [ArgumentBinder](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.html) bean。默认实现在使用 [@Bindable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/annotation/Bindable.html) 进行元注解的参数上查找注解。如果存在，则参数绑定器注册表将搜索支持该注解的参数绑定器。
+Micronaut 使用 [ArgumentBinderRegistry](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinderRegistry.html) 查找能够绑定到控制器方法中参数的 [ArgumentBinder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.html) bean。默认实现在使用 [@Bindable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/annotation/Bindable.html) 进行元注解的参数上查找注解。如果存在，则参数绑定器注册表将搜索支持该注解的参数绑定器。
 
 如果找不到合适的注解，Micronaut 将尝试查找支持该参数类型的参数绑定器。
 
-参数绑定器返回 [ArgumentBinder.BindingResult](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html)。绑定结果为 Micronaut 提供了比值更多的信息。绑定结果要么满足，要么不满足，要么为空，要么不为空。如果参数绑定器返回不满意的结果，则在请求处理的不同时间可能会再次调用绑定器。在读取正文和执行任何筛选器之前，首先调用参数绑定器。如果绑定器依赖于其中任何一个数据，但该数据不存在，则返回 [ArgumentBinder.BindingResult#UNSATISFIED](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#EMPTY) 结果。返回 [ArgumentBinder.BindingResult#EMPTY](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#EMPTY) 或满意的结果将是最终结果，并且不会为该请求再次调用绑定器。
+参数绑定器返回 [ArgumentBinder.BindingResult](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html)。绑定结果为 Micronaut 提供了比值更多的信息。绑定结果要么满足，要么不满足，要么为空，要么不为空。如果参数绑定器返回不满意的结果，则在请求处理的不同时间可能会再次调用绑定器。在读取正文和执行任何筛选器之前，首先调用参数绑定器。如果绑定器依赖于其中任何一个数据，但该数据不存在，则返回 [ArgumentBinder.BindingResult#UNSATISFIED](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#EMPTY) 结果。返回 [ArgumentBinder.BindingResult#EMPTY](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#EMPTY) 或满意的结果将是最终结果，并且不会为该请求再次调用绑定器。
 
 :::tip 注意
-在处理结束时，如果结果仍然是 [ArgumentBinder.BindingResult#UNSATISFIED](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#UNSATISFIED)，则将其视为 [ArgumentBinder.BindingResult#EMPTY](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#EMPTY)。
+在处理结束时，如果结果仍然是 [ArgumentBinder.BindingResult#UNSATISFIED](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#UNSATISFIED)，则将其视为 [ArgumentBinder.BindingResult#EMPTY](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html#EMPTY)。
 :::
 
 关键特性有：
@@ -91,7 +91,7 @@ annotation class ShoppingCart(val value: String = "")
   </TabItem>
 </Tabs>
 
-1. 绑定注释本身必须注解为 [Bindable](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/annotation/Bindable.html)
+1. 绑定注解本身必须注解为 [Bindable](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/annotation/Bindable.html)
 
 *注解数据绑定示例*
 
@@ -266,14 +266,14 @@ class ShoppingCartRequestArgumentBinder(
   </TabItem>
 </Tabs>
 
-1. 自定义参数绑定器必须实现 [AnnotatedRequestArgumentBinder](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/bind/binders/AnnotatedRequestArgumentBinder.html)，包括触发绑定器的注释类型（在本例中为 `MyBindingAnnotation`）和所需参数的类型（在此例中为 `Object`）
+1. 自定义参数绑定器必须实现 [AnnotatedRequestArgumentBinder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/bind/binders/AnnotatedRequestArgumentBinder.html)，包括触发绑定器的注解类型（在本例中为 `MyBindingAnnotation`）和所需参数的类型（在此例中为 `Object`）
 2. 使用自定义参数绑定逻辑覆盖 `bind` 方法——在这种情况下，我们解析带注解的参数的名称，从具有相同名称的 cookie 中提取一个值，并将该值转换为参数类型
 
 :::note 提示
-通常使用 [ConversionService](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/convert/ConversionService.html) 将数据转换为参数的类型。
+通常使用 [ConversionService](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/convert/ConversionService.html) 将数据转换为参数的类型。
 :::
 
-一旦创建了绑定器，我们就可以在控制器方法中注释一个参数，该参数将使用我们指定的自定义逻辑进行绑定。
+一旦创建了绑定器，我们就可以在控制器方法中注解一个参数，该参数将使用我们指定的自定义逻辑进行绑定。
 
 *带有此注解绑定的控制器操作*
 
@@ -318,7 +318,7 @@ fun checkSession(@ShoppingCart sessionId: Long): HttpResponse<String> { //(1)
 
 **TypedRequestArgumentBinder**
 
-基于参数类型绑定的参数绑定器必须实现 [TypedRequestArgumentBinder](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/bind/binders/TypedRequestArgumentBinder.html)。例如，给出这个类：
+基于参数类型绑定的参数绑定器必须实现 [TypedRequestArgumentBinder](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/bind/binders/TypedRequestArgumentBinder.html)。例如，给出这个类：
 
 *POJO 示例*
 
@@ -523,7 +523,7 @@ class ShoppingCartRequestArgumentBinder(private val objectSerializer: JacksonObj
 </Tabs>
 
 1. 使用要绑定的数据类型覆盖 `bind` 方法，在本例中为 `ShoppingCart` 类型
-2. 检索数据后（在本例中，通过从cookie反序列化JSON文本），返回 [ArgumentBinder.BindingResult](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html)
+2. 检索数据后（在本例中，通过从cookie反序列化JSON文本），返回 [ArgumentBinder.BindingResult](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/bind/ArgumentBinder.BindingResult.html)
 3. 还要重写 ArgumentBinderRegistry 使用的 `argumentType` 方法。
 
 创建绑定器后，它将用于关联类型的任何控制器参数：

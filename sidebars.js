@@ -162,6 +162,8 @@ const sidebars = {
         "cache/hazelcast",
         "cache/infinispan",
         "cache/microstream",
+        "cache/noop",
+        "cache/endpoint",
         "cache/repository"
       ]
     },

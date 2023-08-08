@@ -55,7 +55,7 @@ $ mn create-app my-app --features jdbc-tomcat
 ```
 :::
 
-要开始操作，请为与您将使用的实现相对应的 JDBC 配置之一添加依赖。请选择以下之一：
+要开始操作，请为与你将使用的实现相对应的 JDBC 配置之一添加依赖。请选择以下之一：
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';

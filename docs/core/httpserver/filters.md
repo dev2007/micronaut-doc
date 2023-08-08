@@ -7,17 +7,17 @@ sidebar_position: 230
 Micronaut HTTP 服务器支持将过滤器应用于请求/响应处理，其方式与传统 Java 应用程序中的 Servlet 过滤器类似（但是响应式）。
 
 过滤器支持以下用例：
-- 传入 [HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html) 的装饰
-- 修改传出的 [HttpResponse](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpResponse.html)
+- 传入 [HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html) 的装饰
+- 修改传出的 [HttpResponse](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpResponse.html)
 - 实施贯穿各领域的问题，如安全、追踪等。
 
-对于服务器应用程序，可以实现 [HttpServerFilter](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/filter/HttpServerFilter.html) 接口 `doFilter` 方法。
+对于服务器应用程序，可以实现 [HttpServerFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/HttpServerFilter.html) 接口 `doFilter` 方法。
 
-`doFilter` 方法接受 [HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html) 和 [ServerFilterChain](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/filter/ServerFilterChain.html) 的一个实例。
+`doFilter` 方法接受 [HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html) 和 [ServerFilterChain](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/ServerFilterChain.html) 的一个实例。
 
-`ServerFilterChain` 接口包含一个已解析的过滤器链，其中链中的最后一个条目是匹配的路由。 [ServerFilterChain.proceed(io.micronaut.http.HttpRequest)](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/filter/ServerFilterChain.html#proceed-io.micronaut.http.HttpRequest-) 方法恢复对请求的处理。
+`ServerFilterChain` 接口包含一个已解析的过滤器链，其中链中的最后一个条目是匹配的路由。 [ServerFilterChain.proceed(io.micronaut.http.HttpRequest)](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/ServerFilterChain.html#proceed-io.micronaut.http.HttpRequest-) 方法恢复对请求的处理。
 
-`proceed(...)` 方法返回一个 Reactive Streams [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，它会发出要返回给客户端的响应。过滤器的实现者可以订阅 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，并在将响应返回给客户端之前对发出的 [MutableHttpResponse](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MutableHttpResponse.html) 进行变异以修改响应。
+`proceed(...)` 方法返回一个 Reactive Streams [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，它会发出要返回给客户端的响应。过滤器的实现者可以订阅 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)，并在将响应返回给客户端之前对发出的 [MutableHttpResponse](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MutableHttpResponse.html) 进行变异以修改响应。
 
 为了将这些概念付诸实践，我们来看一个例子。
 
@@ -29,7 +29,7 @@ Micronaut HTTP 服务器支持将过滤器应用于请求/响应处理，其方�
 
 假设你希望使用某个外部系统将每个请求跟踪到 Micronaut “Hello World” 示例。该系统可以是数据库或分布式跟踪服务，并且可能需要 I/O 操作。
 
-你不应该在您的过滤器中阻止底层的 Netty 事件循环；相反，过滤器应该在任何 I/O 完成后继续执行。
+你不应该在你的过滤器中阻止底层的 Netty 事件循环；相反，过滤器应该在任何 I/O 完成后继续执行。
 
 例如，考虑使用 [Project Reactor](https://projectreactor.io/) 组成 I/O 操作的 `TraceService`：
 
@@ -207,11 +207,11 @@ class TraceFilter(// (2)
   </TabItem>
 </Tabs>
 
-1. [Filter](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Filter.html) 注解定义筛选器匹配的 URI 模式
-2. 该类实现 [HttpServerFilter](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/filter/HttpServerFilter.html) 接口
+1. [Filter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Filter.html) 注解定义筛选器匹配的 URI 模式
+2. 该类实现 [HttpServerFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/HttpServerFilter.html) 接口
 3. 先前定义的 `TraceService` 是通过构造函数注入的
 
-最后一步是编写 [HttpServerFilter](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/filter/HttpServerFilter.html) 接口的 `doFilter` 实现。
+最后一步是编写 [HttpServerFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/HttpServerFilter.html) 接口的 `doFilter` 实现。
 
 *doFilter 实现*
 
@@ -265,16 +265,16 @@ override fun doFilter(request: HttpRequest<*>,
 </Tabs>
 
 1. 调用 `TraceService` 来跟踪请求
-2. 如果调用成功，筛选器将使用 [Project Reactor](https://projectreactor.io/) 的 `switchMap` 方法恢复请求处理，该方法调用 [ServerFilterChain](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/filter/ServerFilterChain.html) 的继续方法
+2. 如果调用成功，筛选器将使用 [Project Reactor](https://projectreactor.io/) 的 `switchMap` 方法恢复请求处理，该方法调用 [ServerFilterChain](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/filter/ServerFilterChain.html) 的继续方法
 3. 最后，[Project Reactor](https://projectreactor.io/) 的 `doOnNext` 方法将一个 `X-Trace-Enabled` 头添加到响应中。
 
 前面的示例演示了一些关键概念，例如在处理请求和修改传出响应之前以非阻塞方式执行逻辑。
 
 :::note 提示
-示例使用 [Project Reactor](https://projectreactor.io/)，但是您可以使用任何支持响应式流规范的响应式框架
+示例使用 [Project Reactor](https://projectreactor.io/)，但是你可以使用任何支持响应式流规范的响应式框架
 :::
 
-[Filter](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Filter.html) 可以通过设置 `patternStyle` 来使用不同样式的图案进行路径匹配。默认情况下，它使用 [AntPathMatcher](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/util/AntPathMatcher.html) 进行路径匹配。使用 Ant 时，映射使用以下规则匹配 URL：
+[Filter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Filter.html) 可以通过设置 `patternStyle` 来使用不同样式的图案进行路径匹配。默认情况下，它使用 [AntPathMatcher](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/util/AntPathMatcher.html) 进行路径匹配。使用 Ant 时，映射使用以下规则匹配 URL：
 
 - `?` 匹配一个字符
 - `*` 匹配零个或多个字符
@@ -288,6 +288,6 @@ override fun doFilter(request: HttpRequest<*>,
 |`customer/j?y`|customer/joy、customer/jay|
 |`customer/*/id`|customer/adam/id、com/amy/id|
 |`customer/**`|customer/adam、customer/adam/id、customer/adam/name|
-|`customer/*/.html`|customer/index.html、customer/adam/profile.html、customer/adam/job/description.html 另一种选择是基于正则表达式的匹配。若要使用正则表达式，请设置 `patternStyle=FilterPatternStyle.REGEX`。`pattern` 属性应包含一个正则表达式，该正则表达式应与提供的URL完全匹配（使用 [Matcher#matches](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Matcher.html#matches--)）。注意：首选使用 `FilterPatternStyle.ANT`，因为模式匹配比使用正则表达式更具性能。当无法使用 Ant 正确编写模式时，应使用 FilterPatternStyle.REGEX。== 错误状态 从 `chain.proceed` 返回的发布者不应发出错误。在上游过滤器发出错误或路由本身引发异常的情况下，应该发出错误响应而不是异常。在某些情况下，可能需要知道错误响应的原因，为此，如果响应是由于发出或抛出异常而创建的，则响应上存在一个属性。原始原因存储为属性 [EXCEPTION](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpAttributes.html#EXCEPTION)。|
+|`customer/*/.html`|customer/index.html、customer/adam/profile.html、customer/adam/job/description.html 另一种选择是基于正则表达式的匹配。若要使用正则表达式，请设置 `patternStyle=FilterPatternStyle.REGEX`。`pattern` 属性应包含一个正则表达式，该正则表达式应与提供的URL完全匹配（使用 [Matcher#matches](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Matcher.html#matches--)）。注意：首选使用 `FilterPatternStyle.ANT`，因为模式匹配比使用正则表达式更具性能。当无法使用 Ant 正确编写模式时，应使用 FilterPatternStyle.REGEX。== 错误状态 从 `chain.proceed` 返回的发布者不应发出错误。在上游过滤器发出错误或路由本身引发异常的情况下，应该发出错误响应而不是异常。在某些情况下，可能需要知道错误响应的原因，为此，如果响应是由于发出或抛出异常而创建的，则响应上存在一个属性。原始原因存储为属性 [EXCEPTION](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpAttributes.html#EXCEPTION)。|
 
 > [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#filters)

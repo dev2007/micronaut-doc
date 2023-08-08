@@ -122,8 +122,8 @@ class HelloController {
   </TabItem>
 </Tabs>
 
-1. [@Controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) 注解定义类作为控制器，并映射到路径 `/hello`
-2. [@Get](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Get.html) 注解映射 `index` 方法到使用 HTTP GET 所有请求
+1. [@Controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) 注解定义类作为控制器，并映射到路径 `/hello`
+2. [@Get](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Get.html) 注解映射 `index` 方法到使用 HTTP GET 所有请求
 3. 字符串 “Hello World” 作为响应返回
 
 如果使用 Java，请将前一个文件放在 `src/main/Java/hello/world` 中。
@@ -370,12 +370,12 @@ class HelloControllerSpec {
   </TabItem>
 </Tabs>
 
-1. [EmbeddedServer](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/server/EmbeddedServer.html) 配置为共享测试字段
-2. 还定义了 [HttpClient](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClient.html) 实例共享字段
+1. [EmbeddedServer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/server/EmbeddedServer.html) 配置为共享测试字段
+2. 还定义了 [HttpClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClient.html) 实例共享字段
 3. 测试使用 `toBlocking()` 方法进行阻塞调用
 4. `retrieve` 方法以字符串形式返回控制器响应
 
-除了低级客户端之外，Micronaut 还具有一个[声明性的编译时 HTTP 客户端](/core/httpclient.html#73-带有-client-的声明性-http-客户端)，由[客户端](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html)注解提供支持。
+除了低级客户端之外，Micronaut 还具有一个[声明性的编译时 HTTP 客户端](/core/httpclient.html#73-带有-client-的声明性-http-客户端)，由[客户端](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html)注解提供支持。
 
 要创建客户端，请创建一个用 `@Client` 注解的接口，例如：
 
@@ -441,10 +441,10 @@ interface HelloClient {
 </Tabs>
 
 1. `@Client` 注解与作为当前服务器的相对路径的值一起使用
-2. 服务器上使用的 [@Get](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Get.html) 注解用于定义客户端映射
+2. 服务器上使用的 [@Get](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Get.html) 注解用于定义客户端映射
 3. 返回带有 `SingleResult` 注解的 `Publisher`，并返回从服务器读取的值。
 
-要测试 `HelloClient`，请从与服务器关联的 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 中检索它：
+要测试 `HelloClient`，请从与服务器关联的 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 中检索它：
 
 *测试 HelloClient*
 
@@ -526,12 +526,12 @@ class HelloClientSpec {
 </Tabs>
 
 1. `@MicronautTest` 注解定义测试
-2. `HelloClient` 是从 [ApplicationContext](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/ApplicationContext.html) 注入的
+2. `HelloClient` 是从 [ApplicationContext](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/ApplicationContext.html) 注入的
 3. 使用 [Project Reactor](https://projectreactor.io/) `Mono::block` 方法调用客户端
 
-[Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 注解在编译时自动为你生成实现，而无需使用代理或运行时反射。
+[Client](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 注解在编译时自动为你生成实现，而无需使用代理或运行时反射。
 
-[Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 注解非常灵活。有关详细信息，参阅 [Micronaut HTTP Client](/core/httpclient.html) 一节。
+[Client](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 注解非常灵活。有关详细信息，参阅 [Micronaut HTTP Client](/core/httpclient.html) 一节。
 
 ## 2.5 部署应用
 

@@ -57,7 +57,7 @@ object Application {
   </TabItem>
 </Tabs>
 
-要从单元测试运行应用程序，请使用 [EmbeddedServer](https://docs.micronaut.io/3.8.4/api/io/micronaut/runtime/server/EmbeddedServer.html) 接口：
+要从单元测试运行应用程序，请使用 [EmbeddedServer](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/runtime/server/EmbeddedServer.html) 接口：
 
 *Micronaut 测试用例*
 

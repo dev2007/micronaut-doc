@@ -4,7 +4,7 @@ sidebar_position: 60
 
 # 6.6 主机解析
 
-您可能需要解析当前服务器的主机名。Micronaut包括HttpHostResolver接口的实现。
+你可能需要解析当前服务器的主机名。Micronaut包括HttpHostResolver接口的实现。
 
 默认实现按顺序在以下位置查找主机信息：
 
@@ -17,11 +17,11 @@ sidebar_position: 60
 
 通过以下配置可以更改要提取相关数据的头的行为：
 
-*表 1. [HostResolutionConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/HttpServerConfiguration.HostResolutionConfiguration.html) 的配置属性*
+*表 1. [HostResolutionConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/HttpServerConfiguration.HostResolutionConfiguration.html) 的配置属性*
 
 |属性|类型|描述|
 |--|--|--|
-|micronaut.server.host-resolution|[HttpServerConfiguration$HostResolutionConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/server/HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties.html)|主机解析配置|
+|micronaut.server.host-resolution|[HttpServerConfiguration$HostResolutionConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/server/HttpServerConfiguration.HttpLocaleResolutionConfigurationProperties.html)|主机解析配置|
 |micronaut.server.host-resolution.host-header|java.lang.String|存储主机的头名字|
 |micronaut.server.host-resolution.protocol-header|java.lang.String|存储协议的头名字|
 |micronaut.server.host-resolution.port-header|java.lang.String|存储端口的头名字|

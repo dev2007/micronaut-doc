@@ -70,9 +70,9 @@ micronaut:
 
 ## 配置会话解析
 
-[Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 解析可以用 [HttpSessionConfiguration](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/http/HttpSessionConfiguration.html) 进行配置。
+[Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 解析可以用 [HttpSessionConfiguration](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/http/HttpSessionConfiguration.html) 进行配置。
 
-默认情况下，会话是使用一个 [HttpSessionFilter](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/http/HttpSessionFilter.html) 来解决的，它通过 HTTP 头（使用 `Authorization-Info` 或 `X-Auth-Token` 头）或通过一个名为 `SESSION` 的 Cookie 来寻找会话标识符。
+默认情况下，会话是使用一个 [HttpSessionFilter](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/http/HttpSessionFilter.html) 来解决的，它通过 HTTP 头（使用 `Authorization-Info` 或 `X-Auth-Token` 头）或通过一个名为 `SESSION` 的 Cookie 来寻找会话标识符。
 
 你可以通过 `application.yml` 中的配置来禁用头的解析或 cookie 的解析：
 
@@ -92,7 +92,7 @@ micronaut:
 
 ## 使用会话
 
-一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 可以在控制器方法中用一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 类型的参数来检索。例如，考虑下面的控制器：
+一个 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 可以在控制器方法中用一个 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 类型的参数来检索。例如，考虑下面的控制器：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -191,14 +191,14 @@ internal fun addItem(session: Session, name: String): Cart { // (2)
   </TabItem>
 </Tabs>
 
-1. `ShoppingController` 声明了一个名为 `cart` 的 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 属性。
-2. [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 被声明为一个方法参数
+1. `ShoppingController` 声明了一个名为 `cart` 的 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 属性。
+2. [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 被声明为一个方法参数
 3. 检索 `cart` 属性
 4. 否则将创建一个新的 `Cart` 实例并存储在会话中。
 
-注意，由于 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 被声明为一个必要的参数，为了执行控制器动作，将创建一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 并保存到 [SessionStore](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/SessionStore.html)。
+注意，由于 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 被声明为一个必要的参数，为了执行控制器动作，将创建一个 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 并保存到 [SessionStore](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/SessionStore.html)。
 
-如果你不想创建不必要的会话，请将 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 声明为 `@Nullable`，在这种情况下，会话将不会被创建和不必要地保存。比如说：
+如果你不想创建不必要的会话，请将 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 声明为 `@Nullable`，在这种情况下，会话将不会被创建和不必要地保存。比如说：
 
 *Session 使用 @Nullable*
 
@@ -237,7 +237,7 @@ internal fun clearCart(session: Session?) {
   </TabItem>
 </Tabs>
 
-上述方法只在已经存在的情况下注入一个新的 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html)。
+上述方法只在已经存在的情况下注入一个新的 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html)。
 
 ---
 
@@ -296,7 +296,7 @@ cart.items.isEmpty()
 1. 向 `/shopping/cart` 发起一个请求
 2. 响应中出现了 `AUTHORIZATION_INFO` 头
 
-然后你可以在随后的请求中传递这个 `AUTHORIZATION_INFO`，以重用现有的 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html)：
+然后你可以在随后的请求中传递这个 `AUTHORIZATION_INFO`，以重用现有的 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html)：
 
 *发送 AUTHORIZATION_INFO 头*
 
@@ -346,7 +346,7 @@ cart = response.body()
 
 ## 使用 @SessionValue
 
-相对显式地将 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 注入控制器方法中，你也可使用 [@SessionValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/annotation/SessionValue.html)。例如：
+相对显式地将 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 注入控制器方法中，你也可使用 [@SessionValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/annotation/SessionValue.html)。例如：
 
 *使用 @SessionValue*
 
@@ -389,14 +389,14 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // (2)
   </TabItem>
 </Tabs>
 
-1. [@SessionValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/annotation/SessionValue.html) 被声明在方法上，导致返回值被存储在 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 中。请注意，在返回值上使用时，你必须指定属性名称。
-2. [@SessionValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/annotation/SessionValue.html) 被用于一个`@Nullable` 的参数上，其结果是以非阻塞的方式从会话中查找值，如果存在的话就提供给它。在没有为 [@SessionValue](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/annotation/SessionValue.html) 指定一个值的情况下，会导致参数名称被用于查找属性。
+1. [@SessionValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/annotation/SessionValue.html) 被声明在方法上，导致返回值被存储在 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 中。请注意，在返回值上使用时，你必须指定属性名称。
+2. [@SessionValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/annotation/SessionValue.html) 被用于一个`@Nullable` 的参数上，其结果是以非阻塞的方式从会话中查找值，如果存在的话就提供给它。在没有为 [@SessionValue](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/annotation/SessionValue.html) 指定一个值的情况下，会导致参数名称被用于查找属性。
 
 ---
 
 ## 会话事件
 
-你可以注册 [ApplicationEventListener](https://docs.micronaut.io/3.8.4/api/io/micronaut/context/event/ApplicationEventListener.html) bean 来监听位于 [io.micronaut.session.event](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/package-summary.html) 包中的 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 相关事件。
+你可以注册 [ApplicationEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/ApplicationEventListener.html) bean 来监听位于 [io.micronaut.session.event](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/event/package-summary.html) 包中的 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 相关事件。
 
 下表总结了这些事件：
 
@@ -404,10 +404,10 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // (2)
 
 |类型|描述|
 |--|--|
-|[SessionCreatedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/SessionCreatedEvent.html)|当一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 创建时触发|
-|[SessionDeletedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/SessionDeletedEvent.html)|当一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 删除时触发|
-|[SessionExpiredEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/SessionExpiredEvent.html)|当一个 [Session](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/Session.html) 过期时触发|
-|[SessionDestroyedEvent](https://docs.micronaut.io/3.8.4/api/io/micronaut/session/event/SessionDestroyedEvent.html)|`SessionDeletedEvent` 和 `SessionExpiredEvent` 的父类|
+|[SessionCreatedEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/event/SessionCreatedEvent.html)|当一个 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 创建时触发|
+|[SessionDeletedEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/event/SessionDeletedEvent.html)|当一个 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 删除时触发|
+|[SessionExpiredEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/event/SessionExpiredEvent.html)|当一个 [Session](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/Session.html) 过期时触发|
+|[SessionDestroyedEvent](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/session/event/SessionDestroyedEvent.html)|`SessionDeletedEvent` 和 `SessionExpiredEvent` 的父类|
 
 > [英文链接](https://docs.micronaut.io/3.9.4/guide/index.html#sessions)
 

@@ -97,7 +97,7 @@ class HelloController {
   </TabItem>
 </Tabs>
 
-1. 类被定义为控制器，其中 [@controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) 注解映射到路径 `/hello`
+1. 类被定义为控制器，其中 [@controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) 注解映射到路径 `/hello`
 2. 该方法响应对 `/hello` 的 GET 请求，并返回一个 `text/plain` 类型的响应
 3. 通过定义一个名为 `index` 的方法，按照惯例，该方法通过 `/hello` URI 暴露
 

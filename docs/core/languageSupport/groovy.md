@@ -223,7 +223,7 @@ abstract class VehicleService {
 
 ## 使用 Groovy 的无服务器函数
 
-微服务应用程序只是 Micronaut 的一种使用方式。您还可以将其用于无服务器功能，如 AWS Lambda。
+微服务应用程序只是 Micronaut 的一种使用方式。你还可以将其用于无服务器功能，如 AWS Lambda。
 
 借助 function-groovy 模块，Micronaut 增强了对以 Groovy 编写的函数的支持。
 

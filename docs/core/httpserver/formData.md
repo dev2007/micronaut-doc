@@ -8,7 +8,7 @@ sidebar_position: 190
 
 这种方法的优点是，用于自定义 JSON 绑定的相同 Jackson 注解可以用于表单提交。
 
-在实践中，这意味着要绑定常规表单数据，对以前的 JSON 绑定代码所需的唯一更改就是更新所使用的 [MediaType](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MediaType.html)：
+在实践中，这意味着要绑定常规表单数据，对以前的 JSON 绑定代码所需的唯一更改就是更新所使用的 [MediaType](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MediaType.html)：
 
 *绑定表单数据到 POJO*
 

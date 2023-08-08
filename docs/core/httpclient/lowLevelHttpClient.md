@@ -4,9 +4,9 @@ sidebar_position: 10
 
 # 7.1 使用低级 HTTP 客户端
 
-[HttpClient](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClient.html) 接口构成了低级 API 的基础。这个接口声明了一些方法来帮助缓解执行 HTTP 请求和接收响应。
+[HttpClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClient.html) 接口构成了低级 API 的基础。这个接口声明了一些方法来帮助缓解执行 HTTP 请求和接收响应。
 
-[HttpClient](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClient.html) 接口中的大多数方法都返回 响应式流 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 实例，这并不总是最有用的工作接口。
+[HttpClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClient.html) 接口中的大多数方法都返回 响应式流 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 实例，这并不总是最有用的工作接口。
 
 Micronaut 的 Reactor HTTP 客户端依赖性带有一个名为 [ReactorHttpClient](https://micronaut-projects.github.io/micronaut-reactor/latest/api/io/micronaut/reactor/http/client/ReactorHttpClient.html) 的子接口。它提供了一个 HttpClient 接口的变体，返回项目 [Reactor Flux](https://projectreactor.io/) 类型。
 
@@ -30,21 +30,21 @@ Micronaut 的 Reactor HTTP 客户端依赖性带有一个名为 [ReactorHttpClie
 
 上面的 Kotlin 示例注入了一个使用配置路径面向 Twitter API 的客户端。请注意 `"\${path.to.config}"` 上所需的转义（反斜杠），由于 Kotlin 字符串插值，这是必需的。
 
-[Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 注解也是一个自定义作用域，用于管理 [HttpClient](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClient.html) 实例的创建，并确保在应用程序关闭时停止这些实例。
+[Client](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 注解也是一个自定义作用域，用于管理 [HttpClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClient.html) 实例的创建，并确保在应用程序关闭时停止这些实例。
 
-传递给 [Client](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/annotation/Client.html) 注解的值可以是以下值之一：
+传递给 [Client](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/annotation/Client.html) 注解的值可以是以下值之一：
 
 - 一个绝对的 URI，例如：`https://api.twitter.com/1.1`
 - 一个相对的 URI，在这种情况下，目标服务器将是当前的服务器（用于测试）
 - 一个服务标识符。关于这个主题的更多信息，参阅[服务发现](/core/cloud/serviceDiscovery)一节。
 
-另一种创建 `HttpClient` 的方法是使用 [HttpClient](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/client/HttpClient.html) 的静态 `create` 方法，然而这种方法并不被推荐，因为你必须确保你手动关闭客户端，当然，对于创建的客户端也不会发生依赖注入。
+另一种创建 `HttpClient` 的方法是使用 [HttpClient](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/client/HttpClient.html) 的静态 `create` 方法，然而这种方法并不被推荐，因为你必须确保你手动关闭客户端，当然，对于创建的客户端也不会发生依赖注入。
 
 **执行 HTTP GET**
 
 一般来说，在使用 `HttpClient` 时，有两种方法值得关注。第一个是 `retrieve`，它执行一个 HTTP 请求，并以你请求的任何类型（默认是一个字符串）返回主体作为发布者。
 
-`retrieve` 方法接受一个 [HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html) 或一个指向你希望请求的端点的字符串 URI。
+`retrieve` 方法接受一个 [HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html) 或一个指向你希望请求的端点的字符串 URI。
 
 下面的例子显示了如何使用 `retrieve` 来执行一个 HTTP GET，并接收作为一个字符串的响应体：
 
@@ -233,7 +233,7 @@ micronaut:
 
 **定制 HTTP 请求**
 
-前面的例子演示了使用 [HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html) 接口的静态方法来构造一个 [MutableHttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MutableHttpRequest.html) 实例。就像它的名字一样，MutableHttpRequest 可以被突变，包括添加头文件、自定义请求体等的能力。比如说：
+前面的例子演示了使用 [HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html) 接口的静态方法来构造一个 [MutableHttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MutableHttpRequest.html) 实例。就像它的名字一样，MutableHttpRequest 可以被突变，包括添加头文件、自定义请求体等的能力。比如说：
 
 *传递一个 HttpRequest 来检索*
 
@@ -270,7 +270,7 @@ val response = client.retrieve(
   </TabItem>
 </Tabs>
 
-上面的例子在发送前给响应添加了一个头（`X-My-Header`）。[MutableHttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MutableHttpRequest.html) 接口有更多的方便方法，可以很容易地以普通方式修改请求。
+上面的例子在发送前给响应添加了一个头（`X-My-Header`）。[MutableHttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MutableHttpRequest.html) 接口有更多的方便方法，可以很容易地以普通方式修改请求。
 
 **读取 JSON 响应**
 
@@ -503,7 +503,7 @@ response.blockFirst().text shouldBe "Hello John"
 
 如果与你通信的服务器使用的自定义内容类型不是 JSON，默认情况下，Micronaut 的 HTTP 客户端将不知道如何解码这种类型。
 
-为了解决这个问题，将 [MediaTypeCodec](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/codec/MediaTypeCodec.html) 注册为一个 Bean，它将被自动拾取并用于解码（或编码）消息。
+为了解决这个问题，将 [MediaTypeCodec](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/codec/MediaTypeCodec.html) 注册为一个 Bean，它将被自动拾取并用于解码（或编码）消息。
 
 **接收完整的 HTTP 响应**
 
@@ -567,15 +567,15 @@ message.get().text shouldBe "Hello John"
   </TabItem>
 </Tabs>
 
-1. `exchange` 方法接收 [HttpResponse](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpResponse.html)
+1. `exchange` 方法接收 [HttpResponse](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpResponse.html)
 2. 使用响应的 `getBody(..)` 方法检索正文。
-3. 响应的其他方面，如 [HttpStatus](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpStatus.html)，可以被检查。
+3. 响应的其他方面，如 [HttpStatus](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpStatus.html)，可以被检查。
 
-上面的例子接收完整的 [HttpResponse](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpResponse.html)，你可以从中获得头信息和其他有用的信息
+上面的例子接收完整的 [HttpResponse](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpResponse.html)，你可以从中获得头信息和其他有用的信息
 
 ## 7.1.2 发送一个请求体
 
-到目前为止，所有的例子都使用了相同的 HTTP 方法，即 `GET`。[HttpRequest](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpRequest.html) 接口为所有不同的 HTTP 方法提供了工厂方法。下表对它们进行了总结：
+到目前为止，所有的例子都使用了相同的 HTTP 方法，即 `GET`。[HttpRequest](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpRequest.html) 接口为所有不同的 HTTP 方法提供了工厂方法。下表对它们进行了总结：
 
 *表 1. HttpRequest 工厂方法*
 

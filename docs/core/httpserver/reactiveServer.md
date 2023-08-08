@@ -4,9 +4,9 @@ sidebar_position: 130
 
 # 6.13 响应式 HTTP 请求处理
 
-如前所述，Micronaut 是在 Netty 上构建的，Netty 是围绕事件循环模型和非阻塞 I/O 设计的。Micronaut 在与请求线程（事件循环线程）相同的线程中执行 [@Controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) bean 中定义的代码。
+如前所述，Micronaut 是在 Netty 上构建的，Netty 是围绕事件循环模型和非阻塞 I/O 设计的。Micronaut 在与请求线程（事件循环线程）相同的线程中执行 [@Controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) bean 中定义的代码。
 
-这使得如果您执行任何阻塞 I/O 操作（例如与 Hibernate/JPA 或 JDBC 的交互），将这些任务卸载到一个不阻塞事件循环的单独线程池中变得至关重要。
+这使得如果你执行任何阻塞 I/O 操作（例如与 Hibernate/JPA 或 JDBC 的交互），将这些任务卸载到一个不阻塞事件循环的单独线程池中变得至关重要。
 
 例如，以下配置将 I/O 线程池配置为具有 75 个线程的固定线程池（类似于 Tomcat 等传统阻塞服务器在每个请求线程模型中使用的线程）：
 
@@ -20,7 +20,7 @@ micronaut:
       nThreads: 75
 ```
 
-要在 [@Controller](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Controller.html) bean 中使用这个线程池，你有许多选项。最简单的是使用 [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解，它可以在类型或方法级别声明，以指示在哪个配置的线程池上运行控制器的方法：
+要在 [@Controller](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Controller.html) bean 中使用这个线程池，你有许多选项。最简单的是使用 [@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解，它可以在类型或方法级别声明，以指示在哪个配置的线程池上运行控制器的方法：
 
 *使用 @ExecuteOn*
 
@@ -108,15 +108,15 @@ class PersonController (private val personService: PersonService) {
   </TabItem>
 </Tabs>
 
-1. [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解用于在 I/O 线程池上执行操作
+1. [@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解用于在 I/O 线程池上执行操作
 
-[@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解的值可以是在 `micronat.executors` 下定义的任何命名的执行器。
+[@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解的值可以是在 `micronat.executors` 下定义的任何命名的执行器。
 
 :::note 提示
 一般来说，对于数据库操作，你需要配置一个与数据库连接池中指定的最大连接数相匹配的线程池。
 :::
 
-[@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解的另一种选择是使用你选择的响应库提供的工具。Project Reactor 或 RxJava 等响应式实现具有 `subscribeOn` 方法，该方法允许你更改用哪个线程执行用户代码。例如：
+[@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html) 注解的另一种选择是使用你选择的响应库提供的工具。Project Reactor 或 RxJava 等响应式实现具有 `subscribeOn` 方法，该方法允许你更改用哪个线程执行用户代码。例如：
 
 *响应式 subscribeOn 示例*
 
@@ -235,7 +235,7 @@ class PersonController internal constructor(
 
 ## 6.13.1 使用 @Body 注解
 
-要解析请求体，首先向 Micronaut 指示哪个参数接收带有 [Body](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Body.html) 注解的数据。
+要解析请求体，首先向 Micronaut 指示哪个参数接收带有 [Body](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Body.html) 注解的数据。
 
 以下示例实现了一个简单的回显服务器，该服务器回显请求中发送的正文：
 
@@ -310,8 +310,8 @@ open fun echo(@Size(max = 1024) @Body text: String): String { // (2)
   </TabItem>
 </Tabs>
 
-1. [Post](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Post.html) 注解与 `text/plain` 的 [MediaType](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/MediaType.html) 一起使用（默认为 `application/json`）。
-2. [Body](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Body.html) 注解与 `javax.validation.constraints.Size` 一起使用，后者将请求体的大小限制为最多 1KB。此约束并不限制服务器读取/缓冲的数据量。
+1. [Post](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Post.html) 注解与 `text/plain` 的 [MediaType](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/MediaType.html) 一起使用（默认为 `application/json`）。
+2. [Body](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Body.html) 注解与 `javax.validation.constraints.Size` 一起使用，后者将请求体的大小限制为最多 1KB。此约束并不限制服务器读取/缓冲的数据量。
 3. 请求体作为方法的结果返回
 
 请注意，读取请求体是以非阻塞的方式完成的，因为请求内容是在数据变得可用时读取的，并累积到传递给方法的 String 中。
@@ -320,7 +320,7 @@ open fun echo(@Size(max = 1024) @Body text: String): String { // (2)
 `application.yml` 中的 `micronaut.server.maxRequestSize` 设置限制了服务器读取/缓冲的数据大小（默认最大请求大小为 10MB）`@Size` **不能**替代此设置。
 :::
 
-无论限制如何，对于大量数据，将数据累积到内存中的字符串中可能会导致服务器内存紧张。更好的方法是在您的项目中包括一个 Reactive 库（如`Reactor`、`RxJava` 或 `Akka`），该库支持响应流的实现并流式传输它可用的数据：
+无论限制如何，对于大量数据，将数据累积到内存中的字符串中可能会导致服务器内存紧张。更好的方法是在你的项目中包括一个 Reactive 库（如`Reactor`、`RxJava` 或 `Akka`），该库支持响应流的实现并流式传输它可用的数据：
 
 *使用响应流读取请求体*
 
@@ -415,7 +415,7 @@ open fun echoFlow(@Body text: Publisher<String>): Publisher<HttpResponse<String>
 </Tabs>
 
 1. 在这种情况下，方法被更改为接收并返回发布服务器类型。
-2. 此示例使用 [Project Reactor](https://projectreactor.io/) 并返回单个项。因此，响应类型也使用 [SingleResult](https://docs.micronaut.io/3.8.4/api/io/micronaut/core/async/annotation/SingleResult.html) 进行注解。Micronaut 仅在操作完成后才发出响应，而不会阻塞。
+2. 此示例使用 [Project Reactor](https://projectreactor.io/) 并返回单个项。因此，响应类型也使用 [SingleResult](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/core/async/annotation/SingleResult.html) 进行注解。Micronaut 仅在操作完成后才发出响应，而不会阻塞。
 3. 在这个模拟示例中，`collect` 方法用于累积数据，但例如，它可以逐块将数据写入日志服务、数据库等
 
 :::caution 警告
@@ -436,9 +436,9 @@ Micronaut 支持从任何控制器方法返回常见的响应类型，如 [Mono]
 要使用 [RxJava](https://github.com/ReactiveX/RxJava) 的 `Flowable`、`Single` 或 `Maybe`，你需要将 Micronaut RxJava 依赖项添加到你的项目中，以包括必要的转换器。
 :::
 
-使用 [Body](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/annotation/Body.html) 注解指定为请求主体的参数也可以是响应类型或 [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)。
+使用 [Body](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/annotation/Body.html) 注解指定为请求主体的参数也可以是响应类型或 [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)。
 
-当返回反应类型时，Micronaut 在与请求相同的线程（Netty Event Loop 线程）上订阅返回的反应类型。因此，重要的是，如果你执行任何阻塞操作，请将这些操作卸载到适当配置的线程池中，例如使用 [Project Reactor](https://projectreactor.io/) 或 `RxJava subscribeOn（..）` 工具或 [@ExecuteOn](https://docs.micronaut.io/3.8.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html)。
+当返回反应类型时，Micronaut 在与请求相同的线程（Netty Event Loop 线程）上订阅返回的反应类型。因此，重要的是，如果你执行任何阻塞操作，请将这些操作卸载到适当配置的线程池中，例如使用 [Project Reactor](https://projectreactor.io/) 或 `RxJava subscribeOn（..）` 工具或 [@ExecuteOn](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/scheduling/annotation/ExecuteOn.html)。
 
 ::note 提示 
 有关 Micronaut 设置的线程池以及如何配置线程池的信息，参阅[配置线程池](/core/threadPools.html#6291-配置服务线程池)一节。
@@ -452,7 +452,7 @@ Micronaut 支持从任何控制器方法返回常见的响应类型，如 [Mono]
 |--|--|--|
 |[Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html)|实现 [Publisher](http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html) 接口的任意类型|`Publisher<String> hello()`|
 |[CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)|一个 Java `CompletableFuture` 实体|`CompletableFuture<String> hello()`|
-|[HttpResponse](https://docs.micronaut.io/3.8.4/api/io/micronaut/http/HttpResponse.html)|一个 HttpResponse 及可选的响应体|`HttpResponse<Publisher<String>> hello()`|
+|[HttpResponse](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/http/HttpResponse.html)|一个 HttpResponse 及可选的响应体|`HttpResponse<Publisher<String>> hello()`|
 |[CharSequence](https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html)|任意 CharSequence 的实现|`String hello()`|
 |T|任意简单的 POJO 类型|`Book show()`|
 

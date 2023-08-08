@@ -99,7 +99,7 @@ class CurrentDateEndpoint {
 
 端点响应 `GET`（"read"）、`POST`（"write"）和 `DELETE`（"delete"）请求。要从端点返回响应，请使用以下注解之一注解其公共方法：
 
-*表 1.端点方法注释*
+*表 1.端点方法注解*
 
 |注解|描述|
 |--|--|

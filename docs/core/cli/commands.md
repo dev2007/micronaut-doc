@@ -41,7 +41,7 @@ Commands: (2)
   create-test              Creates a simple test for the project's testing framework
 ```
 
-1. 在这里，您可以看到项目生成命令列表
+1. 在这里，你可以看到项目生成命令列表
 2. 此处列出了当前目录下的所有可用命令
 3. **注意**：项目创建命令（始终可用）之后列出的内容取决于当前目录上下文
 
