@@ -222,7 +222,8 @@ const sidebars = {
     "multitenancy/multitenancy",
     "groovy/groovy",
     "acme/acme",
-    "aot/aot"
+    "aot/aot",
+    "toml/toml"
   ],
   actionSidebar: [
     "action/guide",
