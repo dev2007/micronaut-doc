@@ -223,6 +223,7 @@ const sidebars = {
     "groovy/groovy",
     "acme/acme",
     "aot/aot",
+    "reactor/reactor",
     "toml/toml"
   ],
   actionSidebar: [
