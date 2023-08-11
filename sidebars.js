@@ -183,6 +183,7 @@ const sidebars = {
         "redis/appendix"
       ]
     },
+    "mongodb/mongodb",
     {
       type: 'category',
       label: 'Micronaut MicorStream',
@@ -224,6 +225,7 @@ const sidebars = {
     "acme/acme",
     "aot/aot",
     "reactor/reactor",
+    "liquibase/liquibase",
     "toml/toml"
   ],
   actionSidebar: [
