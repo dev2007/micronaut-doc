@@ -206,7 +206,7 @@ def setupSpec() {
 
 ## 7. 仓库
 
-你可以在此资源库中找到此项目的源代码：
+你可以在此仓库中找到此项目的源代码：
 
 https://github.com/micronaut-projects/micronaut-mongodb
 
