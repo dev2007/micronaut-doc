@@ -240,7 +240,8 @@ const sidebars = {
         "action/application",
         "action/controller",
         "action/service",
-        "action/polymorphism"
+        "action/polymorphism",
+        "action/controller-advance"
       ],
     },
   ],

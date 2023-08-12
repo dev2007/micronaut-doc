@@ -69,7 +69,7 @@ const config = {
           hideable: true,
         },
       },
-      metadata: [{ name: 'keywords', content: 'micronaut,micronaut doc,micronaut 文档' }],
+      metadata: [{ name: 'keywords', content: 'micronaut,micronaut doc,micronaut 文档,云原生,graalvm,native image,java' }],
       navbar: {
         title: 'Micronaut 实战及文档',
         logo: {
