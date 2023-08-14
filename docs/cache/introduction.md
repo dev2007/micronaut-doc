@@ -1,4 +1,7 @@
 ---
+description: Micronaut 缓存
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut 缓存,缓存,cache,redis,jcache,microstream,infinispan,hazelcast,ehcache]
+
 sidebar_position: 10
 ---
 

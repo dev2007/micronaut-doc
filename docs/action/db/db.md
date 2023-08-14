@@ -6,8 +6,12 @@ sidebar_position: 30
 
 第 2 章里，我们创建了第一个应用，并实现基本的控制器、服务，了解了依赖注入的基本使用知识，并深入学习了控制器各种使用细节。本章我们将学习数据库相关的操作，包括数据库的配置连接，几种 ORM 框架的使用等。
 
-Micronaut 框架中，主要支持的 ORM 框架为 R2DBC、Hibernate-JPA 和 MyBatis，我们将概述一下三种框架的特点和差异，然后会结合代码详细的介绍各个框架的使用。
+## ORM 框架
 
-## R2DBC
+Micronaut 框架中，主要支持的 ORM 框架为 R2DBC、Hibernate-JPA 和 MyBatis，我们先概述一下三种框架的特点和差异，然后会结合代码详细的介绍各个框架的使用。
 
+### R2DBC
 
+### Hibernate-JPA
+
+### MyBatis

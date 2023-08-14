@@ -1,3 +1,8 @@
+---
+description: Micronaut AOT
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut AOT,AOT]
+---
+
 # Micronaut AOT
 
 ## 1. 介绍

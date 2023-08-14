@@ -1,4 +1,7 @@
 ---
+description: Micronaut Redis
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Redis]
+
 sidebar_position: 10
 ---
 

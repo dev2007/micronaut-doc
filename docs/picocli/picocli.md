@@ -1,3 +1,8 @@
+---
+description: Micronaut Picocli
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Picocli,cmd,powershell,shell]
+---
+
 # Micronaut Picocli 配置
 
 提供 Micronaut 和 Picocli 之间的集成。

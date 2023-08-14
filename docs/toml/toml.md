@@ -1,3 +1,8 @@
+---
+description: Micronaut TOML
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut TOML,toml,json,yaml,xml]
+---
+
 # Micronaut TOML
 
 支持 Micronaut 框架的 TOML 配置格式。

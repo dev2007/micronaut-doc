@@ -1,4 +1,8 @@
 ---
+description: Micronaut JMX
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut JMX,JMX,java]
+
+
 sidebar_position: 10
 ---
 

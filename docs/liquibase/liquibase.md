@@ -1,3 +1,8 @@
+---
+description: Micronaut Liquibase
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Liquibase,Liquibase]
+---
+
 # Micronaut Liquibase
 
 ## 1. 简介

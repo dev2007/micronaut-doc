@@ -1,3 +1,8 @@
+---
+description: Micronaut MongoDB
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut MongoDB,MongoDB,redis,nosql]
+---
+
 # Micronaut MongoDB
 
 Micronaut 和 MongoDB 之间的集成。

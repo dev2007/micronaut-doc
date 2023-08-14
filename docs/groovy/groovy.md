@@ -1,3 +1,8 @@
+---
+description: Micronaut Groovy
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Groovy,Groovy,java,maven,kotlin]
+---
+
 # Micronaut Groovy
 
 增强 Micronaut 和 Groovy 语言体验的项目。

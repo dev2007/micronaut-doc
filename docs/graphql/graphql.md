@@ -1,3 +1,8 @@
+---
+description: Micronaut GraphQL
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut GraphQL,GraphQL]
+---
+
 # Micronaut GraphQL
 
 ## 1. 介绍

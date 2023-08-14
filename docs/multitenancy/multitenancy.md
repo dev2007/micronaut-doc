@@ -1,3 +1,8 @@
+---
+description: Micronaut 多租户
+keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut 多租户,多租户]
+---
+
 # Micronaut 多租户
 
 帮助完成常见的任务，如解决多租户 Micronaut 应用程序的租户问题。
