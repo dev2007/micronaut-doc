@@ -221,6 +221,7 @@ const sidebars = {
     "graphql/graphql",
     "neo4j/neo4j",
     "picocli/picocli",
+    "email/email",
     "jmx/jmx",
     "multitenancy/multitenancy",
     "groovy/groovy",

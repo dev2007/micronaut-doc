@@ -19,7 +19,7 @@ Micronaut 和 MongoDB 之间的集成。
 
 ## 2. 发布历史
 
-关于此项目，您可以在此处找到版本列表（含发布说明）：
+关于此项目，你可以在此处找到版本列表（含发布说明）：
 
 https://github.com/micronaut-projects/micronaut-mongodb/releases
 
@@ -126,13 +126,13 @@ compile "io.micronaut.configuration:micronaut-mongo-gorm"
 ```
 
 :::caution 警告
-对于适用于 GORM 版 MongoDB，您需要在 `application.yml` 中将数据库名称单独配置为 `grails.mongodb.databaseName` 属性。
+对于适用于 GORM 版 MongoDB，你需要在 `application.yml` 中将数据库名称单独配置为 `grails.mongodb.databaseName` 属性。
 :::
 
 在 Micronaut 中使用 GORM 版 MongoDB 时应注意以下几点：
 - 希望成为 GORM 实体的每个类都应使用 `grails.gorm.annotation.Entity` 注解。
-- 与 GORM 交互的每个方法都应注解为 GORM 的 `grails.gorm.transactions.Transactional`，以确保会话的存在。您也可以在类中添加 `@Transactional` 注解。
-- 默认情况下，Micronaut 会扫描与应用程序类相关的实体。如果您希望自定义，可在启动应用程序时通过 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-mongodb/latest/api/io/micronaut/context/ApplicationContextBuilder.html) 指定其他软件包。
+- 与 GORM 交互的每个方法都应注解为 GORM 的 `grails.gorm.transactions.Transactional`，以确保会话的存在。你也可以在类中添加 `@Transactional` 注解。
+- 默认情况下，Micronaut 会扫描与应用程序类相关的实体。如果你希望自定义，可在启动应用程序时通过 [ApplicationContextBuilder](https://micronaut-projects.github.io/micronaut-mongodb/latest/api/io/micronaut/context/ApplicationContextBuilder.html) 指定其他软件包。
 
 ## 5. 配置 Mongo 驱动
 
