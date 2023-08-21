@@ -149,6 +149,7 @@ const sidebars = {
         'core/appendix'
       ]
     },
+    "serialization/serialization",
     {
       type: 'category',
       label: 'Micronaut Cache',
