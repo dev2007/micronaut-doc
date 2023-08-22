@@ -184,6 +184,7 @@ const sidebars = {
         "redis/appendix"
       ]
     },
+    "rabbitmq/rabbitmq",
     "mongodb/mongodb",
     {
       type: 'category',
