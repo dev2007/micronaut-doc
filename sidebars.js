@@ -185,6 +185,7 @@ const sidebars = {
       ]
     },
     "rabbitmq/rabbitmq",
+    "nats/nats",
     "mongodb/mongodb",
     {
       type: 'category',
@@ -233,7 +234,7 @@ const sidebars = {
     "aot/aot",
     "reactor/reactor",
     "liquibase/liquibase",
-    "toml/toml"
+    "toml/toml",
   ],
   actionSidebar: [
     "action/guide",
