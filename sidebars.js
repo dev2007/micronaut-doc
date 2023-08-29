@@ -235,6 +235,7 @@ const sidebars = {
     "reactor/reactor",
     "liquibase/liquibase",
     "toml/toml",
+    "azure/azure"
   ],
   actionSidebar: [
     "action/guide",
