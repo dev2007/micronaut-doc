@@ -4142,7 +4142,7 @@ class EngineInitializer : BeanInitializedEventListener<EngineFactory> { // (4)
 
 [BeanCreatedEventListener](https://micronaut-projects.github.io/micronaut-docs-mn3/3.9.4/api/io/micronaut/context/event/BeanCreatedEventListener.html) 接口通常用于修饰或增强完全初始化的 bean，例如通过创建代理。
 
-:::danger 注意
+:::danger 危险
 Bean 事件监听器在类型转换器**前**初始化。如果事件监听器通过依赖配置属性 bean 或任何其他机制依赖类型转换，则可能会看到与类型转换相关的错误。
 :::
 
@@ -4430,7 +4430,7 @@ class User {
 `accessKind` 接受一个数组，因此可以允许两种类型的访问器，但根据它们在注解中出现的顺序，更喜欢其中一种。列表中的第一个具有优先级。
 :::
 
-:::danger 严重
+:::danger 危险
 在 Kotlin 中无法对字段进行自省，因为无法直接声明字段。
 :::
 

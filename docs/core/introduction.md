@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# 1. 介绍
+# 1. 简介
 
 Micronaut 是一个基于 JVM 的现代全栈 Java 框架，旨在构建模块化、易于测试的 JVM 应用程序，支持 Java、Kotlin 和 Groovy。
 

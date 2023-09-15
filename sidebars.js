@@ -19,6 +19,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Micronaut Launch',
+      link: { type: 'doc', id: "launch/launch" },
       items: [
         'launch/introduction',
         'launch/installation',
@@ -29,6 +30,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Micronaut Core',
+      link: { type: 'doc', id: "core/core" },
       items: [
         "core/introduction",
         "core/quickstart",
@@ -38,7 +40,7 @@ const sidebars = {
         {
           type: 'category',
           label: '6. HTTP 服务器',
-          link: {type: 'doc',id: "core/httpServer"},
+          link: { type: 'doc', id: "core/httpServer" },
           items: [
             "core/httpserver/runningServer",
             "core/httpserver/runningSpecificPort",
@@ -77,7 +79,7 @@ const sidebars = {
         {
           type: 'category',
           label: '7. HTTP 客户端',
-          link: {type: 'doc',id: 'core/httpClient'},
+          link: { type: 'doc', id: 'core/httpClient' },
           items: [
             'core/httpclient/lowLevelHttpClient',
             'core/httpclient/proxyClient',
@@ -90,7 +92,7 @@ const sidebars = {
         {
           type: 'category',
           label: '8. 云原生特性',
-          link: {type: 'doc',id: 'core/cloud'},
+          link: { type: 'doc', id: 'core/cloud' },
           items: [
             'core/cloud/cloudConfiguration',
             'core/cloud/serviceDiscovery',
@@ -104,7 +106,7 @@ const sidebars = {
         {
           type: 'category',
           label: '12. 配置',
-          link: {type: 'doc',id: 'core/configurations'},
+          link: { type: 'doc', id: 'core/configurations' },
           items: [
             'core/configurations/reactiveConfigs',
             'core/configurations/dataAccess'
@@ -114,7 +116,7 @@ const sidebars = {
         {
           type: 'category',
           label: '14. 语言支持',
-          link: {type: 'doc',id: 'core/languageSupport'},
+          link: { type: 'doc', id: 'core/languageSupport' },
           items: [
             'core/languageSupport/java',
             'core/languageSupport/groovy',
@@ -125,7 +127,7 @@ const sidebars = {
         {
           type: 'category',
           label: '15. 管理与监控',
-          link: {type: 'doc',id: 'core/management'},
+          link: { type: 'doc', id: 'core/management' },
           items: [
             'core/management/buildingEndpoints',
             'core/management/providedEndpoints'
@@ -136,7 +138,7 @@ const sidebars = {
         {
           type: 'category',
           label: '18. Micronaut CLI',
-          link: {type: 'doc',id: 'core/cli'},
+          link: { type: 'doc', id: 'core/cli' },
           items: [
             'core/cli/createProject',
             'core/cli/features',
@@ -152,7 +154,33 @@ const sidebars = {
     "serialization/serialization",
     {
       type: 'category',
-      label: 'Micronaut Cache',
+      label: 'Micronaut 安全',
+      link: { type: 'doc', id: "security/security" },
+      items: [
+        "security/introduction",
+        "security/releaseHistory",
+        "security/whatsNew",
+        "security/breaks",
+        "security/gettingStarted",
+        "security/exceptionHandlers",
+        "security/securityConfiguration",
+        "security/authenticationProviders",
+        "security/securityRule",
+        "security/authenticationStrategies",
+        "security/rejection",
+        "security/tokenPropagation",
+        "security/endpoints",
+        "security/retrievingAuthenticatedUser",
+        "security/securityEvents",
+        "security/oauth",
+        "security/aot",
+        "security/repository"
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Micronaut 缓存',
+      link: { type: 'doc', id: "cache/cache" },
       items: [
         "cache/introduction",
         "cache/releaseHistory",

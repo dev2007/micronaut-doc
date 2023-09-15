@@ -61,11 +61,11 @@ class HelloService {
 
 如果跟踪注解和现有的工具还不够，Micronaut 的跟踪集成会注册一个 `io.opentracing.Tracer` Bean，该 Bean 公开了开放追踪 API，并可根据需要进行依赖注入。
 
-根据您选择的实现，还可以使用其他 Bean。例如，Zipkin 的 `brave.Tracing` 和 `brave.SpanCustomizer` Bean 也可用。
+根据你选择的实现，还可以使用其他 Bean。例如，Zipkin 的 `brave.Tracing` 和 `brave.SpanCustomizer` Bean 也可用。
 
 ## 2. 发布历史
 
-关于此项目，您可以在此处找到发布版本列表（含发布说明）：
+关于此项目，你可以在此处找到发布版本列表（含发布说明）：
 
 https://github.com/micronaut-projects/micronaut-tracing/releases
 
@@ -564,7 +564,7 @@ tracing {
 
 ### 定制 Zipkin 发送器
 
-要发送 Spans，需要配置 Zipkin 发送器。您可以配置一个 [HttpClientSender](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/brave/sender/HttpClientSender.html)，使用 Micronaut 的本地 HTTP 客户端和 `tracing.zipkin.http.url` 设置异步发送 Spans：
+要发送 Spans，需要配置 Zipkin 发送器。你可以配置一个 [HttpClientSender](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/brave/sender/HttpClientSender.html)，使用 Micronaut 的本地 HTTP 客户端和 `tracing.zipkin.http.url` 设置异步发送 Spans：
 
 *配置多个 Zipkin 服务器*
 
@@ -837,7 +837,7 @@ tracing {
   </TabItem>
 </Tabs>
 
-您还可以选择将常见的配置类，如 `brave.sampler.Sampler` 等，定义为 Bean，从而依赖注入到 [BraveTracerConfiguration](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/brave/BraveTracerConfiguration.html) 中。有关可用注入点，参阅 [BraveTracerConfiguration](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/brave/BraveTracerConfiguration.html) 的 API。
+你还可以选择将常见的配置类，如 `brave.sampler.Sampler` 等，定义为 Bean，从而依赖注入到 [BraveTracerConfiguration](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/brave/BraveTracerConfiguration.html) 中。有关可用注入点，参阅 [BraveTracerConfiguration](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/brave/BraveTracerConfiguration.html) 的 API。
 
 ---
 
@@ -926,7 +926,7 @@ tracing {
 
 ## 6. 使用 OpenTelemetry 进行追踪
 
-Micronaut Open Telemetry 模块使用 [Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 为追踪配置 Open Telemetry。对于某些功能，您必须添加额外的依赖项。Micronaut 中定义的默认值可能与 [Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 模块中的默认值不同：
+Micronaut Open Telemetry 模块使用 [Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 为追踪配置 Open Telemetry。对于某些功能，你必须添加额外的依赖项。Micronaut 中定义的默认值可能与 [Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 模块中的默认值不同：
 
 - otel.traces.exporter = none
 - otel.metrics.exporter = none
@@ -939,9 +939,9 @@ Micronaut Open Telemetry 模块使用 [Open Telemetry Autoconfigure SDK](https:/
 
 ### 6.1 OpenTelemetry 注解
 
-[io.micronaut.tracing.opentelemetry.processing](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/opentelemetry/processing/package-summary.html) 包包含可使用 Open Telemetry 注释的转换器和映射器。
+[io.micronaut.tracing.opentelemetry.processing](https://micronaut-projects.github.io/micronaut-tracing/latest/api/io/micronaut/tracing/opentelemetry/processing/package-summary.html) 包包含可使用 Open Telemetry 注解的转换器和映射器。
 
-要启用 OpenTelemetry 注解，您必须在依赖中添加下一个注解处理器：
+要启用 OpenTelemetry 注解，你必须在依赖中添加下一个注解处理器：
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
@@ -970,7 +970,7 @@ annotationProcessor("io.micronaut.tracing:micronaut-tracing-opentelemetry-annota
 
 ### 6.2 OpenTelemetry 输出程序
 
-您可以在项目中指定要使用的输出程序。默认值设置为 "none"，这意味着默认情况下没有出口程序注册。[Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 文档中定义了可用的值。
+你可以在项目中指定要使用的输出程序。默认值设置为 "none"，这意味着默认情况下没有出口程序注册。[Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 文档中定义了可用的值。
 
 对于每个要使用的出口程序，都必须在配置中指定，并添加所需的依赖：
 
@@ -1153,7 +1153,7 @@ otel {
 
 ### 6.3 OpenTelemetry 传播器
 
-您可以在项目中指定要使用的传播器。默认设置为 "tracecontext, baggage"。[Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 文档中定义了可用的值。
+你可以在项目中指定要使用的传播器。默认设置为 "tracecontext, baggage"。[Open Telemetry Autoconfigure SDK](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md) 文档中定义了可用的值。
 
 要在应用程序中使用 [AWS X-Ray](https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html#xray-concepts-tracingheader) 传播器，必须在项目中添加下一个依赖：
 
@@ -1254,7 +1254,7 @@ otel {
 
 #### ID 生成器
 
-某些自定义供应商可能需要与默认格式不同的 span traceId。您可以提供自己的 [IdGenerator](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk/trace/src/main/java/io/opentelemetry/sdk/trace/IdGenerator.java) 类型的 Bean。例如，AWS X-Ray 要求其跟踪标识符采用特定格式。添加以下依赖关系，将 [AwsXrayIdGenerator](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/aws/src/main/java/io/opentelemetry/sdk/extension/aws/trace/AwsXrayIdGenerator.java) 实例注册为 [IdGenerator](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk/trace/src/main/java/io/opentelemetry/sdk/trace/IdGenerator.java) 类型的 Bean。
+某些自定义供应商可能需要与默认格式不同的 span traceId。你可以提供自己的 [IdGenerator](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk/trace/src/main/java/io/opentelemetry/sdk/trace/IdGenerator.java) 类型的 Bean。例如，AWS X-Ray 要求其跟踪标识符采用特定格式。添加以下依赖关系，将 [AwsXrayIdGenerator](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/aws/src/main/java/io/opentelemetry/sdk/extension/aws/trace/AwsXrayIdGenerator.java) 实例注册为 [IdGenerator](https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk/trace/src/main/java/io/opentelemetry/sdk/trace/IdGenerator.java) 类型的 Bean。
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
@@ -1375,7 +1375,7 @@ otel {
 
 #### 在请求 span 中添加 HTTP 标头
 
-如果需要，你可以在 span 对象中添加额外的 HTTP 头。您可以为客户端请求、客户端响应、服务器请求和服务器响应指定不同的标头。
+如果需要，你可以在 span 对象中添加额外的 HTTP 头。你可以为客户端请求、客户端响应、服务器请求和服务器响应指定不同的标头。
 
 *在请求 span 中添加 HTTP 头*
 
@@ -1492,7 +1492,7 @@ otel {
 
 ## 6.6 gRPC 服务器和客户端
 
-要启用在每个 GRPC 服务器请求、客户端请求、服务器响应和客户端响应上创建 span 对象。您必须添加下一个依赖：
+要启用在每个 GRPC 服务器请求、客户端请求、服务器响应和客户端响应上创建 span 对象。你必须添加下一个依赖：
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
@@ -1680,7 +1680,7 @@ otel {
 - `excluded-topics` —— 不跟踪的主题列表
 
 :::note 注意
-您不能同时使用 `included-topics` 和 `excluded-topics` 属性，因为它们是相互排斥的，只能选择其一。
+你不能同时使用 `included-topics` 和 `excluded-topics` 属性，因为它们是相互排斥的，只能选择其一。
 :::
 
 ### 6.8 AWS SDK 工具

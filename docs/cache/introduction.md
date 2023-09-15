@@ -5,11 +5,14 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut �
 sidebar_position: 10
 ---
 
-# 1. 介绍
+# 1. 简介
 
 该项目为 Micronaut 带来了额外的缓存实现。
 
 要开始，你需要声明以下依赖项：
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">

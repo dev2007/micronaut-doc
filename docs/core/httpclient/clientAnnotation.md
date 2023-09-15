@@ -375,7 +375,7 @@ Mono<Pet> save(
 |[@PathVariable](https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/PathVariable.html)|以独占方式从路径变量中绑定参数|`@PathVariable Long id`|
 |[@RequestAttribute](https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/RequestAttribute.html)|指定要设置为请求属性的参数|`@RequestAttribute Integer locationId`|
 
-:::danger 注意
+:::danger 危险
 始终使用 [@Produces](https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Produces.html) 或 [@Consumes](https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Consumes.html)，而不是为 `Content-Type` 或 `Accept` 提供一个头。
 :::
 

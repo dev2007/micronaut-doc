@@ -14,7 +14,7 @@ $ mn create-app my-app --features management
 ```
 :::
 
-受 Spring Boot 和 Grails 的启发，Micronaut `management` 依赖项增加了对通过端点监控应用程序的支持：特殊的 URI 可返回有关应用程序健康和状态的详细信息。`management` 端点还与 Micronaut 的 `security` 依赖关系集成，允许将敏感数据限制给安全系统中的认证用户（参阅安全部分的[内置端点访问](/security/securityRule/builtInEndpointsAccess.html)）。
+受 Spring Boot 和 Grails 的启发，Micronaut `management` 依赖项增加了对通过端点监控应用程序的支持：特殊的 URI 可返回有关应用程序健康和状态的详细信息。`management` 端点还与 Micronaut 的 `security` 依赖关系集成，允许将敏感数据限制给安全系统中的认证用户（参阅安全部分的[内置端点访问](/security/securityRule#94-内置端点安全性)）。
 
 要使用本节所述的 `management` 特性，请将此依赖添加到你的构建中：
 

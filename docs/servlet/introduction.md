@@ -5,7 +5,7 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Se
 sidebar_position: 10
 ---
 
-# 1. 介绍
+# 1. 简介
 
 该项目实现了一个支持 Servlet API 的 Micronaut HTTP 服务器，并包括允许将流行的 Servlet 容器作为服务器运行的各种子项目。
 

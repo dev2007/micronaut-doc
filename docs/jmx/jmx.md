@@ -7,7 +7,7 @@ sidebar_position: 10
 
 # Micronaut JMX
 
-## 1. 介绍
+## 1. 简介
 
 `micronaut-jmx` 模块支持通过 JMX 公开 Micronaut 管理端点。
 

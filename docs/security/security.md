@@ -5,4 +5,6 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Se
 
 # Micronaut Security
 
+Micronaut 的官方安全解决方案。
+
 > [英文链接](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html)

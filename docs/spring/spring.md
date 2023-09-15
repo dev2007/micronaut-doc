@@ -27,7 +27,7 @@ https://github.com/micronaut-projects/micronaut-spring/releases
 
 ## 3. 将 Spring 应用程序转换为 Micronaut 应用程序
 
-Micronaut for Spring 允许你使用传统的 Spring 注释，这些注释会在编译时映射到 Micronaut 注解。这样，你编写的应用程序就可以导入到另一个 Spring 或 Micronaut 应用程序中而无需更改。
+Micronaut for Spring 允许你使用传统的 Spring 注解，这些注解会在编译时映射到 Micronaut 注解。这样，你编写的应用程序就可以导入到另一个 Spring 或 Micronaut 应用程序中而无需更改。
 
 与传统的基于运行时反射的框架不同，Micronaut 使用超前编译（AOT），因此不存在支持额外注解集（在本例中为 Spring 的注解编程模型）的运行时开销。
 
@@ -174,7 +174,7 @@ Micronaut 文档中描述的绑定语义一般与 Spring MVC 的行为方式相�
 
 支持以下 Spring Boot 特定注解：
 
-*表 1.支持的 Spring Boot 注释*
+*表 1.支持的 Spring Boot 注解*
 
 |Spring Boot 注解|目标注解|说明|
 |--|--|--|
@@ -406,7 +406,7 @@ annotationProcessor("io.micronaut:micronaut-inject-java")
   </TabItem>
 </Tabs>
 
-然后，你需要明确指定对使用 `jakarta` 命名空间而非 `javax` 命名空间（2.0.x 及以上版本）的 Jakarta 注释模块版本的依赖关系。这是因为 Spring Boot BOM 会自动将该模块的版本降级为使用 javax 命名空间的版本，而 `javax` 命令空间与 Micronaut 不兼容：
+然后，你需要明确指定对使用 `jakarta` 命名空间而非 `javax` 命名空间（2.0.x 及以上版本）的 Jakarta 注解模块版本的依赖关系。这是因为 Spring Boot BOM 会自动将该模块的版本降级为使用 javax 命名空间的版本，而 `javax` 命令空间与 Micronaut 不兼容：
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">

@@ -69,9 +69,9 @@ const config = {
           hideable: true,
         },
       },
-      metadata: [{ name: 'keywords', content: 'micronaut,micronaut doc,micronaut 文档,云原生,graalvm,native image,java' }],
+      metadata: [{ name: 'keywords', content: 'micronaut,micronaut 教程,micronaut 中文教程,micronaut doc,micronaut 文档,micronaut 中文文档,云原生,graalvm,native image,java' }],
       navbar: {
-        title: 'Micronaut 实战及文档',
+        title: 'Micronaut 实战文档及教程',
         logo: {
           alt: 'Micronaut Logo',
           src: 'img/favicon.ico',

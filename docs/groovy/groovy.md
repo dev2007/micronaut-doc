@@ -7,7 +7,7 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Gr
 
 增强 Micronaut 和 Groovy 语言体验的项目。
 
-## 1. 介绍
+## 1. 简介
 
 该项目包括各种子项目，以改善 Groovy 用户的 Micronaut 体验。
 

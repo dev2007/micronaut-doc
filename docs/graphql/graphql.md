@@ -5,7 +5,7 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Gr
 
 # Micronaut GraphQL
 
-## 1. 介绍
+## 1. 简介
 
 Micronau t通过 `micronaut-graphql` 模块支持 [GraphQL](https://graphql.org/)。
 

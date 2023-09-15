@@ -5,7 +5,7 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut AO
 
 # Micronaut AOT
 
-## 1. 介绍
+## 1. 简介
 
 Micronaut AOT 是一个为 Micronaut 应用程序和库实现提前（AOT）优化的框架。这些优化包括在构建时计算通常在运行时完成的事情。这包括但不限于：
 

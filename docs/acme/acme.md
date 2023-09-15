@@ -7,7 +7,7 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut AC
 
 集成 Micronaut 和 Acme 的扩展。
 
-## 1. 介绍
+## 1. 简介
 
 Micronaut 通过 `micronaut-acme` 模块支持 [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment)。
 

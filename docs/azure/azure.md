@@ -45,7 +45,7 @@ implementation("io.microaut.azure:micronaut-azure-function:1.0.1")
   </TabItem>
 </Tabs>
 
-并确保已配置 Micronaut 注释处理器：
+并确保已配置 Micronaut 注解处理器：
 
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
@@ -69,7 +69,7 @@ annotationProcessor("io.microaut.azure:micronaut-inject-java")
   </TabItem>
 </Tabs>
 
-然后，您可以编写一个 [AzureFunction](https://micronaut-projects.github.io/micronaut-azure/1.0.x/api/io/micronaut/azure/function/AzureFunction.html) 子类的函数，该函数在执行时将被注入依赖。例如：
+然后，你可以编写一个 [AzureFunction](https://micronaut-projects.github.io/micronaut-azure/1.0.x/api/io/micronaut/azure/function/AzureFunction.html) 子类的函数，该函数在执行时将被注入依赖。例如：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -211,7 +211,7 @@ implementation("io.microaut.azure:micronaut-azure-function-http:1.0.1")
   </TabItem>
 </Tabs>
 
-然后，您需要定义一个 [AzureHttpFunction](https://micronaut-projects.github.io/micronaut-azure/1.0.x/api/io/micronaut/azure/function/http/AzureHttpFunction.html) 子类的函数，并重载 `invoke` 方法：
+然后，你需要定义一个 [AzureHttpFunction](https://micronaut-projects.github.io/micronaut-azure/1.0.x/api/io/micronaut/azure/function/http/AzureHttpFunction.html) 子类的函数，并重载 `invoke` 方法：
 
 <Tabs>
   <TabItem value="Java" label="Java" default>
@@ -312,18 +312,18 @@ class MyHttpFunction : AzureHttpFunction() {
 1. 函数类是 [AzureHttpFunction](https://micronaut-projects.github.io/micronaut-azure/1.0.x/api/io/micronaut/azure/function/http/AzureHttpFunction.html) 的子类，包含一个零参数构造函数。
 2. 函数名称可以随心所欲
 3. 可以选择只处理特定 HTTP 方法
-4. 一般情况下，您希望使用示例中的全部捕获路由，但也可以对其进行自定义。
+4. 一般情况下，你希望使用示例中的全部捕获路由，但也可以对其进行自定义。
 5. 授权级别指定了谁可以访问该函数。使用 `ANONYMOUS` 允许所有人访问。
 6. 接收到的请求可选择包含原始字节
 7. 方法的主体应调用超级实现的 `route` 方法。
 
 有了这些，你就可以编写常规的 Micronaut 控制器，就像 HTTP 服务器[用户指南](/core/httpServer)中记录的那样，传入的函数请求将被路由到控制器并执行。
 
-通过这种方法，您可以开发常规 Micronaut 应用程序，并根据需要将应用程序的片段部署为无服务器功能。
+通过这种方法，你可以开发常规 Micronaut 应用程序，并根据需要将应用程序的片段部署为无服务器功能。
 
 ## 3. 仓库
 
-您可以在此仓库中找到此项目的源代码：
+你可以在此仓库中找到此项目的源代码：
 
 https://github.com/micronaut-projects/micronaut-azure
 
@@ -333,4 +333,4 @@ https://github.com/micronaut-projects/micronaut-azure
 
 - 首次发布
 
-> [英文链接](https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html#introduction)
+> [英文链接](https://micronaut-projects.github.io/micronaut-azure/1.0.x/guide/index.html)

@@ -5,7 +5,7 @@ keywords: [micronaut,micronaut 文档,micronaut 中文文档,文档,Micronaut Mi
 sidebar_position: 10
 ---
 
-# 1. 介绍
+# 1. 简介
 
 与 [MicroStream](https://microstream.one/) 集成。
 
