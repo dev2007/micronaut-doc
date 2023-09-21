@@ -1,5 +1,5 @@
 ---
-sidebar_position: 31
+sidebar_position: 32
 ---
 
 # 3.2 JPA
@@ -471,7 +471,6 @@ CREATE TABLE BOOK (
 ![delete_category](../_img/3/3.2/delete_category.png)
 
 删除成功后，查询接口中就不会再查到相应数据了。
-
 
 ## 小结
 

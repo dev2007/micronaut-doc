@@ -285,7 +285,8 @@ const sidebars = {
       link: { type: 'doc', id: 'action/db/db' },
       items: [
         "action/db/mybatis",
-        "action/db/jpa"
+        "action/db/jpa",
+        "action/db/jpa-extend"
       ],
     },
   ],
