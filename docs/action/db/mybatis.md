@@ -4,7 +4,7 @@ sidebar_position: 31
 
 # 3.1 MyBatis
 
-MyBatis 作为用得最多的 ORM 框架，虽然在 Micronaut 框架中，它的结合实际并不像与 Spring Boot 框架一样无缝，但我们如果是将老项目改造为 Micronaut 项目，而老项目使用的就是 MyBatis 的话，我们还是得学会在 Micronaut 框架中如何使用它。
+MyBatis 作为用得最多的 ORM 框架，虽然在 Micronaut 框架中，它的结合使用实际上并不像与 Spring Boot 框架一样无缝，但我们如果是将老项目改造为 Micronaut 项目，而老项目使用的就是 MyBatis 的话，我们还是得学会在 Micronaut 框架中如何使用它。
 
 ## 创建项目
 
@@ -33,7 +33,7 @@ MyBatis 作为用得最多的 ORM 框架，虽然在 Micronaut 框架中，它�
     </dependency>
 ```
 
-以上依赖中，`micronaut-jdbc-hikari` 封装的对接 hikari 连接池的依赖；`mybatis` 为我们使用的 MyBatis 框架依赖；`h2` 我们验证数据库操作的内存数据库。同时由于 H2 数据库依赖自带了 JDBC 驱动，我们不需要额外添加驱动依赖。实际项目中，如果我们使用的是 MySQL 数据库，我们还需要添加 MySQL 的驱动依赖，如 `mysql-connector-j`。
+以上依赖中，`micronaut-jdbc-hikari` 封装的对接 hikari 连接池的依赖；`mybatis` 为我们使用的 MyBatis 框架依赖；`h2` 我们验证数据库操作的内存数据库。同时由于 H2 数据库依赖自带了 JDBC 驱动，我们不需要额外添加 JDBC 驱动依赖。实际项目中，如果我们使用的是 MySQL 数据库，我们还需要添加 MySQL 的驱动依赖，如 `mysql-connector-j`。
 
 ## 添加数据库配置
 
@@ -47,8 +47,6 @@ datasources:
     password: ""
     driverClassName: org.h2.Driver
 ```
-
-配置完成后，我们先尝试运行一下项目，运行正常后我们继续后续操作。
 
 ## 配置 MyBatis 工厂
 
@@ -270,6 +268,137 @@ public interface CategoryMapper {
 
     @Select("select * from category")
     List<Category> findAll();
+}
+
+```
+
+然后我们实现这个接口，如下：
+
+- `CategoryMapperImpl.java`
+
+```java
+package fun.mortnon.demo.mapper;
+
+import fun.mortnon.demo.Category;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import java.util.List;
+
+/**
+ * @author dev2007
+ * @date 2023/9/18
+ */
+@Singleton
+public class CategoryMapperImpl implements CategoryMapper {
+    @Inject
+    private SqlSessionFactory sqlSessionFactory;
+
+    private CategoryMapper getMapper(SqlSession sqlSession) {
+        return sqlSession.getMapper(CategoryMapper.class);
+    }
+
+    @Override
+    public Category findById(long id) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getMapper(sqlSession).findById(id);
+        }
+    }
+
+    @Override
+    public void save(Category category) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            getMapper(sqlSession).save(category);
+            sqlSession.commit();
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            getMapper(sqlSession).deleteById(id);
+            sqlSession.commit();
+        }
+    }
+
+    @Override
+    public void update(long id, String name) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            getMapper(sqlSession).update(id, name);
+            sqlSession.commit();
+        }
+    }
+
+    @Override
+    public List<Category> findAll() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getMapper(sqlSession).findAll();
+        }
+    }
+}
+
+```
+
+## 创建控制器 API
+
+我们再创建一个控制器，以便用于通过 API 进行数据的相关操作，示例代码如下：
+
+- `CategoryController.java`
+
+```java
+package fun.mortnon.demo;
+
+import fun.mortnon.demo.mapper.CategoryMapper;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import jakarta.inject.Inject;
+
+import java.util.List;
+
+/**
+ * @author dev2007
+ * @date 2023/9/18
+ */
+@Controller("/category")
+public class CategoryController {
+    @Inject
+    private CategoryMapper categoryMapper;
+
+    @Get("/{id}")
+    public Category show(Long id) {
+        return categoryMapper.findById(id);
+    }
+
+    @Put("/")
+    public HttpResponse<?> update(@Body Category category) {
+        categoryMapper.update(category.getId(), category.getName());
+        return HttpResponse.noContent();
+    }
+
+    @Get(value = "/list")
+    public List<Category> list() {
+        return categoryMapper.findAll();
+    }
+
+    @Post("/")
+    public HttpResponse<Category> save(@Body Category category) {
+        categoryMapper.save(category);
+
+        return HttpResponse.created(category);
+    }
+
+    @Delete("/{id}")
+    public HttpResponse<?> delete(Long id) {
+        categoryMapper.deleteById(id);
+        return HttpResponse.noContent();
+    }
 }
 
 ```

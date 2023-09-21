@@ -284,7 +284,8 @@ const sidebars = {
       label: '3. 操作数据库',
       link: { type: 'doc', id: 'action/db/db' },
       items: [
-        "action/db/mybatis"
+        "action/db/mybatis",
+        "action/db/jpa"
       ],
     },
   ],
