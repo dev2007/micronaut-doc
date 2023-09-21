@@ -479,4 +479,4 @@ CREATE TABLE BOOK (
 
 如本节中所提到的，如果我们进一步使用 Micronaut 框架封装的 JPA 标准 CRUD 操作实现，常规的 CRUD 编写工作量我们都不再需要，从要定义不同实体的数据层即可，只有需要 SQL 的复杂查询时，我们才会涉及到实际代码的编写，下一节我们将介绍一下两种方法如何结合使用。
 
-Demo 代码参见：[JPA Demo]()
+Demo 代码参见：[JPA Demo](https://github.com/dev2007/micronaut-in-action-demo/tree/main/3.2-jpa)
