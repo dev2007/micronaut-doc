@@ -243,7 +243,7 @@ public interface CrudRepository<E, ID> extends GenericRepository<E, ID> {
 
 ```
 
-由以看到可以看到，Micronaut 框架中定义常用的 CRUD 常用方法，而针对不同的响应或需求目标，框架还提供了很多接口，如下表：
+由以上定义可以看到，Micronaut 框架中定义常用的 CRUD 常用方法，而针对不同的响应或需求目标，框架还提供了很多接口，如下表：
 
 *表 1. 内置仓库接口*
 
@@ -265,7 +265,7 @@ public interface CrudRepository<E, ID> extends GenericRepository<E, ID> {
 
 以上这些内置仓库接口已经很丰富，但他们只解决了一部分业务层面的问题，如果还有业务层面的数据需要解决，就只能我们按规范定义新的函数。
 
-比如，仓库接口中像查询，就只有查询列表的 `findAll()` 或按 id 查询指定数据 `findById(ID id)`，如果我们要按名字查询数据，就需要自己定义新的方法，具体规格我们将在本章最后来介绍。
+比如，仓库接口中像查询，就只有查询列表的 `findAll()` 或按 id 查询指定数据 `findById(ID id)`，如果我们要按名字查询数据，就需要自己定义新的方法，具体规则我们将在本章最后来介绍。
 
 我们给 `CategoryRepositoryNew.java` 添加一个按名字查询数据的方法，示例如下：
 

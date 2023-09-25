@@ -286,7 +286,8 @@ const sidebars = {
       items: [
         "action/db/mybatis",
         "action/db/jpa",
-        "action/db/jpa-extend"
+        "action/db/jpa-extend",
+        "action/db/r2dbc"
       ],
     },
   ],
