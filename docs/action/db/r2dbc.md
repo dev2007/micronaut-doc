@@ -340,6 +340,6 @@ CREATE TABLE BOOK (
 3. 如果要使用 Micronaut 框架的响应式异步特性，使用 R2DBC
 4. 如果新入手 Micronuat 框架，使用 R2DBC
 
-Demo 代码参见：[JPA Demo](https://github.com/dev2007/micronaut-in-action-demo/tree/main/3.2-jpa)
+Demo 代码参见：[R2DBC Demo](https://github.com/dev2007/micronaut-in-action-demo/tree/main/3.4-r2dbc)
 
 到此，针对 Micronaut 框架涉及的三种数据库 ORM 框架，我们都做了实战，数据库的主要内容就讲解完成，下一节我们将进阶讲解内置数据库接口的 CRUD 方法自定义规则。
