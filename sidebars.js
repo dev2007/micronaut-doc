@@ -152,6 +152,7 @@ const sidebars = {
       ]
     },
     "serialization/serialization",
+    "r2dbc/r2dbc",
     {
       type: 'category',
       label: 'Micronaut 安全',
