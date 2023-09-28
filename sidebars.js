@@ -152,6 +152,7 @@ const sidebars = {
       ]
     },
     "serialization/serialization",
+    "sql/sql",
     "r2dbc/r2dbc",
     {
       type: 'category',
