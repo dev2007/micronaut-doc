@@ -6,7 +6,7 @@ sidebar_position: 10
 
 以下部分将引导你快速入门，了解如何使用 Micronaut 设置基本的“Hello World”应用程序。
 
-开始之前，请确保安装了 Java 8 或更高版本的 JDK，建议你使用[合适的 IDE](#设置一个-IDE)，如 IntelliJ IDEA。
+开始之前，请确保安装了 Java 8 或更高版本的 JDK，建议你使用[合适的 IDE](#23-设置-ide)，如 IntelliJ IDEA。
 
 ## 2.1 安装 CLI
 
