@@ -156,6 +156,19 @@ const sidebars = {
     "r2dbc/r2dbc",
     {
       type: 'category',
+      label: 'Micronaut Data',
+      link: { type: 'doc', id: "data/data" },
+      items: [
+        "data/introduction",
+        "data/buildConfig",
+        "data/shared",
+        "data/hibernate",
+        "data/dbc",
+        "data/mongo"
+      ]
+    },
+    {
+      type: 'category',
       label: 'Micronaut 安全',
       link: { type: 'doc', id: "security/security" },
       items: [

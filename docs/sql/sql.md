@@ -424,7 +424,7 @@ datasources {
 
 有关详细信息，参阅[健康端点](/core/management/providedEndpoints#1523-健康端点)部分。
 
-## 4 配置 Hibernate
+## 4. 配置 Hibernate
 
 **设置 Hibernate/JPA EntityManager**
 
