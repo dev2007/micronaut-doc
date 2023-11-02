@@ -163,6 +163,7 @@ const sidebars = {
         "data/buildConfig",
         "data/shared",
         "data/hibernate",
+        "data/hibernateReactive",
         "data/dbc",
         "data/mongo"
       ]
