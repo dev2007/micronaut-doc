@@ -306,6 +306,15 @@ const sidebars = {
         "action/db/r2dbc"
       ],
     },
+    {
+      type: 'category',
+      label: '4. 认证与鉴权',
+      link: { type: 'doc', id: 'action/security/security' },
+      items: [
+        "action/security/cookie",
+        "action/security/session"
+      ]
+    }
   ],
 
   // But you can create a sidebar manually
