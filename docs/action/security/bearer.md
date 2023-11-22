@@ -1,12 +1,14 @@
 ---
-sidebar_position: 42
+sidebar_position: 43
 ---
 
-# 4.2 Session 认证
+# 4.3 Bearer 认证
 
-上一节中我们使用 Micornaut 安全框架实现了基于 cookie 的认证，本节我们将学习基于 session 的认证。
+上一节中我们使用 Micornaut 安全框架实现了基于 cookie 的认证，本节我们将学习基于 bearer 的认证。
 
-类似于 cookie 认证的依赖 `micronaut-security-jwt`,session 认证的依赖为 `micronaut-security-session`。
+类似于 session 认证的依赖 `micronaut-security-jwt`,bearer 认证的依赖也为 `micronaut-security-jwt`。
+
+从依赖来看，我们知道 session 认证和 bearer 认证的令牌都是 jwt，其他的只是认证方式的差异。
 
 ## 添加依赖
 
@@ -15,7 +17,7 @@ sidebar_position: 42
 ```xml
         <dependency>
             <groupId>io.micronaut.security</groupId>
-            <artifactId>micronaut-security-session</artifactId>
+            <artifactId>micronaut-security-jwt</artifactId>
         </dependency>
 ```
 
@@ -34,7 +36,7 @@ sidebar_position: 42
 
 ## 配置 `application.yml`
 
-在 `application.yml` 中，我们需要显示的标明现在使用的是 `session` 认证方式，并且我们仅验证相关 API 的调用，不通过网页进行认证 URL 的跳转，所以我们把认证的跳转配置也关闭，配置如下：
+在 `application.yml` 中，我们需要显示的标明现在使用的是 `bearer` 认证方式，并且我们仅验证相关 API 的调用，不通过网页进行认证 URL 的跳转，所以我们把认证的跳转配置也关闭，配置如下：
 
 ```yml
 micronaut:
@@ -45,7 +47,7 @@ micronaut:
     netty:
       max-header-size: 500KB
   security:
-    authentication: session
+    authentication: bearer
     redirect:
       enabled: false
 netty:
@@ -126,7 +128,7 @@ public class UserController {
 
 **图 1**
 
-![api 401](../_img/4/4.2/401.png)
+![api 401](../_img/4/4.3/401.png)
 
 从图中可以看到，在引入了 Micronaut 安全框架相关依赖后，我们直接访问 API 会得到未授权响应码 401。
 
@@ -134,23 +136,25 @@ public class UserController {
 
 **图 2**
 
-![login success](../_img/4/4.2/loginsuccess.png)
+![login success](../_img/4/4.3/loginsuccess.png)
 
 请求体我们按照默认实现，提供了 `username` 和 `password`，并且按照我们之前认证器的实现，只要用户名为 `admin` 即可认证通过。
 
-认证通过后，我们还可以看到响应中携带了 Cookie，但不同于 cookie 的认证方式，我们可以看到凭证是存储于 session，如下图 3：
+认证通过后，我们还可以看到响应体中返回了令牌相关信息，如下图 3：
 
 **图 3**
 
-![session](../_img/4/4.2/session.png)
+![jwt](../_img/4/4.3/jwt.png)
 
-session 与 cookie 认证不同的地方在于：session 方式认证通过后，凭据存放在服务端会话中，只要会话不变（同一个客户端）且凭据未失效，认证就不会失效；而 cookie 方式认证通过后，凭据会发放给客户端存放到 cookie 中，每次请求都会由客户端自动携带上凭据进行认证判定。
+上图中，`access_token` 字段对应的值即为令牌。
 
-有了这个凭证后，我们再访问接口 `/user` ，此时就不会报认证失败 401，但转而报禁止访问 403，如下图 4：
+Micronaut 安全框架，虽然 bearer 与 cookie 认证都使用 JWT 作为令牌生成方式，但不同的地方在于： cookie 方式认证通过后，凭据会发放给客户端存放到 cookie 中，每次请求都会由客户端自动携带上凭据进行认证判定；而 bearer 需要在请求头中自行带上 bearer 相应的请求头。
+
+有了这个凭证后，我们在请求中添加相应的认证头后再访问接口 `/user` ，此时就不会报认证失败 401，但转而报禁止访问 403，如下图 4：
 
 **图 4**
 
-![403](../_img/4/4.2/403.png)
+![403](../_img/4/4.3/403.png)
 
 403 代表鉴权没有通过，原因是我们在控制器 `UserController` 的注解中，没有标明认证方式，我们修改如下：
 
@@ -179,10 +183,10 @@ public class UserController {
 
 **图 5**
 
-![user name](../_img/4/4.2/username.png)
+![user name](../_img/4/4.3/username.png)
 
 ## 小结
 
-通过以上代码实现，我们初步了解了 Micronaut 安全框架引入依赖、配置认证方式、实现认证器的方式，并基于 session 认证方式进行了初步的认证控制。
+通过以上代码实现，我们初步了解了 Micronaut 安全框架引入依赖、配置认证方式、实现认证器的方式，并基于 bearer 认证方式进行了初步的认证控制。
 
-接下来，我们将继续介绍 bearer 认证方式的配置和使用。
+接下来，我们将继续介绍 IdToken 认证方式的配置和使用。

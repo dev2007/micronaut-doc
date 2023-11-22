@@ -312,7 +312,8 @@ const sidebars = {
       link: { type: 'doc', id: 'action/security/security' },
       items: [
         "action/security/cookie",
-        "action/security/session"
+        "action/security/session",
+        "action/security/bearer"
       ]
     }
   ],
