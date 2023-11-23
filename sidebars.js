@@ -165,7 +165,11 @@ const sidebars = {
         "data/hibernate",
         "data/hibernateReactive",
         "data/dbc",
-        "data/mongo"
+        "data/mongo",
+        "data/azureCosmos",
+        "data/howltWorks",
+        "data/graal",
+        "data/spring"
       ]
     },
     {

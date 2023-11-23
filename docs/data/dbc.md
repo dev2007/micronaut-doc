@@ -1,5 +1,5 @@
 ---
-sidebar_position: 50
+sidebar_position: 60
 ---
 
 # 6. Micronaut Data JDBC 和 R2DBC
@@ -4030,6 +4030,231 @@ class QuantityAttributeConverter : AttributeConverter<Quantity?, Int?> {
 
 :::tip 注意
 可以使用 [@MappedProperty](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/MappedProperty.html) 来定义转换器：`@MappedProperty(converter = QuantityTypeConverter.class)`，在这种情况下，数据类型将被自动检测到。
+:::
+
+## 6.8 连接查询
+
+如上一节所述，Micronaut Data JDBC 不支持传统 ORM 意义上的关联。没有懒加载或代理支持。
+
+考虑上一节中与 `Manufacturer` 实体有关联的 `Product` 实体：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+package example;
+
+import io.micronaut.core.annotation.Creator;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Manufacturer {
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String name;
+
+    @Creator
+    public Manufacturer(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+package example
+
+import io.micronaut.core.annotation.Creator
+
+import jakarta.persistence.*
+
+@Entity
+class Manufacturer {
+    @Id
+    @GeneratedValue
+    Long id
+    final String name
+
+    @Creator
+    Manufacturer(String name) {
+        this.name = name
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+package example
+
+import jakarta.persistence.*
+
+@Entity
+data class Manufacturer(
+    @Id
+    @GeneratedValue
+    var id: Long?,
+    val name: String
+)
+```
+
+  </TabItem>
+</Tabs>
+
+如果您查询 `Product` 实例，默认情况下 Micronaut Data JDBC 将只查询和获取简单的属性。对于像上面这样的单端关联，Micronaut Data 将只检索 ID 并在可能的情况下分配它（对于需要构造函数参数的实体，这甚至是不可能的）。
+
+如果还需要获取关联，那么可以在存储库接口上使用 [@Join](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Join.html) 注解，指定执行 `INNER JOIN`（或更合适的连接类型）来获取关联 `Manufacturer`。
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@JdbcRepository(dialect = Dialect.H2)
+public interface ProductRepository extends CrudRepository<Product, Long> {
+    @Join(value = "manufacturer", type = Join.Type.FETCH)
+    // (1)
+    List<Product> list();
+}
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@JdbcRepository(dialect = Dialect.H2)
+public interface ProductRepository extends CrudRepository<Product, Long> {
+    @Join(value = "manufacturer", type = Join.Type.FETCH) // (1)
+    List<Product> list();
+}
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@JdbcRepository(dialect = Dialect.H2)
+interface ProductRepository : CrudRepository<Product, Long> {
+    @Join(value = "manufacturer", type = Join.Type.FETCH) // (1)
+    fun list(): List<Product>
+}
+```
+
+  </TabItem>
+</Tabs>
+
+1. [@Join](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Join.html) 用于表示应包含 `INNER JOIN` 子句。
+
+请注意，[@Join](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Join.html) 注解是可重复的，因此可以为不同的关联多次指定。此外，注解的 `type` 成员可用于指定连接类型，例如 `LEFT`、`INNER` 或 `RIGHT`。
+
+最后，默认情况下，Micronaut Data 会生成别名，用于在连接和查询中选择列。但是，如果在任何时候遇到冲突，可以使用 [@Join](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Join.html) 注解的 `alias` 成员为特定连接指定别名。您可以使用 [@MappedEntity](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/MappedEntity.html) 注解的别名成员覆盖默认实体别名。
+
+:::caution 警告
+某些数据库（如 Oracle）会限制 SQL 查询中别名的长度，因此您可能希望设置自定义别名的另一个原因是避免超过 Oracle 中的别名长度限制。
+:::
+
+如果需要进行比 Micronaut Data 提供的连接选项更复杂的操作，则可能需要使用本地查询。
+
+## 6.9 显式查询
+
+当与 JDBC 一起使用 Micronaut Data 时，你可以使用 [@Query](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Query.html) 注解执行本地 SQL 查询：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+@Query("select * from book b where b.title like :title limit 5")
+List<Book> findBooks(String title);
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+@Query("select * from book b where b.title like :title limit 5")
+List<Book> findBooks(String title);
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+@Query("select * from book b where b.title like :title limit 5")
+fun findBooks(title: String): List<Book>
+```
+
+  </TabItem>
+</Tabs>
+
+上述示例将针对数据库执行原始 SQL。
+
+:::tip 注意
+对于返回一个 [Page](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/model/Page.html) 的 [Pagination](https://micronaut-projects.github.io/micronaut-data/latest/guide/#pagination) 查询，还需要指定本地 `countQuery`。
+:::
+
+**显式查询和连接**
+
+在编写显式 SQL 查询时，如果您在查询中指定了任何连接，您可能希望结果数据绑定到返回的实体。Micronaut Data 不会自动这样做，而是需要指定相关的 [@Join](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Join.html) 注解。
+
+例如：
+
+<Tabs>
+  <TabItem value="Java" label="Java" default>
+
+```java
+    @Query("SELECT *, m_.name as m_name, m_.id as m_id FROM product p INNER JOIN manufacturer m_ ON p.manufacturer_id = m_.id WHERE p.name like :name limit 5")
+    @Join(value = "manufacturer", alias = "m_")
+    List<Product> searchProducts(String name);
+```
+
+  </TabItem>
+  <TabItem value="Groovy" label="Groovy">
+
+```groovy
+    @Query("""SELECT *, m_.name as m_name, m_.id as m_id
+              FROM product p
+              INNER JOIN manufacturer m_ ON p.manufacturer_id = m_.id
+              WHERE p.name like :name limit 5""")
+    @Join(value = "manufacturer", alias = "m_")
+    List<Product> searchProducts(String name);
+```
+
+  </TabItem>
+  <TabItem value="Kotlin" label="Kotlin">
+
+```kt
+    @Query("""SELECT *, m_.name as m_name, m_.id as m_id
+                    FROM product p
+                    INNER JOIN manufacturer m_ ON p.manufacturer_id = m_.id
+                    WHERE p.name like :name limit 5""")
+    @Join(value = "manufacturer", alias = "m_")
+    fun searchProducts(name: String): List<Product>
+```
+
+  </TabItem>
+</Tabs>
+
+在上例中，查询使用名为 `m_` 的别名，通过 `INNER JOIN` 查询 `manufacturer` 表。由于返回的 "产品 "实体具有制造商关联，因此最好也将此对象实体化。[@Join](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/Join.html) 注解中的 `alias` 成员用于指定从哪个别名实体化 `Manufacturer` 实例。
+
+:::note 提示
+有必要在 `@Join` 中使用字段的 "逻辑名称"（在 `@Entity` 类中使用的名称），而不是在本地查询中使用的名称。在前面的例子中，如果类中的名称是 `myManufacturer`，那么就需要使用 `Join(value = "myManufacturer", alias = "m_")`，而不需要修改本地 sql 查询中的任何内容
 :::
 
 > [英文链接](https://micronaut-projects.github.io/micronaut-data/latest/guide/#dbc)
