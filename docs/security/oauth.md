@@ -194,7 +194,7 @@ implementation("io.micronaut.security:micronaut-security-jwt")
 尽管 OpenID 提供商会返回 JWT 标记，但默认情况下，该标记不会直接用于授权 Micronaut 的请求。如果应用程序使用 JWT，则会创建一个新的令牌。这样就能在自定义谁提供者、普通 OAuth 2.0 流程和 OpenID 流程之间实现标准化授权。它还允许根据 OpenID 认证结果进行纯会话授权。要直接使用提供程序令牌，请将谁模式设置为 `idtoken`。
 :::
 
-## 16.3 流量
+## 16.3 流程
 
 ### 16.3.1 授权码（Authorization Code）
 
