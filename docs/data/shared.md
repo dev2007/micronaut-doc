@@ -1876,7 +1876,7 @@ class BookListeners {
 2. 如果操作不应继续，`PrePersistLener` 可以返回 `false`，如果是这种情况，则返回 `true`
 3. 定义了一个额外的 [@PostPersistLener](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/event/listeners/PostPersistListener.html) 事件监听器
 
-## 3.5 交易
+## 3.5 事务
 
 Micronaut Data 会自动为您管理事务。您只需使用 `jakarta.transaction.Transactional` 注解将方法声明为事务。
 
