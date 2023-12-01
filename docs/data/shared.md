@@ -1274,7 +1274,7 @@ fun insertMany(books: Iterable<Book>)
   </TabItem>
 </Tabs>
 
-:::notice 提示
+:::note 提示
 在部分更新中不可能使用实体作为返回类型，因为这需要额外的选择来检索额外的信息。可以返回数字类型（int、long 等）来表示更新的行数。在大多数情况下，应检查更新的行数，以确保更新确实影响了行。
 :::
 
@@ -1553,7 +1553,7 @@ fun deleteMany(books: Iterable<Book>)
 |[@PreUpdate](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/event/PreUpdate.html)|在更新对象之前触发（注：不适用于批量更新）|
 |[@PostUpdate](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/annotation/event/PostUpdate.html)|更新对象后触发（注：不适用于批量更新）|
 
-:::notice 提示
+:::note 提示
 如果您愿意，也可以使用 `javax.persistence` 包中的 JPA 注解。
 :::
 
@@ -1886,7 +1886,7 @@ Micronaut Data 会将声明的事务注解映射到正确的底层语义和编�
 启动 Micronaut Data 4 资源库时不再使用新事务执行，如果没有新事务，将创建新连接。
 :::
 
-:::notice 提示
+:::note 提示
 如果你更喜欢 Hibernate 或 JDBC 的 Spring 管理事务，你可以添加 micronaut-data-spring 依赖关系，Spring 管理事务将被替代使用。更多信息参阅 [Spring 支持](/spring)部分。
 :::
 
@@ -2319,7 +2319,7 @@ open class BookManager(
 2. 发布事件时，如果有正在运行的事务，那么只有在事务提交后才会触发监听器。
 3. 监听器本身注解为 [@TransactionalEventListener](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/transaction/annotation/TransactionalEventListener.html)
 
-:::notice 提示
+:::note 提示
 您可以设置 [@TransactionalEventListener](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/transaction/annotation/TransactionalEventListener.html) 注解的值，将监听器绑定到特定的事务阶段。
 :::
 

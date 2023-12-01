@@ -544,7 +544,7 @@ Micronaut 序列化支持可用的 [Jackson 注解](https://fasterxml.github.io/
 
 主要区别在于 Micronaut Serialization 使用构建时 [Bean 自省](https://docs.micronaut.io/latest/guide/#introspection)，这意味着只支持可访问的 getter 和 setter（以及 Java 17 记录），并且 [@JsonAutoDetect](https://fasterxml.github.io/jackson-annotations/javadoc/2.12/com/fasterxml/jackson/annotation/JsonAutoDetect.html) 不能用于自定义映射。
 
-:::notice 提示
+:::note 提示
 不过，你可以使用 `AccessKind` 字段启用字段。参阅 [Bean 自省](/core/ioc#315-bean-自省)文档中的 "Bean 字段 "部分。
 :::
 

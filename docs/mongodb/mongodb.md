@@ -104,7 +104,7 @@ implementation("io.micronaut.mongodb:micronaut-mongo-sync")
 
 **在 MongoDB 中使用 GORM**
 
-:::notice 提示
+:::note 提示
 *使用 CLI*
 
 如果使用 Micronaut CLI 创建项目，请使用 mongo-gorm 功能在项目中使用 GORM 版 MongoDB：

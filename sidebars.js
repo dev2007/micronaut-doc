@@ -219,6 +219,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Micronaut Redis',
+      link: { type: 'doc', id: "redis/redis" },
       items: [
         "redis/introduction",
         "redis/releaseHistory",
@@ -238,6 +239,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Micronaut MicorStream',
+      link: { type: 'doc', id: "microstream/microstream" },
       items: [
         "microstream/introduction",
         "microstream/releaseHistory",
@@ -256,6 +258,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Micronaut Servlet',
+      link: { type: 'doc', id: "servlet/servlet" },
       items: [
         "servlet/introduction",
         "servlet/releaseHistory",

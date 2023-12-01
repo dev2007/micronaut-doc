@@ -16,7 +16,7 @@ Micronaut Data JPA 4.0.0 版本支持 Hibernate 6，而早期版本支持Hiberna
 
 最快速的入门方法是使用 [Micronaut Launch](https://micronaut.io/launch/) 创建一个新的 Micronaut 应用程序，并选择 `data-jpa`、数据库驱动程序、池化和数据库迁移框架功能。
 
-:::notice 提示
+:::note 提示
 你还可以在 Micronaut 指南中找到关于构建 Micronaut Data JPA 应用程序的精彩指南，包括各种语言的示例代码：[使用 Micronaut Data JPA 访问数据库](https://guides.micronaut.io/latest/micronaut-jpa-hibernate.html)。
 :::
 
@@ -583,7 +583,7 @@ bookRepository.deleteById(id)
 
 为了优化你的查询，你可能需要改变连接，以便在结果集中准确获取你需要的数据。
 
-:::notice 提示
+:::note 提示
 如果出现 `LazyInitializationException`，这并不是 Micronaut Data 或 Hibernate 中的错误，而是表明你应该改变你的查询连接，以获取实现用例所需的相关数据。
 :::
 

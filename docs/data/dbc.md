@@ -30,7 +30,7 @@ Micronaut Data JDBC 是为喜欢低级体验和直接使用 SQL 的用户设计�
 
 最快速的入门方法是使用 [Micronaut Launch](https://micronaut.io/launch/) 创建一个新的 Micronaut 应用程序，并选择 `data-jdbc`、数据库驱动和数据库迁移框架功能。这也可以通过 CLI 完成。
 
-:::notice 提示
+:::note 提示
 您还可以在 Micronaut 指南中找到关于构建 Micronaut 数据 JDBC 应用程序的精彩指南，包括各种语言的示例代码：[使用 Micronaut Data JDBC 访问数据库](https://guides.micronaut.io/latest/micronaut-data-jdbc-repository.html)
 :::
 
@@ -858,7 +858,7 @@ runtimeOnly("mysql:mysql-connector-java")
   </TabItem>
 </Tabs>
 
-:::notice 提示
+:::note 提示
 要为其他驱动创建配置，可以选择相应的功能：`Oracle`、`Postgres`、`SQLServer`、`H2` 或 `Mariadb`。
 :::
 
@@ -1002,7 +1002,7 @@ r2dbc {
 - Flyway 配置需要一个 JDBC 数据源，`datasources.defaul.url` 可配置一个。更多信息，参阅[数据源配置](/data/dbc)
 - `r2dbc.datasources.default.url` 用于配置默认的 R2DBC `ConnectionFactory`
 
-:::notice 提示
+:::note 提示
 R2DBC ConnectionFactory 对象可通过依赖注入注入到代码中的任何位置。
 :::
 
@@ -1795,7 +1795,7 @@ JDBC 也支持 JPA 实现所支持的相同接口。
 
 请注意，由于查询是在编译时计算的，因此必须在仓库中指定所使用的 `dialect`。
 
-:::notice 提示
+:::note 提示
 建议针对目标方言进行测试。[测试容器](https://www.testcontainers.org/)项目就是一个很好的解决方案。如果必须针对另一种方言（如 H2）进行测试，则可以定义一个子接口，在测试范围内用不同的方言 `@Replaces` 仓库。
 :::
 
@@ -1911,7 +1911,7 @@ abstract class AbstractBookRepository(private val jdbcOperations: JdbcOperations
 
 上面的示例使用了 [JdbcOperations](https://micronaut-projects.github.io/micronaut-data/latest/api/io/micronaut/data/jdbc/runtime/JdbcOperations.html) 接口，它简化了在事务上下文中执行 JDBC 查询的过程。
 
-:::notice 提示
+:::note 提示
 您还可以注入任何其他工具来处理更复杂的查询，如 QueryDSL、JOOQ、Spring JdbcTemplate 等。
 :::
 
@@ -3126,7 +3126,7 @@ data class ProjectId(val departmentId: Int, val projectId: Int)
   </TabItem>
 </Tabs>
 
-:::notice 提示
+:::note 提示
 建议 ID 类不可变，并实现 `equals`/`hashCode`。提示：使用 Java 时，请务必为组成复合键的字段定义获取器。
 :::
 
@@ -3211,7 +3211,7 @@ class Project(
   </TabItem>
 </Tabs>
 
-:::notice 提示
+:::note 提示
 要更改 ID 的列映射，可在 `ProjectId` 类中的字段上使用 `@Column` 注解。
 :::
 
@@ -3935,7 +3935,7 @@ data class Quantity(val amount: Int)
 
 正如您所看到的，`@TypeDef` 用于使用 DataType 枚举将 `Quantity` 类型定义为 `INTEGER`。
 
-:::notice 提示
+:::note 提示
 如果不能直接在类型上声明 `@TypeDef`，那么可以在使用该类型的字段上声明。
 :::
 
