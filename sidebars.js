@@ -321,7 +321,8 @@ const sidebars = {
         "action/security/cookie",
         "action/security/session",
         "action/security/bearer",
-        "action/security/oauth2"
+        "action/security/oauth2",
+        "action/security/handler"
       ]
     }
   ],
