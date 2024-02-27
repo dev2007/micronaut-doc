@@ -64,6 +64,9 @@ $ curl https://launch.micronaut.io/demo.zip?lang=java&features=data-jdbc,flyway,
 
 生成的应用程序将在编译范围内依赖于 `micronaut-data-jdbc` 模块，并将使用 MySQL，因为我们通过 `mysql` 特性添加了对 MySQL JDBC 驱动的依赖：
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
 
