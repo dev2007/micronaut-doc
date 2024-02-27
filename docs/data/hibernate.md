@@ -50,6 +50,9 @@ $ mn create-app --lang java example --features data-jpa,flyway,mysql,jdbc-hikari
 
 您需要在应用程序配置文件中配置数据源。例如，对于 H2：
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Properties" label="Properties">
 
