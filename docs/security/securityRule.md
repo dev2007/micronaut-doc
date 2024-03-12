@@ -47,6 +47,9 @@ sidebar_position: 90
 
 但你可以拒绝来自白名单 IP 模式的流量，如下图所示：
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Properties" label="Properties">
 
