@@ -6,6 +6,9 @@ sidebar_position: 50
 
 要将 [Jetty](https://www.eclipse.org/jetty/) 用作服务器，请添加以下依赖项：
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
 
   <TabItem value="Gradle" label="Gradle">

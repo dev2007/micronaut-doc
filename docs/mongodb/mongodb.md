@@ -43,6 +43,9 @@ $ mn create-app my-app --features mongo-reactive
 
 Micronaut 包含一个自动配置本地 MongoDB Java 驱动的配置。要使用该配置，请在应用程序中添加以下依赖：
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
 

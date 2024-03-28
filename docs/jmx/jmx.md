@@ -31,6 +31,9 @@ https://github.com/micronaut-projects/micronaut-jmx/releases
 
 ## 3. 设置 JMX
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Gradle" label="Gradle">
 

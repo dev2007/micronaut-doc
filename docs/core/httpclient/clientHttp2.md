@@ -8,6 +8,9 @@ sidebar_position: 50
 
 *在客户端启用 HTTP/2*
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Properties" label="Properties">
 

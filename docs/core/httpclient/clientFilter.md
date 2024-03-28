@@ -12,6 +12,9 @@ sidebar_position: 40
 
 要解决这个问题，你可以定义一个过滤器。下面是一个 `BintrayService`：
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs>
   <TabItem value="Java" label="Java" default>
 
