@@ -434,7 +434,7 @@ class ConnectionFactoryInterceptor: BeanCreatedEventListener<ConnectionFactory> 
   </TabItem>
 </Tabs>
 
-::note 提示
+:::note 提示
 也可以使用 `rabbitmq.enabled: false` 完全禁用集成。
 :::
 
